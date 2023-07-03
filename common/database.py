@@ -1,3 +1,5 @@
+from typing import List
+
 import psycopg2
 from psycopg2 import Error
 import sys
@@ -31,3 +33,31 @@ class PostgreSQL:
             self.cursor.close()
             self.connection.close()
             print("Connection closed.")
+
+
+class DatabaseManager:
+    def __init__(self, table, query, db: PostgreSQL):
+        self.table = table
+        self.query = query
+        self.db = db
+
+    def execute_query(self):
+        try:
+            if type(self.query) == List:
+                for q in self.query:
+                    self.db.cursor.execute(q)
+                    self.db.connection.commit()
+            else:
+                self.db.cursor.execute(self.query)
+                self.db.connection.commit()
+            print("Query executed successfully")
+        except Error as e:
+            print(f"ExecutionQueryError about {self.table}'{e} occured")
+
+    def fetch_query(self):
+        try:
+            self.db.cursor.execute(self.query)
+            result = self.db.cursor.fetchall()
+            return result
+        except Error as e:
+            print(f"FetchQueryError about {self.table} '{e} occured")
