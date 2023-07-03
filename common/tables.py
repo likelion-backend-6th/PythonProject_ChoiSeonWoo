@@ -25,8 +25,8 @@ CREATE TABLE IF NOT EXISTS loans (
     user_id INTEGER NOT NULL,
     book_id INTEGER NOT NULL,
     loan_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users (id),
-    FOREIGN KEY (book_id) REFERENCES books (id)
+    FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
+    FOREIGN KEY (book_id) REFERENCES books (id) ON DELETE CASCADE
 );
 """
 
