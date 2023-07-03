@@ -49,6 +49,10 @@ def sign_up():
 
     print("회원가입이 완료되었습니다.")
     print("이어서 로그인을 바로 진행하도록 하겠습니다.")
+    sleep(0.5)
+    for i in range(3):
+        print(3 - i)
+        sleep(0.5)
     return login()
 
 def login() -> object:
