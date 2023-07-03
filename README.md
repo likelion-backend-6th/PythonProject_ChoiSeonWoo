@@ -81,8 +81,8 @@
 <br>
 
 ## 📚 Database ERD
+![ERD_library](https://github.com/likelion-backend-6th/PythonProject_ChoiSeonWoo/assets/104040502/66b84361-ffef-408a-bfbc-6fbcf48dc62e)
 
-### 이미지 삽입 예정
 
 ### 🙋‍♂️ 사용자(Users)
 | Column Name  |  Data Type   |      Constraint       |
@@ -113,3 +113,6 @@
 <br>
 
 ## 추후 업데이트 예정
+
+<br>
+
