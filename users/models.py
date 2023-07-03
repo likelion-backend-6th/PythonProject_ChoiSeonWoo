@@ -28,3 +28,16 @@ class Users:
         VALUES ('{self.username}', '{self.fullname}', '{self.password}')
         """
         DatabaseManager(postgres, self.table, query).execute_query()
+
+    def put(self, new_fullname: str, new_password: Optional[str] = None):
+        if new_password:
+            query = f"""
+            UPDATE users SET fullname = '{new_fullname}', password = '{new_password}'
+            WHERE username = '{self.username}';
+            """
+        else:
+            query = f"""
+            UPDATE users SET fullname = '{new_fullname}'
+            WHERE username = '{self.username}';
+            """
+        DatabaseManager(postgres, self.table, query).execute_query()
