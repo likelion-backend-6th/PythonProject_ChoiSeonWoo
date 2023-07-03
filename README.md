@@ -83,7 +83,8 @@
 <br>
 
 ## 📚 Database ERD
-![ERD_library](https://github.com/likelion-backend-6th/PythonProject_ChoiSeonWoo/assets/104040502/66b84361-ffef-408a-bfbc-6fbcf48dc62e)
+![ERD_library](https://github.com/likelion-backend-6th/PythonProject_ChoiSeonWoo/assets/104040502/2d654027-7cb1-4993-9d7c-f4a6953a7a3c)
+
 
 
 ### 🙋‍♂️ 사용자(Users)
