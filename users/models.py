@@ -21,3 +21,10 @@ class Users:
             query = "SELECT * from users;"
         users = DatabaseManager(postgres, self.table, query).fetch_query()
         return users
+
+    def post(self):
+        query = f"""
+        INSERT INTO users (username, fullname, password)
+        VALUES ('{self.username}', '{self.fullname}', '{self.password}')
+        """
+        DatabaseManager(postgres, self.table, query).execute_query()
