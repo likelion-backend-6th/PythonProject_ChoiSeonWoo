@@ -1,3 +1,5 @@
+<br>
+
 # 🏬 도서관 관리 콘솔 애플리케이션
 
 <br>
@@ -90,7 +92,7 @@
 | **user_id**  |   INTEGER    | PRIMARY KEY, NOT NULL |
 | **username** | Varchar(50)  |   UNIQUE, NOT NULL    |
 | **fullname** | VARCHAR(50)  |       NOT NULL        |
-| **password** | VARCHAR(256) |       NOT NULL        |
+| **password** | VARCHAR(255) |       NOT NULL        |
 
 ### 📕 도서(Books)
 | Column Name  |  Data Type   |       Constraint       |
