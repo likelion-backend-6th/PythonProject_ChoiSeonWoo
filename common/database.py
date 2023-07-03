@@ -5,6 +5,7 @@ from psycopg2 import Error
 import sys
 
 from common import settings
+from common.tables import TABLES, CREATE_QUERY_LISTS
 
 
 class PostgreSQL:
@@ -61,3 +62,11 @@ class DatabaseManager:
             return result
         except Error as e:
             print(f"FetchQueryError about {self.table} '{e} occured")
+
+
+postgres = PostgreSQL()
+CREATE_TABLES = zip(TABLES, CREATE_QUERY_LISTS)
+for table, create_query in CREATE_TABLES:
+    DatabaseManager(table, create_query, postgres).execute_query()
+postgres.close()
+
