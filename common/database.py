@@ -33,7 +33,7 @@ class PostgreSQL:
         if self.connection:
             self.cursor.close()
             self.connection.close()
-            print("Connection closed.")
+            print("Connection closed")
 
 
 class DatabaseManager:
@@ -59,14 +59,18 @@ class DatabaseManager:
         try:
             self.db.cursor.execute(self.query)
             result = self.db.cursor.fetchall()
+            print("Query fetched Successfully")
             return result
         except Error as e:
             print(f"FetchQueryError about {self.table} '{e} occured")
 
 
 postgres = PostgreSQL()
-CREATE_TABLES = zip(TABLES, CREATE_QUERY_LISTS)
-for table, create_query in CREATE_TABLES:
-    DatabaseManager(postgres, table, create_query).execute_query()
-postgres.close()
 
+
+# postgres = PostgreSQL()
+# CREATE_TABLES = zip(TABLES, CREATE_QUERY_LISTS)
+# for table, create_query in CREATE_TABLES:
+#     DatabaseManager(postgres, table, create_query).execute_query()
+# postgres.close()
+#
