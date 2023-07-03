@@ -1,5 +1,7 @@
 from typing import Optional
 
+from common.database import DatabaseManager, postgres
+
 
 class Users:
     def __init__(self,
@@ -11,3 +13,11 @@ class Users:
         self.username = username
         self.fullname = fullname
         self.password = password
+
+    def get(self):
+        if self.username != None:
+            query = f"SELECT * from users WHERE username = '{self.username}';"
+        else:
+            query = "SELECT * from users;"
+        users = DatabaseManager(postgres, self.table, query).fetch_query()
+        return users
