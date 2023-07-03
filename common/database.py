@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional, Union
 
 import psycopg2
 from psycopg2 import Error
@@ -37,10 +37,10 @@ class PostgreSQL:
 
 
 class DatabaseManager:
-    def __init__(self, table, query, db: PostgreSQL):
-        self.table = table
-        self.query = query
+    def __init__(self, db: PostgreSQL, table_: str, query: Optional[Union[str, List[str]]]):
         self.db = db
+        self.table = table_
+        self.query = query
 
     def execute_query(self):
         try:
@@ -48,7 +48,7 @@ class DatabaseManager:
                 for q in self.query:
                     self.db.cursor.execute(q)
                     self.db.connection.commit()
-            else:
+            elif type(self.query) == str:
                 self.db.cursor.execute(self.query)
                 self.db.connection.commit()
             print("Query executed successfully")
@@ -67,6 +67,6 @@ class DatabaseManager:
 postgres = PostgreSQL()
 CREATE_TABLES = zip(TABLES, CREATE_QUERY_LISTS)
 for table, create_query in CREATE_TABLES:
-    DatabaseManager(table, create_query, postgres).execute_query()
+    DatabaseManager(postgres, table, create_query).execute_query()
 postgres.close()
 
