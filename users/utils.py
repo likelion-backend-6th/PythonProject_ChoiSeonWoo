@@ -5,7 +5,7 @@ from users.models import Users
 my_info = {"user": None, "is_logined": False}
 
 
-def login():
+def login() -> object:
     usr_cnt, pw_cnt = 0, 0
 
     username = input("사용자명을 입력해주세요. : ")
@@ -41,4 +41,16 @@ def login():
     return my_info
 
 
+def logout() -> object:
+    print("로그아웃 되었습니다.")
+    my_info["user"] = None
+    my_info["is_logined"] = False
+    return my_info
+
+
 login()
+
+if input("로그아웃 하시겠습니까? : ") == "예":
+    logout()
+
+print(f"my_info: {my_info}")
