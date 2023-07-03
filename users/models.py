@@ -20,6 +20,7 @@ class Users:
         else:
             query = "SELECT * from users;"
         users = DatabaseManager(postgres, self.table, query).fetch_query()
+        users.sort(key=lambda x:x[0])
         return users
 
     def post(self):
