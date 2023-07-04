@@ -11,14 +11,18 @@ def sign_up():
     users = Users().get()
 
     username = input("사용자명을 입력해주세요. : ")
-    if not username_validation(username, users):
+    username = username_validation(username, users)
+    if not username:
         sign_up()
 
     fullname = input("성함을 입력해주세요. : ")
 
     password = input("비밀번호를 입력해주세요. : ")
-    if not password_validation(password, users):
+    password = password_validation(password, users)
+    if not password:
         sign_up()
+
+    print(username, fullname, password)
 
     new_user = Users(username, fullname, password)
     new_user.post()
