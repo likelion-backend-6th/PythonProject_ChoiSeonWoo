@@ -51,7 +51,7 @@ def login() -> object:
 
     my_info["user"] = user
     my_info["is_logined"] = True
-    print(f"{my_info['user'][0][2]}님, 어서오세요. 환영합니다")
+    print(f"{my_info['user'][2]}님, 어서오세요. 환영합니다")
     print(my_info)
     return my_info
 

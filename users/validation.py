@@ -62,7 +62,7 @@ def user_validation(username: str):
 def password_validation2(password:str, user: Users):
     pw_cnt = 0
     while True:
-        matching = (user[0][-1] == password)
+        matching = (user[-1] == password)
         if matching:
             return True
         pw_cnt += 1
