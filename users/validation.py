@@ -57,3 +57,20 @@ def user_validation(username: str):
                 sleep(0.5)
             return False
         username = input(f"조회되는 정보가 없습니다. ({usr_cnt}/3)  사용자명을 다시 입력해주세요. : ")
+
+
+def password_validation2(password:str, user: Users):
+    pw_cnt = 0
+    while True:
+        matching = (user[0][-1] == password)
+        if matching:
+            return True
+        pw_cnt += 1
+        if pw_cnt == 3:
+            print("3회 이상 실패하였으므로 초기 메뉴로 돌아갑니다.")
+            sleep(0.5)
+            for i in range(3):
+                print(3 - i)
+                sleep(0.5)
+            return False
+        password = input(f"비밀번호가 일치하지 않습니다. ({pw_cnt}/3)  다시 입력해주세요. : ")
