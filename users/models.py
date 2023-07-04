@@ -17,11 +17,13 @@ class Users:
     def get(self):
         if self.username != None:
             query = f"SELECT * from users WHERE username = '{self.username}';"
+            user = DatabaseManager(postgres, self.table, query).fetchone_query()
+            return user
         else:
             query = "SELECT * from users;"
-        users = DatabaseManager(postgres, self.table, query).fetch_query()
-        users.sort(key=lambda x:x[0])
-        return users
+            users = DatabaseManager(postgres, self.table, query).fetchall_query()
+            users.sort(key=lambda x:x[0])
+            return users
 
     def post(self):
         query = f"""
