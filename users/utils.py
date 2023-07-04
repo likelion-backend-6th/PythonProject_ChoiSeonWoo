@@ -2,7 +2,7 @@ import re
 from time import sleep
 
 from users.models import Users
-from users.validation import username_validation, password_validation, user_validation
+from users.validation import username_validation, password_validation, user_validation, password_validation2
 
 my_info = {"user": None, "is_logined": False}
 
@@ -45,16 +45,9 @@ def login() -> object:
         login()
 
     password = input("비밀번호를 입력해주세요. : ")
-    while user[0][-1] != password:
-        pw_cnt += 1
-        password = input(f"비밀번호가 일치하지 않습니다. ({pw_cnt}/3)  다시 입력해주세요. : ")
-        if pw_cnt == 3:
-            print("3회 이상 실패하였으므로 초기 메뉴로 돌아갑니다.")
-            sleep(0.5)
-            for i in range(3):
-                print(3 - i)
-                sleep(0.5)
-            login()
+    password_matched = password_validation2(password, user)
+    if not password_matched:
+        login()
 
     my_info["user"] = user
     my_info["is_logined"] = True
