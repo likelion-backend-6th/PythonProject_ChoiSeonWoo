@@ -18,7 +18,7 @@ def sign_up():
     fullname = input("성함을 입력해주세요. : ")
 
     password = input("비밀번호를 입력해주세요. : ")
-    password = password_validation(password, users)
+    password = password_validation(password)
     if not password:
         sign_up()
 

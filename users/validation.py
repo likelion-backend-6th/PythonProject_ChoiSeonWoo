@@ -22,7 +22,7 @@ def username_validation(username: str, users: List):
         username = input(f"이미 가입된 정보가 있습니다. ({usr_cnt}/3)  사용자명을 다시 입력해주세요. : ")
 
 
-def password_validation(password: str, users: List):
+def password_validation(password: str):
     pw_cnt = 0
 
     match = "^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$"
