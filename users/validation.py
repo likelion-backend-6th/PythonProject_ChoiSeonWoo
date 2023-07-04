@@ -8,7 +8,7 @@ def username_validation(username: str, users: List):
     while True:
         username_check = map(lambda x: x[1] == username, users)
         if True not in username_check:
-            return True  # 중복 검사 통과
+            return username  # 중복 검사 통과
         usr_cnt += 1
         if usr_cnt == 3:
             print("3회 이상 실패하였으므로 초기 메뉴로 돌아갑니다.")
@@ -28,7 +28,7 @@ def password_validation(password: str, users: List):
 
     while True:
         if validation.match(password) is not None:
-            return True
+            return password
         pw_cnt += 1
         if pw_cnt == 3:
             print("3회 이상 실패하였으므로 초기 메뉴로 돌아갑니다.")
