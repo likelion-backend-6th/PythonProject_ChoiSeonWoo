@@ -2,6 +2,8 @@ import re
 from typing import List
 from time import sleep
 
+from users.models import Users
+
 
 def username_validation(username: str, users: List):
     usr_cnt = 0
@@ -38,3 +40,20 @@ def password_validation(password: str, users: List):
                 sleep(0.5)
             return False
         password = input(f"비밀번호는 하나 이상의 문자, 숫자, 특수문자를 포함하여 8자리 이상으로 작성해주세요. ({pw_cnt}/3)  : ")
+
+
+def user_validation(username: str):
+    usr_cnt = 0
+    while True:
+        user = Users(username).get()
+        if user:
+            return user
+        usr_cnt += 1
+        if usr_cnt == 3:
+            print("3회 이상 실패하였으므로 초기 메뉴로 돌아갑니다.")
+            sleep(0.5)
+            for i in range(3):
+                print(3 - i)
+                sleep(0.5)
+            return False
+        username = input(f"조회되는 정보가 없습니다. ({usr_cnt}/3)  사용자명을 다시 입력해주세요. : ")
