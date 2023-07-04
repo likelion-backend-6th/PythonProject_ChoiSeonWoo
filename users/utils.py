@@ -2,7 +2,7 @@ import re
 from time import sleep
 
 from users.models import Users
-from users.validation import username_validation, password_validation
+from users.validation import username_validation, password_validation, user_validation
 
 my_info = {"user": None, "is_logined": False}
 
@@ -40,18 +40,9 @@ def login() -> object:
     usr_cnt, pw_cnt = 0, 0
 
     username = input("사용자명을 입력해주세요. : ")
-    user = Users(username).get()
-    while not user:
-        usr_cnt += 1
-        username = input(f"조회되는 정보가 없습니다. ({usr_cnt}/3)  사용자명을 다시 입력해주세요. : ")
-        user = Users(username).get()
-        if usr_cnt == 3:
-            print("3회 이상 실패하였으므로 초기 메뉴로 돌아갑니다.")
-            sleep(0.5)
-            for i in range(3):
-                print(3 - i)
-                sleep(0.5)
-            login()
+    user = user_validation(username)
+    if not user:
+        login()
 
     password = input("비밀번호를 입력해주세요. : ")
     while user[0][-1] != password:
@@ -79,12 +70,14 @@ def logout() -> object:
     return my_info
 
 
-# login()
-#
-# if input("로그아웃 하시겠습니까? : ") == "예":
-#     logout()
-#
-# print(f"my_info: {my_info}")
+login()
+
+if input("로그아웃 하시겠습니까? : ") == "예":
+    logout()
+
+print(f"my_info: {my_info}")
 
 
-sign_up()
+# sign_up()
+
+
