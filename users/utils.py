@@ -2,29 +2,18 @@ import re
 from time import sleep
 
 from users.models import Users
+from users.validation import username_validation
 
 my_info = {"user": None, "is_logined": False}
 
 
-
 def sign_up():
-    usr_cnt, pw_cnt = 0, 0
-
+    pw_cnt = 0
     users = Users().get()
 
     username = input("사용자명을 입력해주세요. : ")
-    username_check = map(lambda x: x[1] == username, users)
-    while True in username_check:
-        usr_cnt += 1
-        username = input(f"이미 가입된 정보가 있습니다. ({usr_cnt}/3)  사용자명을 다시 입력해주세요. : ")
-        username_check = map(lambda x: x[1] == username, users)
-        if usr_cnt == 3:
-            print("3회 이상 실패하였으므로 초기 메뉴로 돌아갑니다.")
-            sleep(0.5)
-            for i in range(3):
-                print(3 - i)
-                sleep(0.5)
-            sign_up()
+    if not username_validation(username, users):
+        sign_up()
 
     fullname = input("성함을 입력해주세요. : ")
 
@@ -33,7 +22,7 @@ def sign_up():
     match = "^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$"
     validation = re.compile(match)
 
-    while validation.match(str(password)) == None:
+    while validation.match(str(password)) is None:
         pw_cnt += 1
         password = input(f"비밀번호는 하나 이상의 문자, 숫자, 특수문자를 포함하여 8자리 이상으로 작성해주세요. ({pw_cnt}/3)  : ")
         if pw_cnt == 3:
@@ -42,7 +31,7 @@ def sign_up():
             for i in range(3):
                 print(3 - i)
                 sleep(0.5)
-            sign_up()
+        sign_up()
 
     new_user = Users(username, fullname, password)
     new_user.post()
@@ -54,6 +43,7 @@ def sign_up():
         print(3 - i)
         sleep(0.5)
     return login()
+
 
 def login() -> object:
     usr_cnt, pw_cnt = 0, 0
