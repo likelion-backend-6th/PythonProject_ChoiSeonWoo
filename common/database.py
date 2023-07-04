@@ -55,10 +55,19 @@ class DatabaseManager:
         except Error as e:
             print(f"ExecutionQueryError about {self.table}'{e} occured")
 
-    def fetch_query(self):
+    def fetchall_query(self):
         try:
             self.db.cursor.execute(self.query)
             result = self.db.cursor.fetchall()
+            print("Query fetched Successfully")
+            return result
+        except Error as e:
+            print(f"FetchQueryError about {self.table} '{e} occured")
+
+    def fetchone_query(self):
+        try:
+            self.db.cursor.execute(self.query)
+            result = self.db.cursor.fetchone()
             print("Query fetched Successfully")
             return result
         except Error as e:
