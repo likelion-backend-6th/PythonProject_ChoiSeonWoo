@@ -69,24 +69,27 @@ class Books:
         """
         DatabaseManager(self.table, query).execute_query()
 
+    def put(
+            self,
+            id: int,
+            new_title: Optional[str] = None,
+            new_author: Optional[str] = None,
+            new_publisher: Optional[str] = None,
+    ):
+        query = "UPDATE books SET "
+        end_query = f" WHERE id = '{id}';"
 
-# 현재 책 데이터 조회
-print("전체 책 데이터 조회")
-books = Books()
-now_all_books = books.get()
-print(f"현재 책 데이터: {now_all_books}")
-now_all_books_count = len(now_all_books)
+        if new_title or new_author or new_publisher:
+            extra_query = []
+            if new_title:
+                extra_query.append(f"title = '{new_title}'")
+            if new_author:
+                extra_query.append(f"author = '{new_author}'")
+            if new_publisher:
+                extra_query.append(f"publisher = '{new_publisher}'")
+            query += ', '.join(extra_query) + end_query
+        else:
+            change_isavailable = "is_available = NOT is_available"
+            query += change_isavailable + end_query
 
-# books 데이터 추가
-new_book = Books('파이썬 CCC', '최모씨', '시공사')
-new_book.post()
-
-# 새로 책 데이터 조회
-new_all_books = new_book.get()
-print(f"새로 조회한 책 데이터: {new_all_books}")
-new_all_books_count = len(new_all_books)
-
-print(f"이전 책 데이터의 수는 {now_all_books_count}개였으며, 현재 책 데이터 수는 {new_all_books_count}개 입니다. ")
-
-# 책 권수가 정상적으로 증가하였는지 확인
-assert new_all_books_count == now_all_books_count + 1, "요청한 책 데이터가 정상적으로 생성되지 않았습니다."
+        DatabaseManager(self.table, query).execute_query()
