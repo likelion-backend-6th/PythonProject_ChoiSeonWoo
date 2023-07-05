@@ -64,6 +64,15 @@ class DatabaseManager:
         except Error as e:
             print(f"FetchQueryError about {self.table} '{e} occured")
 
+    def fetch_many(self, size: int):
+        try:
+            self.db.cursor.execute(self.query)
+            result = self.db.cursor.fetchmany(size)
+            print("Multiple Data fetched Successfully")
+            return result
+        except Error as e:
+            print(f"FetchQueryError about {self.table} '{e} occured")
+
     def fetchone_query(self):
         try:
             self.db.cursor.execute(self.query)
