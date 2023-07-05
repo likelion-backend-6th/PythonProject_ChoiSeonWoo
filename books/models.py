@@ -27,7 +27,7 @@ class Books:
             author: Optional[str] = None,
             publisher: Optional[str] = None,
             is_available: Optional[bool] = None,
-    ) -> object:
+    ):
         if id is not None:
             query = f"SELECT * FROM books WHERE id = '{id}';"
             book = DatabaseManager(self.table, query).fetch_one()
@@ -100,9 +100,9 @@ class Loans:
 
     def __init__(
             self,
-            user_id: int,
-            book_id: int,
-            loan_date: date,
+            user_id: Optional[int] = None,
+            book_id: Optional[int] = None,
+            loan_date: Optional[date] = None,
             return_date: Optional[date] = None,
     ):
         self.table = "loans"
@@ -110,3 +110,42 @@ class Loans:
         self.book_id = book_id
         self.loan_date = loan_date
         self.return_date = return_date
+
+    def get(
+            self,
+            size: Optional[int] = None,
+            user_id: Optional[int] = None,
+            book_id: Optional[int] = None,
+            date: Optional[date] = None,
+            today: Optional[date] = None,
+    ):
+        query = "SELECT * FROM loans "
+        end_query = " ORDER BY id DESC"
+
+
+        if user_id or book_id:
+            extra_query = []
+            if user_id:
+                extra_query.append(f"user_id = '{user_id}'")
+            if book_id:
+                extra_query.append(f"book_id = '{book_id}'")
+            query += "WHERE " + ", ".join(extra_query) + end_query + ";"
+
+        elif date:
+            extra_query = f"WHERE loan_date < '{date}'"
+            query += extra_query + end_query + ";"
+
+        elif today:
+            extra_query = f"WHERE return_date < '{today}'"
+            query += extra_query + end_query + ";"
+
+        elif size:
+            extra_query = f" LIMIT {size}"
+            end_query, extra_query = extra_query, end_query
+            query += extra_query + end_query + ";"
+
+        else:
+            query += end_query + ";"
+
+        loans = DatabaseManager(self.table, query).fetch_all()
+        return loans
