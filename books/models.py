@@ -93,3 +93,58 @@ class Books:
             query += change_isavailable + end_query
 
         DatabaseManager(self.table, query).execute_query()
+
+
+# 테스트 데이터 추가
+# new_book = Books('테스트 타이틀', '테스트 저자', '테스트 출판사')
+# new_book.post()
+
+
+# 데이터 수정 테스트 진행
+books = Books()
+
+# 수정 전
+print(" 수정 전 -----------------------")
+print(books.get(id=14))
+print()
+
+# 수정 후
+print(" 수정 후 -----------------------")
+books.put(id=14)
+print(books.get(id=14))
+print("-------------------")
+print()
+
+books.put(14, "새타이틀", "새저자", "새출판사")
+print(books.get(id=14))
+print("-------------------")
+print()
+
+books.put(14, new_title="새타이틀2", new_publisher="새출판사2")
+print(books.get(id=14))
+print("-------------------")
+print()
+
+books.put(14, new_author="새저자3", new_publisher="새출판사3")
+print(books.get(id=14))
+print("-------------------")
+print()
+
+books.put(14, new_title="새타이틀4" ,new_author="새저자4")
+print(books.get(id=14))
+print("-------------------")
+print()
+
+books.put(14, new_title="새타이틀5")
+print(books.get(id=14))
+print("-------------------")
+print()
+
+books.put(14, new_author="새저자5")
+print(books.get(id=14))
+print("-------------------")
+print()
+
+books.put(14, new_author="새저자5")
+print(books.get(id=14))
+print("-------------------")
