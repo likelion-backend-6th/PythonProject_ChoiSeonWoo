@@ -115,7 +115,20 @@
 
 <br>
 
-## 추후 업데이트 예정
+## 📌 Notion
+- [01. github 관련 설정](https://browneyed.notion.site/01-github-d3648c9203474a72a7186b30490bc5b6?pvs=4)
+- [02. 프로젝트 구조 설정](https://browneyed.notion.site/02-195e169e850a4a5685b8d2baa5d3d235?pvs=4)
+- [03. 필수 라이브러리 설치](https://browneyed.notion.site/03-bb518dceb5a644bbae5c952c6060ba35?pvs=4)
+- [04. .gitignore 설정](https://browneyed.notion.site/04-gitignore-e8d1e0b1ab78401787f9bc9b3c86b356?pvs=4)
+- [05. env를 이용한 환경변수 설정](https://browneyed.notion.site/05-env-f296c5b859204a8289e4c296c860b37b?pvs=4)
+- [06. README.md 작성](https://browneyed.notion.site/06-README-md-5e7a97c9c1474134a86b96678ff7a28c?pvs=4)
+- [07. Database 설정](https://browneyed.notion.site/07-Database-c36d85d2a016489db8c5e3e5daff39e6?pvs=4)
+- [08. Table 생성](https://browneyed.notion.site/08-Table-eeac3a678b55483cad14e9638fe94eaf?pvs=4)
+- [09. User 모델 생성 및 get/post/put 구현](https://browneyed.notion.site/09-User-get-post-put-7adf364351ec4bf8bd79a6db9f7bcf12?pvs=4)
+- [10. 로그인, 로그아웃 구현 + get 메서드 수정](https://browneyed.notion.site/10-get-253e86b1423d4a40a87314bfb87b7afe?pvs=4)
+- [11. 회원가입 구현](https://browneyed.notion.site/11-e6208c7431a443c7a40d917546bb0e5b?pvs=4)
+- [12. 유효성 검증 - 분리](https://browneyed.notion.site/12-c5acf263f3ac436c8b39476de2afdd7f?pvs=4)
+- [13. 일부 기능 추가 및 수정](https://browneyed.notion.site/13-05eb8cc4c24543ab9fc5b906a83f960c?pvs=4)
+- [14. Github - Template](https://browneyed.notion.site/14-Github-Issue-Template-68b603a54a124eb5a74a78aa108d566f?pvs=4)
 
-<br>
 
