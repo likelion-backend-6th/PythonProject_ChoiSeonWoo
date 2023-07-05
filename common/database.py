@@ -55,11 +55,11 @@ class DatabaseManager:
         except Error as e:
             print(f"ExecutionQueryError about {self.table}'{e} occured")
 
-    def fetchall_query(self):
+    def fetch_all(self):
         try:
             self.db.cursor.execute(self.query)
             result = self.db.cursor.fetchall()
-            print("Query fetched Successfully")
+            print("All Data fetched Successfully")
             return result
         except Error as e:
             print(f"FetchQueryError about {self.table} '{e} occured")
@@ -73,11 +73,11 @@ class DatabaseManager:
         except Error as e:
             print(f"FetchQueryError about {self.table} '{e} occured")
 
-    def fetchone_query(self):
+    def fetch_one(self):
         try:
             self.db.cursor.execute(self.query)
             result = self.db.cursor.fetchone()
-            print("Query fetched Successfully")
+            print("Single Data fetched Successfully")
             return result
         except Error as e:
             print(f"FetchQueryError about {self.table} '{e} occured")
