@@ -149,3 +149,26 @@ class Loans:
 
         loans = DatabaseManager(self.table, query).fetch_all()
         return loans
+
+
+loans = Loans()
+
+all_loans = loans.get()
+print(f"전체 대출 데이터: {all_loans}")
+
+print()
+
+multiple_loans = loans.get(3)
+print(f"최근 3개의 대출 데이터: {multiple_loans}")
+
+print()
+
+users_loans = loans.get(user_id=1)
+print(f"1번 유저의 대출 정보: {users_loans}")
+
+print()
+
+books_loans = loans.get(user_id=1)
+print(f"1번 유저의 대출 정보: {users_loans}")
+
+
