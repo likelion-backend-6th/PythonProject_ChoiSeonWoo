@@ -114,6 +114,7 @@ class Loans:
     def get(
             self,
             size: Optional[int] = None,
+            id: Optional[int] = None,
             user_id: Optional[int] = None,
             book_id: Optional[int] = None,
             date: Optional[datetime] = None,
@@ -121,33 +122,29 @@ class Loans:
     ):
         query = "SELECT * FROM loans "
         end_query = " ORDER BY id DESC"
+        extra_query = []
 
-        if user_id or book_id:
-            extra_query = []
+        if id or user_id or book_id or date or today:
+            if id:
+                extra_query.append(f"id = '{id}'")
             if user_id:
                 extra_query.append(f"user_id = '{user_id}'")
             if book_id:
                 extra_query.append(f"book_id = '{book_id}'")
-            query += "WHERE " + ", ".join(extra_query) + end_query + ";"
+            if date:
+                extra_query = f"WHERE loan_date < '{date}'"
+            if today:
+                extra_query = f"WHERE return_date < '{today}'"
 
-        elif date:
-            extra_query = f"WHERE loan_date < '{date}'"
-            query += extra_query + end_query + ";"
+        extra_query = "WHERE " + ", ".join(extra_query) if extra_query else ""
+        query += extra_query + end_query
 
-        elif today:
-            extra_query = f"WHERE return_date < '{today}'"
-            query += extra_query + end_query + ";"
-
-        elif size:
-            extra_query = f" LIMIT {size}"
-            end_query, extra_query = extra_query, end_query
-            query += extra_query + end_query + ";"
-
-        else:
-            query += end_query + ";"
+        limit_query = f" LIMIT {size}" if size else ";"
+        query += limit_query
 
         loans = DatabaseManager(self.table, query).fetch_all()
-        return loans
+
+        return loans if not id else loans[0]
 
     def post(self):
         return_date = f"'{self.return_date}'" if self.return_date else "NULL"
