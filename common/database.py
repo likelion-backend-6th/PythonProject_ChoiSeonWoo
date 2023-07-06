@@ -37,8 +37,8 @@ class PostgreSQL:
 
 
 class DatabaseManager:
-    def __init__(self, db: PostgreSQL, table_: str, query: Optional[Union[str, List[str]]]):
-        self.db = db
+    def __init__(self, table_: str, query: Optional[Union[str, List[str]]]):
+        self.db = PostgreSQL()
         self.table = table_
         self.query = query
 
@@ -54,32 +54,46 @@ class DatabaseManager:
             print("Query executed successfully")
         except Error as e:
             print(f"ExecutionQueryError about {self.table}'{e} occured")
+        else:
+            self.db.close()
 
-    def fetchall_query(self):
+    def fetch_all(self):
         try:
             self.db.cursor.execute(self.query)
             result = self.db.cursor.fetchall()
-            print("Query fetched Successfully")
+            print("All Data fetched Successfully")
             return result
         except Error as e:
             print(f"FetchQueryError about {self.table} '{e} occured")
+        finally:
+            self.db.close()
 
-    def fetchone_query(self):
+    def fetch_many(self, size: int):
+        try:
+            self.db.cursor.execute(self.query)
+            result = self.db.cursor.fetchmany(size)
+            print("Multiple Data fetched Successfully")
+            return result
+        except Error as e:
+            print(f"FetchQueryError about {self.table} '{e} occured")
+        finally:
+            self.db.close()
+
+    def fetch_one(self):
         try:
             self.db.cursor.execute(self.query)
             result = self.db.cursor.fetchone()
-            print("Query fetched Successfully")
+            print("Single Data fetched Successfully")
             return result
         except Error as e:
             print(f"FetchQueryError about {self.table} '{e} occured")
+        finally:
+            self.db.close()
 
 
-postgres = PostgreSQL()
 
 
-# postgres = PostgreSQL()
+# DB 테이블 생성
 # CREATE_TABLES = zip(TABLES, CREATE_QUERY_LISTS)
 # for table, create_query in CREATE_TABLES:
 #     DatabaseManager(postgres, table, create_query).execute_query()
-# postgres.close()
-#

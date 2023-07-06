@@ -1,6 +1,6 @@
 from typing import Optional
 
-from common.database import DatabaseManager, postgres
+from common.database import DatabaseManager
 
 
 class Users:
@@ -14,15 +14,18 @@ class Users:
         self.fullname = fullname
         self.password = password
 
-    def get(self):
+    def get(self, size: Optional[int] = None):
         if self.username != None:
             query = f"SELECT * from users WHERE username = '{self.username}';"
-            user = DatabaseManager(postgres, self.table, query).fetchone_query()
+            user = DatabaseManager(self.table, query).fetch_one()
             return user
+        elif size:
+            query = f"SELECT * from users order by id limit {size};"
+            users = DatabaseManager(self.table, query).fetch_many(size)
+            return users
         else:
-            query = "SELECT * from users;"
-            users = DatabaseManager(postgres, self.table, query).fetchall_query()
-            users.sort(key=lambda x:x[0])
+            query = "SELECT * from users order by id;"
+            users = DatabaseManager(self.table, query).fetch_all()
             return users
 
     def post(self):
@@ -30,7 +33,7 @@ class Users:
         INSERT INTO users (username, fullname, password)
         VALUES ('{self.username}', '{self.fullname}', '{self.password}')
         """
-        DatabaseManager(postgres, self.table, query).execute_query()
+        DatabaseManager(self.table, query).execute_query()
 
     def put(self, new_fullname: str, new_password: Optional[str] = None):
         if new_password:
@@ -43,4 +46,27 @@ class Users:
             UPDATE users SET fullname = '{new_fullname}'
             WHERE username = '{self.username}';
             """
-        DatabaseManager(postgres, self.table, query).execute_query()
+        DatabaseManager(self.table, query).execute_query()
+
+
+# # 모든 유저 조회
+# print("fetch_all 메서드")
+# users = Users()
+# all_users = users.get()
+# print(f"all_users: {all_users}")
+#
+# print("")
+#
+# # 일부 유저 조회
+# print("fetch_many 메서드")
+# users = Users()
+# multiple_users = users.get(3)
+# print(f"multiple_users: {multiple_users}")
+#
+# print("")
+#
+# # 특정 유저 조회
+# print("fetch_one 메서드")
+# users = Users("admin")
+# single_user = users.get()
+# print(f"single_user: {single_user}")
