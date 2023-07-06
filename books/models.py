@@ -1,5 +1,5 @@
-from datetime import date
-from typing import Optional
+from datetime import datetime
+from typing import Optional, Union
 
 from common.database import DatabaseManager
 
@@ -102,8 +102,8 @@ class Loans:
             self,
             user_id: Optional[int] = None,
             book_id: Optional[int] = None,
-            loan_date: Optional[date] = None,
-            return_date: Optional[date] = None,
+            loan_date: Optional[datetime] = None,
+            return_date: Optional[datetime] = None,
     ):
         self.table = "loans"
         self.user_id = user_id
@@ -116,12 +116,11 @@ class Loans:
             size: Optional[int] = None,
             user_id: Optional[int] = None,
             book_id: Optional[int] = None,
-            date: Optional[date] = None,
-            today: Optional[date] = None,
+            date: Optional[datetime] = None,
+            today: Optional[datetime] = None,
     ):
         query = "SELECT * FROM loans "
         end_query = " ORDER BY id DESC"
-
 
         if user_id or book_id:
             extra_query = []
@@ -150,25 +149,12 @@ class Loans:
         loans = DatabaseManager(self.table, query).fetch_all()
         return loans
 
-
-loans = Loans()
-
-all_loans = loans.get()
-print(f"전체 대출 데이터: {all_loans}")
-
-print()
-
-multiple_loans = loans.get(3)
-print(f"최근 3개의 대출 데이터: {multiple_loans}")
-
-print()
-
-users_loans = loans.get(user_id=1)
-print(f"1번 유저의 대출 정보: {users_loans}")
-
-print()
-
-books_loans = loans.get(user_id=1)
-print(f"1번 유저의 대출 정보: {users_loans}")
-
+    def post(self):
+        return_date = f"'{self.return_date}'" if self.return_date else "NULL"
+        query = f"""
+        INSERT INTO loans (user_id, book_id, loan_date, return_date)
+        VALUES ('{self.user_id}', '{self.book_id}', '{self.loan_date}', {return_date});
+        """
+        DatabaseManager(self.table, query).execute_query()
+        Books().put(id=self.book_id)
 
