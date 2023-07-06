@@ -182,27 +182,29 @@ class Loans:
         DatabaseManager(self.table, query).execute_query()
 
 
-loans = Loans()
-
-all_loans = loans.get()
-print(f"전체 대출 데이터: {all_loans}")
+print("7번 대출 정보 조회")
+print(Loans().get(id=7))
 
 print()
 
-multiple_loans = loans.get(3)
-print(f"최근 3개의 대출 데이터: {multiple_loans}")
+print("user_id를 3으로 수정")
+Loans().put(id=7, user_id=3)
+print(Loans().get(id=7))
 
 print()
 
-single_loan = loans.get(id=3)
-print(f"3번 대출 정보: {single_loan}")
+print("book_id를 5로 수정")
+Loans().put(id=7, book_id=5)
+print(Loans().get(id=7))
 
 print()
 
-users_loans = loans.get(user_id=1)
-print(f"1번 유저의 대출 정보: {users_loans}")
+print("대출 일자를 23년7월7일12시로 수정")
+Loans().put(id=7, loan_date=datetime(2023,7,7,12,0,0))
+print(Loans().get(id=7))
 
 print()
 
-books_loans = loans.get(book_id=3)
-print(f"3번 책의 대출 정보: {books_loans}")
+print("반납 일자를 23년7월14일12시로 수정")
+Loans().put(id=7, return_date=datetime(2023,7,14,12,0,0), return_update=True)
+print(Loans().get(id=7))
