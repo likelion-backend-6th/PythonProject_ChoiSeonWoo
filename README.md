@@ -130,5 +130,11 @@
 - [12. 유효성 검증 - 분리](https://browneyed.notion.site/12-c5acf263f3ac436c8b39476de2afdd7f?pvs=4)
 - [13. 일부 기능 추가 및 수정](https://browneyed.notion.site/13-05eb8cc4c24543ab9fc5b906a83f960c?pvs=4)
 - [14. Github - Template](https://browneyed.notion.site/14-Github-Issue-Template-68b603a54a124eb5a74a78aa108d566f?pvs=4)
+- [15. fetchmany 메서드 추가](https://browneyed.notion.site/15-fetchmany-9846baa8c83341fba7b1b635648781f4?pvs=4)
+- [16. Book 모델 생성 및 get 메서드 구현](https://browneyed.notion.site/16-Book-get-a9ca5a8e67854f409a94205f73344ef5?pvs=4)
+- [17. Books 모델 - post / put 메서드 추가](https://browneyed.notion.site/17-Books-post-put-7013ac79023f45bda23d520d3ee36d7b?pvs=4)
+- [18. Loans 모델 생성 및 get 메서드 구현](https://browneyed.notion.site/18-Loans-get-673c227ed5c148f9b92fde631ffa9b07?pvs=4)
+- [19. Loans 모델 - post / put 메서드 추가](https://browneyed.notion.site/19-Loans-post-put-6611e8ca84834d9ab20a2503acf82d5e?pvs=4)
 
 
+<br>
