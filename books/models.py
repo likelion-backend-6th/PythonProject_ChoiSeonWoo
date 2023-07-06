@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import Optional, Union
+from typing import Optional, Union, Tuple
 
 from common.database import DatabaseManager
 
@@ -95,6 +95,18 @@ class Books:
 
         DatabaseManager(self.table, query).execute_query()
 
+    def handle_complex_query(
+            self,
+            query: str,
+            handle_type: str
+    ):
+        if handle_type == "get":
+            result = DatabaseManager(self.table, query).fetch_all()
+        elif handle_type == "post" or "put":
+            result = DatabaseManager(self.table, query).execute_query()
+        print(f"'{handle_type}' Request was processed Successfully")
+        return result
+
 
 class Loans:
 
@@ -180,3 +192,15 @@ class Loans:
 
         query += ', '.join(extra_query) + end_query
         DatabaseManager(self.table, query).execute_query()
+
+    def handle_complex_query(
+            self,
+            query: str,
+            handle_type: str
+    ):
+        if handle_type == "get":
+            result = DatabaseManager(self.table, query).fetch_all()
+        elif handle_type == "post" or "put":
+            result = DatabaseManager(self.table, query).execute_query()
+        print(f"'{handle_type}' Request was processed Successfully")
+        return result

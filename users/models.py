@@ -48,25 +48,14 @@ class Users:
             """
         DatabaseManager(self.table, query).execute_query()
 
-
-# # 모든 유저 조회
-# print("fetch_all 메서드")
-# users = Users()
-# all_users = users.get()
-# print(f"all_users: {all_users}")
-#
-# print("")
-#
-# # 일부 유저 조회
-# print("fetch_many 메서드")
-# users = Users()
-# multiple_users = users.get(3)
-# print(f"multiple_users: {multiple_users}")
-#
-# print("")
-#
-# # 특정 유저 조회
-# print("fetch_one 메서드")
-# users = Users("admin")
-# single_user = users.get()
-# print(f"single_user: {single_user}")
+    def handle_complex_query(
+            self,
+            query: str,
+            handle_type: str
+    ):
+        if handle_type == "get":
+            result = DatabaseManager(self.table, query).fetch_all()
+        elif handle_type == "post" or "put":
+            result = DatabaseManager(self.table, query).execute_query()
+        print(f"'{handle_type}' Request was processed Successfully")
+        return result
