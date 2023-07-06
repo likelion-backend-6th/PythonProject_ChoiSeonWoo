@@ -27,41 +27,36 @@ class Books:
             author: Optional[str] = None,
             publisher: Optional[str] = None,
             is_available: Optional[bool] = None,
+            order_by: Optional[Tuple] = None,
     ):
-        if id is not None:
-            query = f"SELECT * FROM books WHERE id = '{id}';"
-            book = DatabaseManager(self.table, query).fetch_one()
-            return book
+        query = "SELECT * FROM books "
+        extra_query = []
 
-        elif title is not None:
-            query = f"SELECT * FROM books WHERE title LIKE '%{title}%' order by id;"
-            books = DatabaseManager(self.table, query).fetch_all()
-            return books
+        if id or title or author or publisher or is_available:
+            if id:
+                extra_query.append(f"id = '{id}'")
+            if title:
+                extra_query.append(f"title LIKE '%{title}%'")
+            if author:
+                extra_query.append(f"author = '{author}'")
+            if publisher:
+                extra_query = f"publisher LIKE '%{publisher}%'"
+            if is_available:
+                extra_query = f"is_available = '{is_available}'"
 
-        elif author is not None:
-            query = f"SELECT * FROM books WHERE author = '{author}' order by id;"
-            books = DatabaseManager(self.table, query).fetch_all()
-            return books
+        extra_query = "WHERE " + ", ".join(extra_query) if extra_query else ""
 
-        elif publisher is not None:
-            query = f"SELECT * FROM books WHERE publisher LIKE '%{publisher}%' order by id;"
-            books = DatabaseManager(self.table, query).fetch_all()
-            return books
+        if order_by:
+            extra_query += "WHERE " f" ORDER BY {order_by[0]} {order_by[1]}"
 
-        elif is_available is not None:
-            query = f"SELECT * FROM books WHERE is_available = '{is_available}' order by id;"
-            books = DatabaseManager(self.table, query).fetch_all()
-            return books
+        query += extra_query
 
-        elif size is not None:
-            query = f"SELECT * from books order by id limit {size};"
-            books = DatabaseManager(self.table, query).fetch_many(size)
-            return books
+        limit_query = f" LIMIT {size};" if size else ";"
+        query += limit_query
 
-        else:
-            query = f"SELECT * FROM books order by id;"
-            books = DatabaseManager(self.table, query).fetch_all()
-            return books
+        books = DatabaseManager(self.table, query).fetch_all()
+
+        return books
 
     def post(self):
         query = f"""
@@ -174,7 +169,7 @@ class Loans:
             book_id: Optional[int] = None,
             loan_date: Optional[datetime] = None,
             return_date: Optional[datetime] = None,
-            return_update : Optional[bool] = False,
+            return_update: Optional[bool] = False,
     ):
         return_date_ = f"'{return_date}'" if return_date else "NULL"
         query = "UPDATE loans SET "
