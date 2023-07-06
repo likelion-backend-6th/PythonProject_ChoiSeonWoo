@@ -49,7 +49,7 @@ class Books:
             return books
 
         elif is_available is not None:
-            query = f"SELECT * FROM books WHERE is_available = '{is_available} order by id';"
+            query = f"SELECT * FROM books WHERE is_available = '{is_available}' order by id;"
             books = DatabaseManager(self.table, query).fetch_all()
             return books
 
@@ -180,31 +180,3 @@ class Loans:
 
         query += ', '.join(extra_query) + end_query
         DatabaseManager(self.table, query).execute_query()
-
-
-print("7번 대출 정보 조회")
-print(Loans().get(id=7))
-
-print()
-
-print("user_id를 3으로 수정")
-Loans().put(id=7, user_id=3)
-print(Loans().get(id=7))
-
-print()
-
-print("book_id를 5로 수정")
-Loans().put(id=7, book_id=5)
-print(Loans().get(id=7))
-
-print()
-
-print("대출 일자를 23년7월7일12시로 수정")
-Loans().put(id=7, loan_date=datetime(2023,7,7,12,0,0))
-print(Loans().get(id=7))
-
-print()
-
-print("반납 일자를 23년7월14일12시로 수정")
-Loans().put(id=7, return_date=datetime(2023,7,14,12,0,0), return_update=True)
-print(Loans().get(id=7))
