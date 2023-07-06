@@ -2,6 +2,7 @@ from time import sleep
 from typing import List, Union
 
 from books.models import Books
+from books.validation import fetch_type_validation, search_type_validation
 
 
 def fetch_books_list() -> List:
@@ -16,7 +17,10 @@ def fetch_books_list() -> List:
 
         books = Books()
 
-        fetch_type = int(input(message))
+        fetch_type = fetch_type_validation(int(input(message)))
+
+        if fetch_type not in [1, 2]:
+            continue
 
         if fetch_type == 1:
             books_list: List = books.get()
@@ -24,9 +28,6 @@ def fetch_books_list() -> List:
         elif fetch_type == 2:
             books_list: List = books.get(is_available=True)
             return books_list
-        else:
-            print(" \n   잘못 입력하셨습니다. 확인 후 다시 입력해주세요. \n")
-            sleep(0.4)
 
 
 def search_book_list(book_lists: List) -> Union[List, str]:
@@ -40,7 +41,10 @@ def search_book_list(book_lists: List) -> Union[List, str]:
     search_type_list = {1: "ID", 2: "제목"}
 
     while True:
-        search_type = int(input(message1))
+        search_type = search_type_validation(int(input(message1)))
+
+        if search_type not in [1, 2]:
+            continue
 
         message2 = [
             f"\n   도서의 {search_type_list[search_type]} 을/를 입력해주세요.",
@@ -52,9 +56,9 @@ def search_book_list(book_lists: List) -> Union[List, str]:
 
         if search_type == 1:
             result: List = list(filter(lambda x: x[0] == int(target), book_lists))
-            result = result[0] if result else "해당 도서는 존재하지 않습니다."
+            result = result[0] if result else f"해당 {search_type_list[search_type]} (으)로 검색한 도서는 존재하지 않습니다."
         elif search_type == 2:
             result: List = list(filter(lambda x: target in x[1], book_lists))
-            result = result if result else "해당 도서는 존재하지 않습니다."
+            result = result if result else f"해당 {search_type_list[search_type]} (으)로 검색한 도서는 존재하지 않습니다."
 
         return result
