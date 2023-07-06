@@ -158,3 +158,28 @@ class Loans:
         DatabaseManager(self.table, query).execute_query()
         Books().put(id=self.book_id)
 
+    def put(
+            self,
+            id: int,
+            user_id: Optional[int] = None,
+            book_id: Optional[int] = None,
+            loan_date: Optional[datetime] = None,
+            return_date: Optional[datetime] = None,
+            return_update : Optional[bool] = False,
+    ):
+        return_date_ = f"'{return_date}'" if return_date else "NULL"
+        query = "UPDATE loans SET "
+        end_query = f" WHERE id = '{id}';"
+        extra_query = []
+
+        if user_id:
+            extra_query.append(f"user_id = '{user_id}'")
+        if book_id:
+            extra_query.append(f"book_id = '{book_id}'")
+        if loan_date:
+            extra_query.append(f"loan_date = '{loan_date}'")
+        if return_update:
+            extra_query.append(f"return_date = {return_date_}")
+
+        query += ', '.join(extra_query) + end_query
+        DatabaseManager(self.table, query).execute_query()
