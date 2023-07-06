@@ -5,6 +5,14 @@ from books.models import Books
 from books.validation import fetch_type_validation, search_type_validation
 
 
+def change_isavailable(books_list: List) -> List:
+    return [(book_data[:-1] + ("대여가능" if book_data[-1] else "대여중",)) for book_data in books_list]
+
+
+def restore_isavailable(books_list: List) -> List:
+    return [(book_data[:-1] + (True if book_data[-1] == "대여가능" else False,)) for book_data in books_list]
+
+
 def fetch_books_list() -> List:
     message = [
         "   희망하시는 조회 대상 도서 정보의 번호를 입력해주세요.",
@@ -56,9 +64,9 @@ def search_book_list(book_lists: List) -> Union[List, str]:
 
         if search_type == 1:
             result: List = list(filter(lambda x: x[0] == int(target), book_lists))
-            result = result[0] if result else f"해당 {search_type_list[search_type]} (으)로 검색한 도서는 존재하지 않습니다."
         elif search_type == 2:
             result: List = list(filter(lambda x: target in x[1], book_lists))
-            result = result if result else f"해당 {search_type_list[search_type]} (으)로 검색한 도서는 존재하지 않습니다."
+
+        result = result if result else f"해당 {search_type_list[search_type]} (으)로 검색한 도서는 존재하지 않습니다."
 
         return result
