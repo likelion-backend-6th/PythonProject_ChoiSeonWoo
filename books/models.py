@@ -23,31 +23,31 @@ class Books:
             self,
             size: Optional[int] = None,
             id: Optional[int] = None,
-            title: Optional[str] = None,
-            author: Optional[str] = None,
-            publisher: Optional[str] = None,
+            title_info: Optional[Tuple] = None,
+            author_info: Optional[Tuple] = None,
+            publisher_info: Optional[str] = None,
             is_available: Optional[bool] = None,
-            order_by: Optional[Tuple] = None,
+            order_by_info: Tuple = ('id', 'DESC')
     ):
         query = "SELECT * FROM books "
         extra_query = []
 
-        if id or title or author or publisher or is_available:
+        if id or title_info or author_info or publisher_info or is_available:
             if id:
                 extra_query.append(f"id = '{id}'")
-            if title:
-                extra_query.append(f"title LIKE '%{title}%'")
-            if author:
-                extra_query.append(f"author = '{author}'")
-            if publisher:
-                extra_query = f"publisher LIKE '%{publisher}%'"
+            if title_info:
+                extra_query.append(f"title {title_info[1]} ILIKE '%{title_info[0]}%'")
+            if author_info:
+                extra_query.append(f"title {author_info[1]} ILIKE '%{author_info[0]}%'")
+            if publisher_info:
+                extra_query.append(f"title {publisher_info[1]} ILIKE '%{publisher_info[0]}%'")
             if is_available:
-                extra_query = f"is_available = '{is_available}'"
+                extra_query.append(f"is_available = '{is_available}'")
 
         extra_query = "WHERE " + ", ".join(extra_query) if extra_query else ""
 
-        if order_by:
-            extra_query += "WHERE " f" ORDER BY {order_by[0]} {order_by[1]}"
+        if order_by_info:
+            extra_query += f" ORDER BY {order_by_info[0]} {order_by_info[1]}"
 
         query += extra_query
 
@@ -100,6 +100,7 @@ class Books:
         elif handle_type == "post" or "put":
             result = DatabaseManager(self.table, query).execute_query()
         print(f"'{handle_type}' Request was processed Successfully")
+
         return result
 
 
@@ -124,34 +125,40 @@ class Loans:
             id: Optional[int] = None,
             user_id: Optional[int] = None,
             book_id: Optional[int] = None,
-            date: Optional[datetime] = None,
-            today: Optional[datetime] = None,
+            loan_date_info: Optional[Tuple] = None,
+            return_date_info: Optional[Tuple] = None,
+            order_by_info: Tuple = ('id', 'DESC')
     ):
         query = "SELECT * FROM loans "
-        end_query = " ORDER BY id DESC"
         extra_query = []
 
-        if id or user_id or book_id or date or today:
+        if id or user_id or book_id or loan_date_info or return_date_info:
             if id:
                 extra_query.append(f"id = '{id}'")
             if user_id:
                 extra_query.append(f"user_id = '{user_id}'")
             if book_id:
                 extra_query.append(f"book_id = '{book_id}'")
-            if date:
-                extra_query = f"WHERE loan_date < '{date}'"
-            if today:
-                extra_query = f"WHERE return_date < '{today}'"
+            if loan_date_info:
+                extra_query.append(f"loan_date {loan_date_info[1]} '{loan_date_info[0]}'")
+            if return_date_info and return_date_info[0] == "NULL":
+                extra_query.append(f"return_date is {return_date_info[0]}")
+            elif return_date_info:
+                extra_query.append(f"return_date {return_date_info[1]} '{return_date_info[0]}'")
 
         extra_query = "WHERE " + ", ".join(extra_query) if extra_query else ""
-        query += extra_query + end_query
 
-        limit_query = f" LIMIT {size}" if size else ";"
+        if order_by_info:
+            extra_query += f" ORDER BY {order_by_info[0]} {order_by_info[1]}"
+
+        query += extra_query
+
+        limit_query = f" LIMIT {size};" if size else ";"
         query += limit_query
 
         loans = DatabaseManager(self.table, query).fetch_all()
 
-        return loans if not id else loans[0]
+        return loans
 
     def post(self):
         return_date = f"'{self.return_date}'" if self.return_date else "NULL"
