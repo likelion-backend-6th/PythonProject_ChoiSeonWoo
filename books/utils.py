@@ -6,12 +6,36 @@ from books.validation import fetch_type_validation, search_type_validation
 
 
 def change_isavailable(books_list: List) -> List:
-    return [(book_data[:-1] + ("대여가능" if book_data[-1] else "대여중",)) for book_data in books_list]
+    result = []
+    for book in books_list:
+        if book[4] == True:
+            book = book[:4] + ('대여가능',) + book[5:]
+        else:
+            book = book[:4] + ('대여중',) + book[5:]
+        result.append(book)
+    return result
 
 
 def restore_isavailable(books_list: List) -> List:
-    return [(book_data[:-1] + (True if book_data[-1] == "대여가능" else False,)) for book_data in books_list]
+    result = []
+    for book in books_list:
+        if book[4] == '대여가능':
+            book = book[:4] + (True,) + book[5:]
+        else:
+            book = book[:4] + (False,) + book[5:]
+        result.append(book)
+    return result
 
+
+
+
+books = Books()
+books_list = books.get()
+print(books_list)
+
+print(change_isavailable(books_list))
+print(restore_isavailable(change_isavailable(books_list)))
+print(books_list == restore_isavailable(change_isavailable(books_list)))
 
 def fetch_books_list() -> List:
     message = [
