@@ -27,16 +27,6 @@ def restore_isavailable(books_list: List) -> List:
     return result
 
 
-
-
-books = Books()
-books_list = books.get()
-print(books_list)
-
-print(change_isavailable(books_list))
-print(restore_isavailable(change_isavailable(books_list)))
-print(books_list == restore_isavailable(change_isavailable(books_list)))
-
 def fetch_books_list() -> List:
     message = [
         "   희망하시는 조회 대상 도서 정보의 번호를 입력해주세요.",
@@ -56,10 +46,10 @@ def fetch_books_list() -> List:
 
         if fetch_type == 1:
             books_list: List = books.get()
-            return books_list
+            return change_isavailable(books_list)
         elif fetch_type == 2:
             books_list: List = books.get(is_available=True)
-            return books_list
+            return change_isavailable(books_list) if books_list else "현재 모든 도서가 대출중입니다."
 
 
 def search_book_list(book_lists: List) -> Union[List, str]:
