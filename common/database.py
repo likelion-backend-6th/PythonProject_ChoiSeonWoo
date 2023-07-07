@@ -96,4 +96,4 @@ class DatabaseManager:
 # DB 테이블 생성
 # CREATE_TABLES = zip(TABLES, CREATE_QUERY_LISTS)
 # for table, create_query in CREATE_TABLES:
-#     DatabaseManager(postgres, table, create_query).execute_query()
+#     DatabaseManager(table, create_query).execute_query()
