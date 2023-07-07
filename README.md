@@ -135,6 +135,11 @@
 - [17. Books 모델 - post / put 메서드 추가](https://browneyed.notion.site/17-Books-post-put-7013ac79023f45bda23d520d3ee36d7b?pvs=4)
 - [18. Loans 모델 생성 및 get 메서드 구현](https://browneyed.notion.site/18-Loans-get-673c227ed5c148f9b92fde631ffa9b07?pvs=4)
 - [19. Loans 모델 - post / put 메서드 추가](https://browneyed.notion.site/19-Loans-post-put-6611e8ca84834d9ab20a2503acf82d5e?pvs=4)
+- [20. 전체 혹은 대출 가능한 도서 목록 조회 기능](https://browneyed.notion.site/20-85c009d3fc7d44b4a43964ea281d4ac8?pvs=4)
+- [21. ID 혹은 이름을 통한 도서 정보 조회 기능](https://browneyed.notion.site/21-ID-bd41ae1bb3734d7a9104856ff5e02c0d?pvs=4)
+- [22. 입력값에 대한 Validation 처리](https://browneyed.notion.site/22-Validation-bc14b3d6d6644263bbe424bb6c1a3f37?pvs=4)
+- [23. 조회된 결과에 도서의 상태를 표시 + 조회 결과를 테이블로 변환 ](https://browneyed.notion.site/23-1943fa6b357d4e0f9b106eb366a03a90?pvs=4)
+- [24. 대출 중인 도서에 대출 정보 (대출일, 반납일)을 함께 표시](https://browneyed.notion.site/24-0c9f43ef65d646a89913cc430686eb0b?pvs=4)
 
 
 <br>
