@@ -5,7 +5,6 @@ from psycopg2 import Error
 import sys
 
 from common import settings
-from common.tables import TABLES, CREATE_QUERY_LISTS
 
 
 class PostgreSQL:
@@ -91,9 +90,6 @@ class DatabaseManager:
             self.db.close()
 
 
-
-
-# DB 테이블 생성
-# CREATE_TABLES = zip(TABLES, CREATE_QUERY_LISTS)
-# for table, create_query in CREATE_TABLES:
-#     DatabaseManager(table, create_query).execute_query()
+def create_table(tables: List, queries: List):
+    for table, query in zip(tables, queries):
+        DatabaseManager(table, query).execute_query()
