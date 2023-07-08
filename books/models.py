@@ -27,12 +27,13 @@ class Books:
             author_info: Optional[Tuple] = None,
             publisher_info: Optional[str] = None,
             is_available: Optional[bool] = None,
-            order_by_info: Tuple = ('b.id', 'ASC'),
+            order_by_info: Tuple = ("b.id", "ASC"),
+            user_id: Optional[int] = None,
             recent_loan_only: bool = True,
     ) -> List:
 
         if recent_loan_only:
-            join_table = "(SELECT book_id, loan_date, return_date FROM loans l1 " \
+            join_table = f"(SELECT user_id, book_id, loan_date, return_date FROM loans l1 " \
                            "WHERE loan_date = (SELECT MAX(l2.loan_date) FROM loans l2 WHERE l1.book_id = l2.book_id))"
         else:
             join_table = "loans"
@@ -40,9 +41,9 @@ class Books:
         query = f"SELECT b.*, l.loan_date, l.return_date FROM books b LEFT JOIN {join_table} l on b.id = l.book_id "
         extra_query = []
 
-        if id or title_info or author_info or publisher_info or is_available:
+        if id or title_info or author_info or publisher_info or is_available or user_id:
             if id:
-                extra_query.append(f"b.id = '{id}'")
+                extra_query.append(f"b.id = {id}")
             if title_info:
                 extra_query.append(f"b.title {title_info[1]} ILIKE '%{title_info[0]}%'")
             if author_info:
@@ -51,6 +52,8 @@ class Books:
                 extra_query.append(f"b.publisher {publisher_info[1]} ILIKE '%{publisher_info[0]}%'")
             if is_available:
                 extra_query.append(f"b.is_available = '{is_available}'")
+            if user_id:
+                extra_query.append(f"l.user_id = {user_id}")
 
         extra_query = "WHERE " + ", ".join(extra_query) if extra_query else ""
 
@@ -69,10 +72,8 @@ class Books:
         return books
 
     def post(self):
-        query = f"""
-        INSERT INTO books (title, author, publisher)
-        VALUES ('{self.title}', '{self.author}', '{self.publisher}');
-        """
+        query = f"INSERT INTO books (title, author, publisher) " \
+                 "VALUES ('{self.title}', '{self.author}', '{self.publisher}');"
         DatabaseManager(self.table, query).execute_query()
 
     def put(
