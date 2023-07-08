@@ -8,19 +8,25 @@ my_info = {"user": None, "is_logined": False}
 
 
 def sign_up():
+    print("===========           회원가입을 진행합니다.           ==========")
     users = Users().get()
 
-    username = input("사용자명을 입력해주세요. : ")
+    message = "   가입에 사용할 사용자명을 입력해주세요.\n" \
+              "   이미 가입된 회원의 경우, 로그인 메뉴로 이동하시려면 숫자 1을 입력해주세요.\n" \
+              "   --->  입력  :  "
+    username = input(message)
+    if username == "1":
+        return login()
     username = username_validation(username, users)
     if not username:
-        sign_up()
+        return sign_up()
 
     fullname = input("성함을 입력해주세요. : ")
 
     password = input("비밀번호를 입력해주세요. : ")
     password = password_validation(password)
     if not password:
-        sign_up()
+        return sign_up()
 
     print(username, fullname, password)
 
@@ -37,40 +43,34 @@ def sign_up():
 
 
 def login() -> object:
+    print("===========            로그인을 진행합니다.            ==========\n")
     usr_cnt, pw_cnt = 0, 0
 
-    username = input("사용자명을 입력해주세요. : ")
+    message = "   사용자명을 입력해주세요.\n" \
+              "   회원가입을 진행하시려면 숫자 1을 입력해주세요.\n" \
+              "   --->  입력  :  "
+    username = input(message)
+    if username == "1":
+        return sign_up()
     user = user_validation(username)
     if not user:
-        login()
+        return login()
 
-    password = input("비밀번호를 입력해주세요. : ")
+    password = input("   비밀번호를 입력해주세요. : ")
     password_matched = password_validation2(password, user)
     if not password_matched:
-        login()
+        return login()
 
     my_info["user"] = user
     my_info["is_logined"] = True
-    print(f"{my_info['user'][2]}님, 어서오세요. 환영합니다")
+    print(f"   {my_info['user'][2]}님, 어서오세요. 환영합니다")
     print(my_info)
     return my_info
 
 
 def logout() -> object:
-    print("로그아웃 되었습니다.")
+    print("   로그아웃 되었습니다.")
     my_info["user"] = None
     my_info["is_logined"] = False
     return my_info
-
-
-login()
-
-if input("로그아웃 하시겠습니까? : ") == "예":
-    logout()
-
-print(f"my_info: {my_info}")
-
-
-# sign_up()
-
 
