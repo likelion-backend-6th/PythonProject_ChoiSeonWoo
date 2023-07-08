@@ -38,7 +38,7 @@ def search_type_validation(search_type: int):
         search_type = int(input(f"   잘못 입력하였습니다. 번호를 다시 입력해주세요. ({cnt}/3)  :  "))
 
 
-def book_ids_validation() -> List:
+def loan_book_ids_validation() -> List:
     loanable_book_id_list = list(map(lambda x: x[0], Books().get(is_available=True)))
     cnt = 0
 
@@ -65,7 +65,7 @@ def book_ids_validation() -> List:
             for i in range(3):
                 print(f"   {3 - i}")
                 sleep(0.3)
-            return book_ids_validation()
+            return loan_book_ids_validation()
         sleep(0.2)
 
         message3 = error_message + f"ID를 다시 입력해주세요. ({cnt}/3)  :  \n" \
@@ -74,8 +74,3 @@ def book_ids_validation() -> List:
         book_ids = input(message3)
         book_id_list = book_ids.replace(" ", "").split(",")
         book_id_list = list(map(int, book_id_list))
-
-
-
-book_id_list = book_ids_validation()
-print(book_id_list)

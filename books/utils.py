@@ -3,7 +3,7 @@ from time import sleep
 from typing import List, Union
 
 from books.models import Books, Loans
-from books.validation import fetch_type_validation, search_type_validation, book_ids_validation
+from books.validation import fetch_type_validation, search_type_validation, loan_book_ids_validation
 
 
 def change_isavailable(books_list: List) -> List:
@@ -77,7 +77,7 @@ def search_book_list(book_lists) -> Union[List, str]:
 
 def loan_books(user_id: int) -> List:
 
-    book_id_list = book_ids_validation()
+    book_id_list = loan_book_ids_validation()
 
     for book_id in book_id_list:
         target_book = Books().put(id=book_id)
@@ -104,14 +104,3 @@ def return_books(user_id: int) -> List:
         update_return = Loans().put(return_date=datetime.now(), return_update=True, return_book_id=book_id)
 
     return [Books().get(id=book_id)[0] for book_id in book_id_list]
-
-
-# print(return_books(1))
-
-fetched_list = fetch_books_list()
-
-print(fetched_list)
-
-searched_list = search_book_list(fetched_list)
-
-print(searched_list)
