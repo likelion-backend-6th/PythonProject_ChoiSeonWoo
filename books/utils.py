@@ -95,26 +95,12 @@ def loan_books(user_id: int) -> List:
     message3 = ("\n").join(message3)
 
     book_ids = input(message3)
-    print(book_ids)
 
     book_ids_list = book_ids.split(",")
-    print(book_ids_list)
     book_ids_list = list(map(lambda x: int(x.strip()), book_ids_list))
-    print(book_ids_list)
 
     for book_id in book_ids_list:
         target_book = Books().put(id=book_id)
         new_loan = Loans(user_id, book_id).post()
 
-    return Books().get(id=user_id, is_available=False, order_by_info=('l.loan_date', "DESC"))
-
-
-print(Books().get(id=1))
-
-print()
-
-print(loan_books(1))
-
-print()
-
-print(Books().get(id=1))
+    return Books().get(user_id=user_id, is_available=False, order_by_info=('l.loan_date', "DESC"))
