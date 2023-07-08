@@ -1,3 +1,4 @@
+from datetime import datetime
 from time import sleep
 from typing import List, Union
 
@@ -97,10 +98,33 @@ def loan_books(user_id: int) -> List:
     book_ids = input(message3)
 
     book_ids_list = book_ids.split(",")
-    book_ids_list = list(map(lambda x: int(x.strip()), book_ids_list))
+    book_ids_list = list(map(lambda x: int(x), book_ids_list))
 
     for book_id in book_ids_list:
         target_book = Books().put(id=book_id)
         new_loan = Loans(user_id, book_id).post()
 
     return Books().get(user_id=user_id, is_available=False, order_by_info=('l.loan_date', "DESC"))
+
+
+def return_books(user_id: int) -> List:
+    message4 = [
+        "\n   반납을 희망하는 도서의 ID를 입력해주세요.",
+        "   여러 권을 대출하고자 하는 경우, 쉼표(,)로 구분하여 ID를 입력해주세요.",
+        "   -->  ID 입력  :  "
+    ]
+    message4 = ("\n").join(message4)
+
+    book_ids = input(message4)
+
+    book_ids_list = book_ids.split(",")
+    book_ids_list = list(map(lambda x: int(x), book_ids_list))
+
+    for book_id in book_ids_list:
+        target_book = Books().put(id=book_id)
+        update_return = Loans().put(return_date=datetime.now(), return_update=True, return_book_id=book_id)
+
+    return [Books().get(id=book_id)[0] for book_id in book_ids_list]
+
+
+print(return_books(1))
