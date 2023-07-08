@@ -3,7 +3,8 @@ from time import sleep
 from typing import List, Union
 
 from books.models import Books, Loans
-from books.validation import fetch_type_validation, search_type_validation, loan_book_ids_validation
+from books.validation import fetch_type_validation, search_type_validation, \
+                             loan_book_ids_validation, return_book_ids_validation
 
 
 def change_isavailable(books_list: List) -> List:
@@ -79,6 +80,9 @@ def loan_books(user_id: int) -> List:
 
     book_id_list = loan_book_ids_validation()
 
+    if not book_id_list:
+        return []
+
     for book_id in book_id_list:
         target_book = Books().put(id=book_id)
         new_loan = Loans(user_id, book_id).post()
@@ -87,17 +91,11 @@ def loan_books(user_id: int) -> List:
 
 
 def return_books(user_id: int) -> List:
-    message4 = [
-        "\n   반납을 희망하는 도서의 ID를 입력해주세요.",
-        "   여러 권을 대출하고자 하는 경우, 쉼표(,)로 구분하여 ID를 입력해주세요.",
-        "   -->  ID 입력  :  "
-    ]
-    message4 = ("\n").join(message4)
 
-    book_ids = input(message4)
+    book_id_list = return_book_ids_validation(user_id)
 
-    book_id_list = book_ids.split(",")
-    book_id_list = list(map(lambda x: int(x), book_id_list))
+    if not book_id_list:
+        return []
 
     for book_id in book_id_list:
         target_book = Books().put(id=book_id)
