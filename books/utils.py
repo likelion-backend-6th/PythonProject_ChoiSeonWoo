@@ -3,7 +3,7 @@ from time import sleep
 from typing import List, Union
 
 from books.models import Books, Loans
-from books.validation import fetch_type_validation, search_type_validation
+from books.validation import fetch_type_validation, search_type_validation, book_ids_validation
 
 
 def change_isavailable(books_list: List) -> List:
@@ -76,19 +76,10 @@ def search_book_list(book_lists) -> Union[List, str]:
 
 
 def loan_books(user_id: int) -> List:
-    message3 = [
-        "\n   대출을 희망하는 도서의 ID를 입력해주세요.",
-        "   여러 권을 대출하고자 하는 경우, 쉼표(,)로 구분하여 ID를 입력해주세요.",
-        "   -->  ID 입력  :  "
-    ]
-    message3 = ("\n").join(message3)
 
-    book_ids = input(message3)
+    book_id_list = book_ids_validation()
 
-    book_ids_list = book_ids.split(",")
-    book_ids_list = list(map(lambda x: int(x), book_ids_list))
-
-    for book_id in book_ids_list:
+    for book_id in book_id_list:
         target_book = Books().put(id=book_id)
         new_loan = Loans(user_id, book_id).post()
 
@@ -105,14 +96,14 @@ def return_books(user_id: int) -> List:
 
     book_ids = input(message4)
 
-    book_ids_list = book_ids.split(",")
-    book_ids_list = list(map(lambda x: int(x), book_ids_list))
+    book_id_list = book_ids.split(",")
+    book_id_list = list(map(lambda x: int(x), book_id_list))
 
-    for book_id in book_ids_list:
+    for book_id in book_id_list:
         target_book = Books().put(id=book_id)
         update_return = Loans().put(return_date=datetime.now(), return_update=True, return_book_id=book_id)
 
-    return [Books().get(id=book_id)[0] for book_id in book_ids_list]
+    return [Books().get(id=book_id)[0] for book_id in book_id_list]
 
 
 # print(return_books(1))
