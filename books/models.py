@@ -171,13 +171,21 @@ class Loans:
         return loans
 
     def post(self):
-        return_date = f"'{self.return_date}'" if self.return_date else "NULL"
-        query = f"""
-        INSERT INTO loans (user_id, book_id, loan_date, return_date)
-        VALUES ('{self.user_id}', '{self.book_id}', '{self.loan_date}', {return_date});
-        """
+        query_part1 = "INSERT INTO loans (user_id, book_id"
+        query_part2 = f" VALUES ('{self.user_id}', '{self.book_id}'"
+        loan_date_ = f", '{self.loan_date}'" if self.loan_date else ""
+        return_date_ = f"'{self.return_date}'" if self.return_date else "NULL"
+
+        if loan_date_:
+            query_part1 += ", loan_date"
+            query_part2 += loan_date_
+
+        query_part1 += ", return_date)"
+        query_part2 += f", {return_date_});"
+
+        query = query_part1 + query_part2
+
         DatabaseManager(self.table, query).execute_query()
-        Books().put(id=self.book_id)
 
     def put(
             self,
