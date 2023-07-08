@@ -1,7 +1,7 @@
 from time import sleep
 from typing import List, Union
 
-from books.models import Books
+from books.models import Books, Loans
 from books.validation import fetch_type_validation, search_type_validation
 
 
@@ -84,3 +84,37 @@ def search_book_list(book_lists: List) -> Union[List, str]:
         result = result if result else f"해당 {search_type_list[search_type]} (으)로 검색한 도서는 존재하지 않습니다."
 
         return result
+
+
+def loan_books(user_id: int) -> List:
+    message3 = [
+        "\n   대출을 희망하는 도서의 ID를 입력해주세요.",
+        "   여러 권을 대출하고자 하는 경우, 쉼표(,)로 구분하여 ID를 입력해주세요.",
+        "   -->  ID 입력  :  "
+    ]
+    message3 = ("\n").join(message3)
+
+    book_ids = input(message3)
+    print(book_ids)
+
+    book_ids_list = book_ids.split(",")
+    print(book_ids_list)
+    book_ids_list = list(map(lambda x: int(x.strip()), book_ids_list))
+    print(book_ids_list)
+
+    for book_id in book_ids_list:
+        target_book = Books().put(id=book_id)
+        new_loan = Loans(user_id, book_id).post()
+
+    return Books().get(id=user_id, is_available=False, order_by_info=('l.loan_date', "DESC"))
+
+
+print(Books().get(id=1))
+
+print()
+
+print(loan_books(1))
+
+print()
+
+print(Books().get(id=1))
