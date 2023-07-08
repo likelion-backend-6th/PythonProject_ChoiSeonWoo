@@ -140,6 +140,13 @@
 - [22. 입력값에 대한 Validation 처리](https://browneyed.notion.site/22-Validation-bc14b3d6d6644263bbe424bb6c1a3f37?pvs=4)
 - [23. 조회된 결과에 도서의 상태를 표시 + 조회 결과를 테이블로 변환 ](https://browneyed.notion.site/23-1943fa6b357d4e0f9b106eb366a03a90?pvs=4)
 - [24. 대출 중인 도서에 대출 정보 (대출일, 반납일)을 함께 표시](https://browneyed.notion.site/24-0c9f43ef65d646a89913cc430686eb0b?pvs=4)
+- [25. 도서 대출 함수 구현](https://browneyed.notion.site/25-85e6b22db72a4115915fb2fee55457d9?pvs=4)
+- [26. 도서 반납 함수 구현](https://browneyed.notion.site/26-eabad56c6d9b49bdaff16ea92f53ca3c?pvs=4)
+- [27. 도서 조회 및 검색에 대한 유효성 검증 기능 분리 및 적용](https://browneyed.notion.site/27-a0d10ad6c38f47c68b00ed247081ebed?pvs=4)
+- [28. 대출 여부에 대한 유효성 검증 기능 분리](https://browneyed.notion.site/28-516e297928e04b039724d98fb3be4175?pvs=4)
+- [29. 반납 여부에 대한 유효성 검증 기능 분리](https://browneyed.notion.site/29-30b23ed618184ff99546c64d513a7e70?pvs=4)
+
+
 
 
 <br>
