@@ -41,7 +41,7 @@ class Books:
         query = f"SELECT b.*, l.loan_date, l.return_date FROM books b LEFT JOIN {join_table} l on b.id = l.book_id "
         extra_query = []
 
-        if id or title_info or author_info or publisher_info or is_available or user_id:
+        if id or title_info or author_info or publisher_info or is_available is not None or user_id:
             if id:
                 extra_query.append(f"b.id = {id}")
             if title_info:
@@ -50,13 +50,12 @@ class Books:
                 extra_query.append(f"b.author {author_info[1]} ILIKE '%{author_info[0]}%'")
             if publisher_info:
                 extra_query.append(f"b.publisher {publisher_info[1]} ILIKE '%{publisher_info[0]}%'")
-            if is_available:
+            if is_available is not None:
                 extra_query.append(f"b.is_available = '{is_available}'")
             if user_id:
                 extra_query.append(f"l.user_id = {user_id}")
 
-        extra_query = "WHERE " + ", ".join(extra_query) if extra_query else ""
-
+        extra_query = "WHERE " + " AND ".join(extra_query) if extra_query else ""
         if order_by_info:
             extra_query += f" ORDER BY {order_by_info[0]} {order_by_info[1]} NULLS LAST, b.id"
         else:
@@ -157,7 +156,7 @@ class Loans:
             elif return_date_info:
                 extra_query.append(f"return_date {return_date_info[1]} '{return_date_info[0]}'")
 
-        extra_query = "WHERE " + ", ".join(extra_query) if extra_query else ""
+        extra_query = "WHERE " + " AND ".join(extra_query) if extra_query else ""
 
         if order_by_info:
             extra_query += f" ORDER BY {order_by_info[0]} {order_by_info[1]}"
