@@ -27,12 +27,13 @@ class Books:
             author_info: Optional[Tuple] = None,
             publisher_info: Optional[str] = None,
             is_available: Optional[bool] = None,
-            order_by_info: Tuple = ('b.id', 'ASC'),
+            order_by_info: Tuple = ("b.id", "ASC"),
+            user_id: Optional[int] = None,
             recent_loan_only: bool = True,
     ) -> List:
 
         if recent_loan_only:
-            join_table = "(SELECT book_id, loan_date, return_date FROM loans l1 " \
+            join_table = f"(SELECT user_id, book_id, loan_date, return_date FROM loans l1 " \
                            "WHERE loan_date = (SELECT MAX(l2.loan_date) FROM loans l2 WHERE l1.book_id = l2.book_id))"
         else:
             join_table = "loans"
@@ -40,20 +41,21 @@ class Books:
         query = f"SELECT b.*, l.loan_date, l.return_date FROM books b LEFT JOIN {join_table} l on b.id = l.book_id "
         extra_query = []
 
-        if id or title_info or author_info or publisher_info or is_available:
+        if id or title_info or author_info or publisher_info or is_available is not None or user_id:
             if id:
-                extra_query.append(f"b.id = '{id}'")
+                extra_query.append(f"b.id = {id}")
             if title_info:
                 extra_query.append(f"b.title {title_info[1]} ILIKE '%{title_info[0]}%'")
             if author_info:
                 extra_query.append(f"b.author {author_info[1]} ILIKE '%{author_info[0]}%'")
             if publisher_info:
                 extra_query.append(f"b.publisher {publisher_info[1]} ILIKE '%{publisher_info[0]}%'")
-            if is_available:
+            if is_available is not None:
                 extra_query.append(f"b.is_available = '{is_available}'")
+            if user_id:
+                extra_query.append(f"l.user_id = {user_id}")
 
-        extra_query = "WHERE " + ", ".join(extra_query) if extra_query else ""
-
+        extra_query = "WHERE " + " AND ".join(extra_query) if extra_query else ""
         if order_by_info:
             extra_query += f" ORDER BY {order_by_info[0]} {order_by_info[1]} NULLS LAST, b.id"
         else:
@@ -63,16 +65,14 @@ class Books:
 
         limit_query = f" LIMIT {size};" if size else ";"
         query += limit_query
-
+        print(query)
         books = DatabaseManager(self.table, query).fetch_all()
 
         return books
 
     def post(self):
-        query = f"""
-        INSERT INTO books (title, author, publisher)
-        VALUES ('{self.title}', '{self.author}', '{self.publisher}');
-        """
+        query = f"INSERT INTO books (title, author, publisher) " \
+                 "VALUES ('{self.title}', '{self.author}', '{self.publisher}');"
         DatabaseManager(self.table, query).execute_query()
 
     def put(
@@ -97,7 +97,7 @@ class Books:
         else:
             change_isavailable = "is_available = NOT is_available"
             query += change_isavailable + end_query
-
+        print(query)
         DatabaseManager(self.table, query).execute_query()
 
     def handle_complex_query(
@@ -156,7 +156,7 @@ class Loans:
             elif return_date_info:
                 extra_query.append(f"return_date {return_date_info[1]} '{return_date_info[0]}'")
 
-        extra_query = "WHERE " + ", ".join(extra_query) if extra_query else ""
+        extra_query = "WHERE " + " AND ".join(extra_query) if extra_query else ""
 
         if order_by_info:
             extra_query += f" ORDER BY {order_by_info[0]} {order_by_info[1]}"
@@ -165,33 +165,46 @@ class Loans:
 
         limit_query = f" LIMIT {size};" if size else ";"
         query += limit_query
-
+        print(query)
         loans = DatabaseManager(self.table, query).fetch_all()
 
         return loans
 
     def post(self):
-        return_date = f"'{self.return_date}'" if self.return_date else "NULL"
-        query = f"""
-        INSERT INTO loans (user_id, book_id, loan_date, return_date)
-        VALUES ('{self.user_id}', '{self.book_id}', '{self.loan_date}', {return_date});
-        """
+        query_part1 = "INSERT INTO loans (user_id, book_id"
+        query_part2 = f" VALUES ('{self.user_id}', '{self.book_id}'"
+        loan_date_ = f", '{self.loan_date}'" if self.loan_date else ""
+        return_date_ = f"'{self.return_date}'" if self.return_date else "NULL"
+
+        if loan_date_:
+            query_part1 += ", loan_date"
+            query_part2 += loan_date_
+
+        query_part1 += ", return_date)"
+        query_part2 += f", {return_date_});"
+
+        query = query_part1 + query_part2
+        print(query)
         DatabaseManager(self.table, query).execute_query()
-        Books().put(id=self.book_id)
 
     def put(
             self,
-            id: int,
+            id: Optional[int] = None,
             user_id: Optional[int] = None,
             book_id: Optional[int] = None,
             loan_date: Optional[datetime] = None,
             return_date: Optional[datetime] = None,
             return_update: Optional[bool] = False,
+            return_book_id: Optional[int] = None
     ):
         return_date_ = f"'{return_date}'" if return_date else "NULL"
         query = "UPDATE loans SET "
-        end_query = f" WHERE id = '{id}';"
         extra_query = []
+
+        if id:
+            end_query = f" WHERE id = '{id}';"
+        elif return_book_id:
+            end_query = f" WHERE id = (SELECT id FROM loans WHERE book_id = {return_book_id} ORDER BY loan_date desc LIMIT 1);"
 
         if user_id:
             extra_query.append(f"user_id = '{user_id}'")
@@ -203,6 +216,7 @@ class Loans:
             extra_query.append(f"return_date = {return_date_}")
 
         query += ', '.join(extra_query) + end_query
+        print(query)
         DatabaseManager(self.table, query).execute_query()
 
     def handle_complex_query(
