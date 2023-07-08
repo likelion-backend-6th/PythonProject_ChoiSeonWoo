@@ -65,7 +65,7 @@ class Books:
 
         limit_query = f" LIMIT {size};" if size else ";"
         query += limit_query
-
+        print(query)
         books = DatabaseManager(self.table, query).fetch_all()
 
         return books
@@ -97,7 +97,7 @@ class Books:
         else:
             change_isavailable = "is_available = NOT is_available"
             query += change_isavailable + end_query
-
+        print(query)
         DatabaseManager(self.table, query).execute_query()
 
     def handle_complex_query(
@@ -165,7 +165,7 @@ class Loans:
 
         limit_query = f" LIMIT {size};" if size else ";"
         query += limit_query
-
+        print(query)
         loans = DatabaseManager(self.table, query).fetch_all()
 
         return loans
@@ -184,22 +184,27 @@ class Loans:
         query_part2 += f", {return_date_});"
 
         query = query_part1 + query_part2
-
+        print(query)
         DatabaseManager(self.table, query).execute_query()
 
     def put(
             self,
-            id: int,
+            id: Optional[int] = None,
             user_id: Optional[int] = None,
             book_id: Optional[int] = None,
             loan_date: Optional[datetime] = None,
             return_date: Optional[datetime] = None,
             return_update: Optional[bool] = False,
+            return_book_id: Optional[int] = None
     ):
         return_date_ = f"'{return_date}'" if return_date else "NULL"
         query = "UPDATE loans SET "
-        end_query = f" WHERE id = '{id}';"
         extra_query = []
+
+        if id:
+            end_query = f" WHERE id = '{id}';"
+        elif return_book_id:
+            end_query = f" WHERE id = (SELECT id FROM loans WHERE book_id = {return_book_id} ORDER BY loan_date desc LIMIT 1);"
 
         if user_id:
             extra_query.append(f"user_id = '{user_id}'")
@@ -211,6 +216,7 @@ class Loans:
             extra_query.append(f"return_date = {return_date_}")
 
         query += ', '.join(extra_query) + end_query
+        print(query)
         DatabaseManager(self.table, query).execute_query()
 
     def handle_complex_query(
