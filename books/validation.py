@@ -36,6 +36,35 @@ def type_validation(message) -> int:
     return False
 
 
+def search_validation(search_type: int, book_list: list):
+    search_type_list = {1: "ID", 2: "제목"}
+    message = f"\n   도서의 {search_type_list[search_type]} 을/를 입력해주세요.\n" \
+               f"   -->  {search_type_list[search_type]} 입력  :  "
+
+    cnt = 0
+
+    while cnt < 3:
+        try:
+            item = input(message)
+            if search_type == 1 and item.isdigit():
+                return item
+            else:
+                cnt += 1
+                print(f"   잘못 입력하였습니다. 다시 입력해주세요. ({cnt}/3)")
+        except ValueError:
+                cnt += 1
+                print(f"   잘못 입력하였습니다. 다시 입력해주세요. ({cnt}/3)")
+
+    if search_type == 1:
+        book_list: List = list(filter(lambda x: x[0] == int(item), book_list))
+    elif search_type == 2:
+        book_list: List = list(filter(lambda x: x[1] == int(item), book_list))
+
+    if not book_list:
+        print(f"해당 {search_type_list[search_type]} (으)로 검색한 도서는 존재하지 않습니다.")
+    return book_list
+
+
 def loan_book_ids_validation() -> List:
     loanable_book_id_list = list(map(lambda x: x[0], Books().get(is_available=True)))
     cnt = 0
