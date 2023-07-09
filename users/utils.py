@@ -5,20 +5,24 @@ from users.models import Users
 from users.validation import username_validation, password_validation, user_validation, password_validation2, \
                              logout_validation
 
-my_info = {"user": None, "is_logined": False}
+my_info = None
 
 
-def sign_up(progress: List):
+def sign_up():
     print("   =========           회원가입을 진행합니다.           =========\n")
-    progress.append("8")
 
     username = username_validation()
-    if username == "8":
-        return login(progress)
+    print(f"username: {username}")
+    if username == "-1":
+        return -1
 
     fullname = input("   성함을 입력해주세요. : ")
+    if fullname == "-1":
+        return -1
 
     password = password_validation()
+    if password == "-1":
+        return -1
 
     print(username, fullname, password)
 
@@ -31,27 +35,21 @@ def sign_up(progress: List):
     for i in range(3):
         print(f"   {3 - i}")
         sleep(0.5)
-    return login(progress)
+    return login()
 
 
-def login(progress: List) -> object:
+def login() -> object:
     print("   ========            로그인을 진행합니다.            =========\n")
-    usr_cnt, pw_cnt = 0, 0
-
-
     user = user_validation()
-    print(user)
-    if user == "7":
-        progress.append("7")
-        return sign_up(progress)
+    if user == "-1":
+        return -1
 
     password = password_validation2(user)
+    if password == "-1":
+        return -1
 
-    my_info["user"] = user
-    my_info["is_logined"] = True
-    print(f"   {my_info['user'][0][2]}님, 어서오세요. 환영합니다")
-    print(my_info)
-    return my_info
+    print(f"   {user[0][2]}님, 어서오세요. 환영합니다")
+    return user
 
 
 def logout():
