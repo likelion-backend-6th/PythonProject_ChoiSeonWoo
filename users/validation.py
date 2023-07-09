@@ -14,7 +14,7 @@ def username_validation():
     users = Users().get()
 
     while True:
-        username = input(message).replace(" ","")
+        username = input(message).replace(" ", "")
         username_check = map(lambda x: x[1] == username, users)
         if username == "8" or True not in username_check:
             return username
@@ -23,6 +23,7 @@ def username_validation():
         message = f"\n   이미 가입된 정보가 있습니다. ({cnt}/3)\n"\
                    "   확인 후 사용자명을 다시 입력해주세요.\n" \
                    "   -->  사용자명 입력  :  "
+
         if cnt == 3:
             message, cnt = init_message, 0
             print("   3회 이상 실패하였으므로 초기 메뉴로 돌아갑니다.")
@@ -49,9 +50,10 @@ def password_validation():
         message = f"\n   비밀번호는 하나 이상의 문자, 숫자, 특수문자를 포함하여 8자리 이상으로 작성해주세요. ({cnt}/3)\n" \
                    "   확인 후 비밀번호를 다시 입력해주세요.\n" \
                    "   -->  비밀번호 입력  :  "
+
         if cnt == 3:
             message, cnt = init_message, 0
-            print("3회 이상 실패하였으므로 초기 메뉴로 돌아갑니다.")
+            print("   3회 이상 실패하였으므로 초기 메뉴로 돌아갑니다.")
             sleep(0.5)
             for i in range(3):
                 print(f"   {3 - i}")
@@ -80,10 +82,10 @@ def user_validation():
 
         if cnt == 3:
             message, cnt = init_message, 0
-            print("3회 이상 실패하였으므로 초기 메뉴로 돌아갑니다.")
+            print("   3회 이상 실패하였으므로 초기 메뉴로 돌아갑니다.")
             sleep(0.5)
             for i in range(3):
-                print(3 - i)
+                print(f"   {3 - i}")
                 sleep(0.5)
 
 
@@ -103,8 +105,8 @@ def password_validation2(user: List):
                    "   -->  비밀번호 입력  :  "
 
         if cnt == 3:
-            print("3회 이상 실패하였으므로 초기 메뉴로 돌아갑니다.")
+            print("   3회 이상 실패하였으므로 초기 메뉴로 돌아갑니다.")
             sleep(0.5)
             for i in range(3):
-                print(3 - i)
+                print(f"   {3 - i}")
                 sleep(0.5)

@@ -8,7 +8,7 @@ my_info = {"user": None, "is_logined": False}
 
 
 def sign_up(progress: List):
-    print("===========           회원가입을 진행합니다.           ==========\n")
+    print("   =========           회원가입을 진행합니다.           =========\n")
     progress.append("8")
 
     username = username_validation()
@@ -24,17 +24,17 @@ def sign_up(progress: List):
     new_user = Users(username, fullname, password)
     new_user.post()
 
-    print("회원가입이 완료되었습니다.")
-    print("이어서 로그인을 바로 진행하도록 하겠습니다.")
+    print("\n   회원가입이 완료되었습니다.\n" 
+          "   이어서 로그인을 바로 진행하도록 하겠습니다.")
     sleep(0.5)
     for i in range(3):
-        print(3 - i)
+        print(f"   {3 - i}")
         sleep(0.5)
     return login(progress)
 
 
 def login(progress: List) -> object:
-    print("===========            로그인을 진행합니다.            ==========\n")
+    print("   ========            로그인을 진행합니다.            =========\n")
     usr_cnt, pw_cnt = 0, 0
 
 
