@@ -145,6 +145,11 @@
 - [27. 도서 조회 및 검색에 대한 유효성 검증 기능 분리 및 적용](https://browneyed.notion.site/27-a0d10ad6c38f47c68b00ed247081ebed?pvs=4)
 - [28. 대출 여부에 대한 유효성 검증 기능 분리](https://browneyed.notion.site/28-516e297928e04b039724d98fb3be4175?pvs=4)
 - [29. 반납 여부에 대한 유효성 검증 기능 분리](https://browneyed.notion.site/29-30b23ed618184ff99546c64d513a7e70?pvs=4)
+- [30. DB 테이블 설정 및 생성 관련 코드 수정](https://browneyed.notion.site/30-DB-d16dba3a8f2d44d68a904bbb58c3559b?pvs=4)
+- [31. books - validation 및 utils 함수 개선](https://browneyed.notion.site/31-books-validation-utils-7e1ea2a2d68c4042a1c75c55d5ae818d?pvs=4)
+- [32. main.py - 뼈대 생성 및 유저 기능 연결](https://browneyed.notion.site/32-main-py-4c9bae3ac8064948af9423ca1eadecf1?pvs=4)
+- [33. users - Model 코드 개선](https://browneyed.notion.site/33-users-Model-85aec5e5dfb447c4b69db88c072cd65f?pvs=4)
+- [34. users - validation 및 utils 함수 개선](https://browneyed.notion.site/34-users-validation-utils-a95473021ac146baab84abd276e50149?pvs=4)
 
 
 
