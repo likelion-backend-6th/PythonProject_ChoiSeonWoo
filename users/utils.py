@@ -1,5 +1,5 @@
-import re
 from time import sleep
+from typing import List
 
 from users.models import Users
 from users.validation import username_validation, password_validation, user_validation, password_validation2
@@ -7,20 +7,17 @@ from users.validation import username_validation, password_validation, user_vali
 my_info = {"user": None, "is_logined": False}
 
 
-def sign_up():
-    users = Users().get()
+def sign_up(progress: List):
+    print("===========           회원가입을 진행합니다.           ==========\n")
+    progress.append("8")
 
-    username = input("사용자명을 입력해주세요. : ")
-    username = username_validation(username, users)
-    if not username:
-        sign_up()
+    username = username_validation()
+    if username == "8":
+        return login(progress)
 
-    fullname = input("성함을 입력해주세요. : ")
+    fullname = input("   성함을 입력해주세요. : ")
 
-    password = input("비밀번호를 입력해주세요. : ")
-    password = password_validation(password)
-    if not password:
-        sign_up()
+    password = password_validation()
 
     print(username, fullname, password)
 
@@ -33,44 +30,32 @@ def sign_up():
     for i in range(3):
         print(3 - i)
         sleep(0.5)
-    return login()
+    return login(progress)
 
 
-def login() -> object:
+def login(progress: List) -> object:
+    print("===========            로그인을 진행합니다.            ==========\n")
     usr_cnt, pw_cnt = 0, 0
 
-    username = input("사용자명을 입력해주세요. : ")
-    user = user_validation(username)
-    if not user:
-        login()
 
-    password = input("비밀번호를 입력해주세요. : ")
-    password_matched = password_validation2(password, user)
-    if not password_matched:
-        login()
+    user = user_validation()
+    print(user)
+    if user == "7":
+        progress.append("7")
+        return sign_up(progress)
+
+    password = password_validation2(user)
 
     my_info["user"] = user
     my_info["is_logined"] = True
-    print(f"{my_info['user'][2]}님, 어서오세요. 환영합니다")
+    print(f"   {my_info['user'][0][2]}님, 어서오세요. 환영합니다")
     print(my_info)
     return my_info
 
 
-def logout() -> object:
-    print("로그아웃 되었습니다.")
+def logout(progress: List) -> object:
+    print("   로그아웃 되었습니다.")
     my_info["user"] = None
     my_info["is_logined"] = False
     return my_info
-
-
-login()
-
-if input("로그아웃 하시겠습니까? : ") == "예":
-    logout()
-
-print(f"my_info: {my_info}")
-
-
-# sign_up()
-
 
