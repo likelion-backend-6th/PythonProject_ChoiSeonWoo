@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, Tuple
 
 from common.database import DatabaseManager
 
@@ -14,19 +14,33 @@ class Users:
         self.fullname = fullname
         self.password = password
 
-    def get(self, size: Optional[int] = None):
-        if self.username != None:
-            query = f"SELECT * from users WHERE username = '{self.username}';"
-            user = DatabaseManager(self.table, query).fetch_one()
-            return user
-        elif size:
-            query = f"SELECT * from users order by id limit {size};"
-            users = DatabaseManager(self.table, query).fetch_many(size)
-            return users
-        else:
-            query = "SELECT * from users order by id;"
-            users = DatabaseManager(self.table, query).fetch_all()
-            return users
+    def get(self,
+            size: Optional[int] = None,
+            id: Optional[int] = None,
+            username: Optional[str] = None,
+            fullname: Optional[str] = None,
+            order_by_info: Tuple = ('id', 'ASC')
+    ):
+        query = "SELECT * FROM users "
+        extra_query = []
+
+        if id:
+            extra_query.append(f"id = '{id}'")
+        if username:
+            extra_query.append(f"username = '{username}'")
+        if fullname:
+            extra_query.append(f"fullname = '{fullname}'")
+
+        extra_query = "WHERE " + " AND ".join(extra_query) if extra_query else ""
+
+        if order_by_info:
+            extra_query += f" ORDER BY {order_by_info[0]} {order_by_info[1]}"
+
+        limit_query = f" LIMIT {size};" if size else ";"
+        query += limit_query
+        print(query)
+        users = DatabaseManager(self.table, query).fetch_all()
+        return users
 
     def post(self):
         query = f"""
@@ -35,17 +49,22 @@ class Users:
         """
         DatabaseManager(self.table, query).execute_query()
 
-    def put(self, new_fullname: str, new_password: Optional[str] = None):
-        if new_password:
-            query = f"""
-            UPDATE users SET fullname = '{new_fullname}', password = '{new_password}'
-            WHERE username = '{self.username}';
-            """
-        else:
-            query = f"""
-            UPDATE users SET fullname = '{new_fullname}'
-            WHERE username = '{self.username}';
-            """
+    def put(self,
+            fullname: str,
+            id: Optional[int] = None,
+            username: Optional[str] = None,
+            password: Optional[str] = None
+    ):
+        query = f"UPDATE users SET fullname = '{fullname}' "
+
+        if password:
+            query += f", password = '{password}' WHERE "
+
+        if id:
+            query += f"id = {id};"
+        elif username:
+            query += f"username = '{username};"
+        print(query)
         DatabaseManager(self.table, query).execute_query()
 
     def handle_complex_query(
