@@ -8,10 +8,9 @@ BOOK_MENU_INIT_MESSAGE = "   1. 도서 조회   2. 도서 검색   3. 도서 대
                          "   9. 로그아웃   0. 이전 메뉴   007. 프로그램 종료\n"
 
 
-
-def menu_num_validation(MENU_NUM_LIST: List, MENU_INIT_MESSAGE: str, progress):
+def menu_num_validation(menu_num_list: List, menu_init_message: str):
     init_message = "\n   다음을 확인하여 메뉴의 번호를 입력해주세요 .\n" + \
-                   MENU_INIT_MESSAGE + \
+                   menu_init_message + \
                    "   -->  메뉴 입력  :  "
     cnt = 0
     message = init_message
@@ -20,9 +19,7 @@ def menu_num_validation(MENU_NUM_LIST: List, MENU_INIT_MESSAGE: str, progress):
         run_menu_num = input(message)
 
         if run_menu_num.isdigit():
-            if run_menu_num in MENU_NUM_LIST:
-                progress.append(run_menu_num)
-                print(progress)
+            if run_menu_num in menu_num_list:
                 return run_menu_num
             else:
                 error_message = "\n   입력하신 번호에 대한 메뉴가 존재하지 않습니다.\n"
