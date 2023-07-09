@@ -39,6 +39,7 @@ def login(progress: List) -> object:
 
 
     user = user_validation()
+    print(user)
     if user == "7":
         progress.append("7")
         return sign_up(progress)
@@ -47,7 +48,7 @@ def login(progress: List) -> object:
 
     my_info["user"] = user
     my_info["is_logined"] = True
-    print(f"   {my_info['user'][2]}님, 어서오세요. 환영합니다")
+    print(f"   {my_info['user'][0][2]}님, 어서오세요. 환영합니다")
     print(my_info)
     return my_info
 
