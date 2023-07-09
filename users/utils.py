@@ -9,18 +9,22 @@ my_info = None
 
 
 def sign_up():
-    print("   =========           회원가입을 진행합니다.           =========\n")
+    print("\n   =========           회원가입을 진행합니다.           =========\n")
 
     username = username_validation()
-    print(f"username: {username}")
-    if username == "-1":
+
+    if username == "8":
+        return login()
+    elif username == "-1":
         return -1
 
     fullname = input("   성함을 입력해주세요. : ")
+
     if fullname == "-1":
         return -1
 
     password = password_validation()
+
     if password == "-1":
         return -1
 
@@ -39,22 +43,29 @@ def sign_up():
 
 
 def login() -> object:
-    print("   ========            로그인을 진행합니다.            =========\n")
+    print("\n   ========            로그인을 진행합니다.            =========\n")
+
     user = user_validation()
-    if user == "-1":
+
+    if user == "7":
+        return sign_up()
+    elif user == "-1":
         return -1
 
     password = password_validation2(user)
+
     if password == "-1":
         return -1
 
-    print(f"   {user[0][2]}님, 어서오세요. 환영합니다")
+    print(f"\n   {user[0][2]}님, 어서오세요. 환영합니다")
     return user
 
 
 def logout():
+    ("\n   =======            로그아웃을 진행합니다.            ========\n")
 
     logout_bool = logout_validation()
+
     if logout_bool:
         return print("   로그아웃 되었습니다.")
     else:

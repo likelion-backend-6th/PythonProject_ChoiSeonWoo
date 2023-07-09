@@ -4,12 +4,12 @@ from typing import List
 from books.models import Books
 
 
-FETCH_TYPE_MESSAGE = "\n   희망하시는 조회 대상 도서 정보의 번호를 입력해주세요.\n" \
+FETCH_TYPE_MESSAGE = "   희망하시는 조회 대상 도서 정보의 번호를 입력해주세요.\n" \
                      "   [  1. 모든 도서  2. 현재 대출 가능한 도서  ]\n" \
                      "   (이전 메뉴로 돌아가려면 '-1'을 입력해주세요.)\n" \
                      "   -->  번호 입력  :  "
 
-SEARCH_TYPE_MESSAGE = "\n   검색을 희망하는 항목에 대한 번호를 입력해주세요.\n" \
+SEARCH_TYPE_MESSAGE = "   검색을 희망하는 항목에 대한 번호를 입력해주세요.\n" \
                       "   [  1. ID  2. 제목  ]\n" \
                       "   (이전 메뉴로 돌아가려면 '-1'을 입력해주세요.)\n" \
                       "   -->  번호 입력  :  "
@@ -48,7 +48,7 @@ def type_validation(message: str):
 
 def search_validation(search_type: int, book_list: list):
     search_type_list = {1: "ID", 2: "제목"}
-    init_message = f"\n   도서의 {search_type_list[search_type]} 을/를 입력해주세요.\n" \
+    init_message = f"   도서의 {search_type_list[search_type]} 을/를 입력해주세요.\n" \
                     "   (이전 메뉴로 돌아가려면 '-1'을 입력해주세요.)\n" \
                    f"   -->  {search_type_list[search_type]} 입력  :  "
     cnt = 0
@@ -90,7 +90,7 @@ def search_validation(search_type: int, book_list: list):
 
 def loan_book_ids_validation():
     loanable_book_id_list = list(map(lambda x: x[0], Books().get(is_available=True)))
-    init_message = "\n   대출을 희망하는 도서의 ID를 입력해주세요.\n" \
+    init_message = "   대출을 희망하는 도서의 ID를 입력해주세요.\n" \
                    "   여러 권을 대출하고자 하는 경우, 쉼표(,)로 구분하여 ID를 입력해주세요.\n" \
                    "   (이전 메뉴로 돌아가려면 '-1'을 입력해주세요.)\n" \
                    "   -->  ID 입력  :  "
@@ -131,7 +131,7 @@ def loan_book_ids_validation():
 
 def return_book_ids_validation(user_id):
     returnable_book_id_list = list(map(lambda x: x[0], Books().get(is_available=False, user_id=user_id)))
-    init_message = "\n   반납을 희망하는 도서의 ID를 입력해주세요.\n" \
+    init_message = "   반납을 희망하는 도서의 ID를 입력해주세요.\n" \
                    "   여러 권을 반납하고자 하는 경우, 쉼표(,)로 구분하여 ID를 입력해주세요.\n" \
                    "   (이전 메뉴로 돌아가려면 '-1'을 입력해주세요.)\n" \
                    "   -->  ID 입력  :  "

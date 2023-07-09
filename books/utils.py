@@ -22,6 +22,7 @@ def change_isavailable(books_list: List) -> List:
 
 
 def fetch_books_list() -> List | str | bool:
+    print("\n   =========           도서 조회를 진행합니다.          =========\n")
     fetch_type = type_validation(FETCH_TYPE_MESSAGE)
 
     if fetch_type == 1:
@@ -37,6 +38,7 @@ def fetch_books_list() -> List | str | bool:
 
 
 def search_book_list(book_list: Optional[List] = None) -> List | bool:
+    print("\n   =========           도서 검색를 진행합니다.          =========\n")
     book_list = book_list if book_list else fetch_books_list()
 
     if book_list == -1:
@@ -54,6 +56,7 @@ def search_book_list(book_list: Optional[List] = None) -> List | bool:
 
 
 def loan_books(user_id: int) -> List | bool:
+    print("\n   =========           도서 대여를 진행합니다.          =========\n")
     book_id_list = loan_book_ids_validation()
 
     if book_id_list == -1:
@@ -71,6 +74,7 @@ def loan_books(user_id: int) -> List | bool:
 
 
 def return_books(user_id: int) -> List | bool:
+    print("\n   =========           도서 반납을 진행합니다.          =========\n")
     book_id_list = return_book_ids_validation(user_id)
 
     if book_id_list == -1:
