@@ -1,5 +1,5 @@
-import re
 from time import sleep
+from typing import List
 
 from users.models import Users
 from users.validation import username_validation, password_validation, user_validation, password_validation2
@@ -7,26 +7,17 @@ from users.validation import username_validation, password_validation, user_vali
 my_info = {"user": None, "is_logined": False}
 
 
-def sign_up():
-    print("===========           회원가입을 진행합니다.           ==========")
-    users = Users().get()
+def sign_up(progress: List):
+    print("===========           회원가입을 진행합니다.           ==========\n")
+    progress.append("8")
 
-    message = "   가입에 사용할 사용자명을 입력해주세요.\n" \
-              "   이미 가입된 회원의 경우, 로그인 메뉴로 이동하시려면 숫자 1을 입력해주세요.\n" \
-              "   --->  입력  :  "
-    username = input(message)
-    if username == "1":
-        return login()
-    username = username_validation(username, users)
-    if not username:
-        return sign_up()
+    username = username_validation()
+    if username == "8":
+        return login(progress)
 
-    fullname = input("성함을 입력해주세요. : ")
+    fullname = input("   성함을 입력해주세요. : ")
 
-    password = input("비밀번호를 입력해주세요. : ")
-    password = password_validation(password)
-    if not password:
-        return sign_up()
+    password = password_validation()
 
     print(username, fullname, password)
 
@@ -39,27 +30,20 @@ def sign_up():
     for i in range(3):
         print(3 - i)
         sleep(0.5)
-    return login()
+    return login(progress)
 
 
-def login() -> object:
+def login(progress: List) -> object:
     print("===========            로그인을 진행합니다.            ==========\n")
     usr_cnt, pw_cnt = 0, 0
 
-    message = "   사용자명을 입력해주세요.\n" \
-              "   회원가입을 진행하시려면 숫자 1을 입력해주세요.\n" \
-              "   --->  입력  :  "
-    username = input(message)
-    if username == "1":
-        return sign_up()
-    user = user_validation(username)
-    if not user:
-        return login()
 
-    password = input("   비밀번호를 입력해주세요. : ")
-    password_matched = password_validation2(password, user)
-    if not password_matched:
-        return login()
+    user = user_validation()
+    if user == "7":
+        progress.append("7")
+        return sign_up(progress)
+
+    password = password_validation2(user)
 
     my_info["user"] = user
     my_info["is_logined"] = True
@@ -68,7 +52,7 @@ def login() -> object:
     return my_info
 
 
-def logout() -> object:
+def logout(progress: List) -> object:
     print("   로그아웃 되었습니다.")
     my_info["user"] = None
     my_info["is_logined"] = False
