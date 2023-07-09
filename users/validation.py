@@ -6,7 +6,7 @@ from users.models import Users
 
 
 def username_validation():
-    init_message = "\n   가입에 사용할 사용자명을 입력해주세요.\n" \
+    init_message = "   가입에 사용할 사용자명을 입력해주세요.\n" \
                    "   이미 가입된 회원의 경우, 로그인 메뉴로 이동하시려면 숫자 8을 입력해주세요.\n" \
                    "   (이전 메뉴로 돌아가려면 '-1'을 입력해주세요.)\n" \
                    "   --->  입력  :  "
@@ -33,10 +33,11 @@ def username_validation():
             for i in range(3):
                 print(f"   {3 - i}")
                 sleep(0.5)
+            return "-1"
 
 
 def password_validation():
-    init_message = "\n   가입에 사용할 비밀번호를 입력해주세요.\n" \
+    init_message = "   가입에 사용할 비밀번호를 입력해주세요.\n" \
                    "   (이전 메뉴로 돌아가려면 '-1'을 입력해주세요.)\n" \
                    "   --->  비밀번호 입력  :  "
     cnt = 0
@@ -62,6 +63,7 @@ def password_validation():
             for i in range(3):
                 print(f"   {3 - i}")
                 sleep(0.5)
+            return "-1"
 
 
 def user_validation():
@@ -93,6 +95,7 @@ def user_validation():
             for i in range(3):
                 print(f"   {3 - i}")
                 sleep(0.5)
+            return "-1"
 
 
 def password_validation2(user: List):
@@ -120,6 +123,7 @@ def password_validation2(user: List):
             for i in range(3):
                 print(f"   {3 - i}")
                 sleep(0.5)
+            return "-1"
 
 
 def logout_validation():
