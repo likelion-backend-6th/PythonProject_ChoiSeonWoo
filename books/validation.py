@@ -67,77 +67,71 @@ def search_validation(search_type: int, book_list: list):
 
 def loan_book_ids_validation() -> List:
     loanable_book_id_list = list(map(lambda x: x[0], Books().get(is_available=True)))
+    init_message = "\n   대출을 희망하는 도서의 ID를 입력해주세요.\n" \
+              "   여러 권을 대출하고자 하는 경우, 쉼표(,)로 구분하여 ID를 입력해주세요.\n" \
+              "   -->  ID 입력  :  "
     cnt = 0
-
-    message = "\n   대출을 희망하는 도서의 ID를 입력해주세요.\n" \
-               "   여러 권을 대출하고자 하는 경우, 쉼표(,)로 구분하여 ID를 입력해주세요.\n" \
-               "   -->  ID 입력  :  "
-
-    book_ids = input(message).replace(" ", "")
-    if not book_ids:
-        return []
-    book_id_list = list(map(int, book_ids.split(",")))
+    message = init_message
 
     while True:
-        if len(book_id_list) <= 1 or len(book_id_list) == len(set(book_id_list)):
-            if all(book_id in loanable_book_id_list for book_id in book_id_list):
-                return book_id_list
+        book_ids = input(message).replace(" ", "")
+
+        try:
+            book_id_list = list(map(int, book_ids.split(",")))
+            if len(book_id_list) <= 1 or len(book_id_list) == len(set(book_id_list)):
+                if all(book_id in loanable_book_id_list for book_id in book_id_list):
+                    return book_id_list
+                else:
+                    error_message = "   요청하신 ID에 해당하는 대출 가능한 도서가 존재하지 않습니다.\n   "
             else:
-                error_message = "   요청하신 ID에 해당하는 대출 가능한 도서가 존재하지 않습니다.\n   "
-        else:
-            error_message = "   숫자를 중복 입력 입력하였습니다."
+                error_message = "   숫자를 중복 입력 입력하였습니다. "
+        except ValueError:
+            error_message = "   잘못된 입력입니다. "
+
         cnt += 1
+        message = error_message + f"확인 후 ID를 다시 입력해주세요. ({cnt}/3)\n" \
+                                  "   여러 권을 대출하고자 하는 경우, 쉼표(,)로 구분하여 ID를 입력해주세요.\n" \
+                                  "   -->  ID 입력  :  "
         if cnt == 3:
+            message, cnt = init_message, 0
             print("   3회 이상 실패하였으므로 초기 메뉴로 돌아갑니다.")
             sleep(0.5)
             for i in range(3):
                 print(f"   {3 - i}")
                 sleep(0.3)
-            return loan_book_ids_validation()
-        sleep(0.2)
-
-        message = error_message + f"ID를 다시 입력해주세요. ({cnt}/3)  :  \n" \
-                   "   여러 권을 대출하고자 하는 경우, 쉼표(,)로 구분하여 ID를 입력해주세요.\n" \
-                   "   -->  ID 입력  :  "
-        book_ids = input(message)
-        book_id_list = book_ids.replace(" ", "").split(",")
-        book_id_list = list(map(int, book_id_list))
 
 
 def return_book_ids_validation(user_id) -> List:
     returnable_book_id_list = list(map(lambda x: x[0], Books().get(is_available=False, user_id=user_id)))
-    cnt = 0
-
-    message4 = "\n   반납을 희망하는 도서의 ID를 입력해주세요.\n" \
+    init_message = "\n   반납을 희망하는 도서의 ID를 입력해주세요.\n" \
                "   여러 권을 반납하고자 하는 경우, 쉼표(,)로 구분하여 ID를 입력해주세요.\n" \
                "   -->  ID 입력  :  "
-
-    book_ids = input(message4).replace(" ", "")
-    if not book_ids:
-        return []
-    book_id_list = list(map(int, book_ids.split(",")))
+    cnt = 0
+    message = init_message
 
     while True:
-        if len(book_id_list) <= 1 or len(book_id_list) == len(set(book_id_list)):
-            if all(book_id in returnable_book_id_list for book_id in book_id_list):
-                return book_id_list
+        book_ids = input(message).replace(" ", "")
+
+        try:
+            book_id_list = list(map(int, book_ids.split(",")))
+            if len(book_id_list) <= 1 or len(book_id_list) == len(set(book_id_list)):
+                if all(book_id in returnable_book_id_list for book_id in book_id_list):
+                    return book_id_list
+                else:
+                    error_message = "   요청하신 ID에 해당하는 반납 가능한 도서가 존재하지 않습니다.\n   "
             else:
-                error_message = "   요청하신 ID에 해당하는 반납 가능한 도서가 존재하지 않습니다.\n   "
-        else:
-            error_message = "   숫자를 중복 입력 입력하였습니다."
+                error_message = "   숫자를 중복 입력 입력하였습니다. "
+        except ValueError:
+            error_message = "   잘못된 입력입니다. "
+
         cnt += 1
+        message = error_message + f"확인 후 ID를 다시 입력해주세요. ({cnt}/3)  :  \n" \
+                   "   여러 권을 반납하고자 하는 경우, 쉼표(,)로 구분하여 ID를 입력해주세요.\n" \
+                   "   -->  ID 입력  :  "
         if cnt == 3:
+            message, cnt = init_message, 0
             print("   3회 이상 실패하였으므로 초기 메뉴로 돌아갑니다.")
             sleep(0.5)
             for i in range(3):
                 print(f"   {3 - i}")
                 sleep(0.3)
-            return return_book_ids_validation(user_id)
-        sleep(0.2)
-
-        message4 = error_message + f"ID를 다시 입력해주세요. ({cnt}/3)  :  \n" \
-                   "   여러 권을 반납하고자 하는 경우, 쉼표(,)로 구분하여 ID를 입력해주세요.\n" \
-                   "   -->  ID 입력  :  "
-        book_ids = input(message4)
-        book_id_list = book_ids.replace(" ", "").split(",")
-        book_id_list = list(map(int, book_id_list))
