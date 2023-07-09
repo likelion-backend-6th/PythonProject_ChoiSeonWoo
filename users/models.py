@@ -36,6 +36,8 @@ class Users:
         if order_by_info:
             extra_query += f" ORDER BY {order_by_info[0]} {order_by_info[1]}"
 
+        query += extra_query
+
         limit_query = f" LIMIT {size};" if size else ";"
         query += limit_query
         print(query)
