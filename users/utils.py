@@ -2,7 +2,8 @@ from time import sleep
 from typing import List
 
 from users.models import Users
-from users.validation import username_validation, password_validation, user_validation, password_validation2
+from users.validation import username_validation, password_validation, user_validation, password_validation2, \
+                             logout_validation
 
 my_info = {"user": None, "is_logined": False}
 
@@ -53,9 +54,12 @@ def login(progress: List) -> object:
     return my_info
 
 
-def logout(progress: List) -> object:
-    print("   로그아웃 되었습니다.")
-    my_info["user"] = None
-    my_info["is_logined"] = False
-    return my_info
+def logout():
+
+    logout_bool = logout_validation()
+    if logout_bool:
+        return print("   로그아웃 되었습니다.")
+    else:
+        return True
+
 
