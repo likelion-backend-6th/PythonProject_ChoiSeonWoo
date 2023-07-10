@@ -150,6 +150,11 @@
 - [32. main.py - 뼈대 생성 및 유저 기능 연결](https://browneyed.notion.site/32-main-py-4c9bae3ac8064948af9423ca1eadecf1?pvs=4)
 - [33. users - Model 코드 개선](https://browneyed.notion.site/33-users-Model-85aec5e5dfb447c4b69db88c072cd65f?pvs=4)
 - [34. users - validation 및 utils 함수 개선](https://browneyed.notion.site/34-users-validation-utils-a95473021ac146baab84abd276e50149?pvs=4)
+- [35. 입력받은 메뉴 번호에 대한 유효성 검증 구현 및 적용](https://browneyed.notion.site/35-f6f25577066141f69e1e5d6266089c77?pvs=4)
+- [36. 메인 클래스에서 사용할 유효성 검증 함수 생성](https://browneyed.notion.site/36-4c760ecff49847cbb488f4a163f1b79d?pvs=4)
+- [37. 상위 메뉴로의 이동에 대한 아이디어 고찰](https://browneyed.notion.site/37-e5c1d88381904d19860940c0847fe732?pvs=4)
+- [38. logout 관련 입력값에 대한 유효성 검증 함수 구현 및 적용](https://browneyed.notion.site/38-logout-658e8798e866466a99b4a88231e6631a?pvs=4)
+- [39. 이전 메뉴로 돌아가기 - 입력값 처리](https://browneyed.notion.site/39-aed0ccf84beb4648a8a27be43652e550?pvs=4)
 
 
 
