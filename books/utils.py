@@ -14,7 +14,9 @@ def change_isavailable(books_list: List) -> List:
             if book[4]:
                 book = book[:4] + ('대여가능',) + ('', '')
             elif not book[4]:
-                book = book[:4] + ('대여중',) + book[5:]
+                loan_date = book[5].strftime("%Y년 %m월 %d일") if book[5] else ''
+                return_date = book[6].strftime("%Y년 %m월 %d일") if book[6] else ''
+                book = book[:4] + ('대여중',) + (loan_date, return_date)
 
             result.append(book)
 
@@ -88,4 +90,4 @@ def return_books(user_id: int) -> List | bool:
             target_book = Books().put(id=book_id)
             update_return = Loans().put(return_date=datetime.now(), return_update=True, return_book_id=book_id)
 
-    return change_isavailable([Books().get(id=book_id)[0] for book_id in book_id_list])
+    return change_isavailable(Books().get(user_id=user_id, is_available=False, order_by_info=('l.loan_date', "DESC")))
