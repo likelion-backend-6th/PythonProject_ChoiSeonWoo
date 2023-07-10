@@ -40,7 +40,7 @@ class Users:
 
         limit_query = f" LIMIT {size};" if size else ";"
         query += limit_query
-        print(query)
+
         users = DatabaseManager(self.table, query).fetch_all()
         return users
 
@@ -66,7 +66,7 @@ class Users:
             query += f"id = {id};"
         elif username:
             query += f"username = '{username};"
-        print(query)
+
         DatabaseManager(self.table, query).execute_query()
 
     def handle_complex_query(
