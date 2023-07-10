@@ -5,6 +5,9 @@ from dotenv import load_dotenv
 # .env 파일 로드
 load_dotenv()
 
+# debug 모드
+DEBUG = False
+
 
 # POSTGRES 설정
 POSTGRES_HOST = os.getenv("POSTGRES_HOST")
