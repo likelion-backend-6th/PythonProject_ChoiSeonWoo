@@ -3,6 +3,7 @@ from typing import List, Optional, Dict, Callable
 from books.utils import fetch_books_list, search_book_list, loan_books, return_books
 from common.database import create_table
 from common.settings import TABLES, CREATE_QUERY_LISTS
+from common.validation import menu_num_validation, USER_MENU_NUM_LIST, USER_MENU_INIT_MESSAGE
 from users.utils import sign_up, login, logout
 
 
@@ -28,14 +29,15 @@ class LibrarySystem:
     user: Optional[Dict] = None
 
     def manage_user(self):
-        pass
+        execute_menu_num = menu_num_validation(USER_MENU_NUM_LIST, USER_MENU_INIT_MESSAGE, self.progress)
+        self.user = self.MENU[execute_menu_num](self.progress)
 
     def manage_book(self):
         pass
 
     def main(self):
         create_table(TABLES, CREATE_QUERY_LISTS)
-        pass
+        self.manage_user()
 
 
 if __name__ == "__main__":
