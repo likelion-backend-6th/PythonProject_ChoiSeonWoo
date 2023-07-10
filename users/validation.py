@@ -124,28 +124,3 @@ def password_validation2(user: List):
                 print(f"   {3 - i}")
                 sleep(0.5)
             return "-1"
-
-
-def logout_validation():
-    init_message = "   로그아웃 하시겠습니까? (Y/N).\n" \
-                   "   --->  입력  :  "
-    cnt = 0
-    message = init_message
-
-    while True:
-        logout_bool = input(message)
-        if logout_bool.lower() in ["y", "yes", "예", "네"]:
-            return True
-        elif logout_bool.lower() in ["n", "no", "아니오"]:
-            return False
-        cnt += 1
-        message = f"\n   로그아웃 여부를 바르게 입력해주세요. ({cnt}/3)\n" \
-                  "   -->  (Y/N) 입력  :  "
-
-        if cnt == 3:
-            print("\n   3회 이상 실패하였으므로 초기 메뉴로 돌아갑니다.")
-            sleep(0.5)
-            for i in range(3):
-                print(f"   {3 - i}")
-                sleep(0.5)
-            return None

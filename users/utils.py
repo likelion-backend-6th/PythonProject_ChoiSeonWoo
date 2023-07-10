@@ -1,11 +1,9 @@
 from time import sleep
 from typing import List
 
+from common.validation import bool_validation, LOGOUT_MESSAGE
 from users.models import Users
-from users.validation import username_validation, password_validation, user_validation, password_validation2, \
-                             logout_validation
-
-my_info = None
+from users.validation import username_validation, password_validation, user_validation, password_validation2
 
 
 def sign_up():
@@ -62,12 +60,12 @@ def login() -> object:
 
 
 def logout():
-    ("\n   =======            로그아웃을 진행합니다.            ========\n")
+    print("\n   =======            로그아웃을 진행합니다.            ========\n")
 
-    logout_bool = logout_validation()
+    is_loggedout = bool_validation(LOGOUT_MESSAGE)
 
-    if logout_bool:
-        return print("   로그아웃 되었습니다.")
+    if is_loggedout:
+        return print("   로그아웃 되었습니다.\n   초기 화면으로 돌아갑니다.")
     else:
         return True
 
