@@ -51,6 +51,7 @@ class LibrarySystem:
             result = self.MENU[execute_menu_num]()
 
             if result == -1:
+                print(self.MESSAGE["manage_user"])
                 continue
             else:
                 self.user = result
@@ -66,10 +67,8 @@ class LibrarySystem:
                 result = self.MENU[execute_menu_num]()
             elif execute_menu_num in ["3", "4"]:
                 result = self.MENU[execute_menu_num](self.user[0][0])
-
             if result == -1:
                 break
-
             if execute_menu_num == "9":
                 current_user_info = self.MENU[execute_menu_num]()
                 if current_user_info is None:
@@ -82,6 +81,12 @@ class LibrarySystem:
         while True:
             if not self.user:
                 self.manage_user()
+
+            self.manage_book()
+
+            if self.user:
+                continue
+            print(self.MESSAGE["bye"])
 
 
 if __name__ == "__main__":
