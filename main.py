@@ -1,6 +1,6 @@
 from typing import List, Dict, Callable
 
-from books.utils import fetch_books_list, search_book_list, loan_books, return_books
+from books.utils import fetch_book_list, search_book_list, loan_books, return_books
 from common.utils import create_table, stand_by
 from common.settings import TABLES, CREATE_QUERY_LISTS
 from common.validation import menu_num_validation, USER_MENU_NUM_LIST, USER_MENU_INIT_MESSAGE, \
@@ -22,7 +22,7 @@ class LibrarySystem:
     }
 
     MENU: Dict[str, Callable] = {
-        "1": fetch_books_list,
+        "1": fetch_book_list,
         "2": search_book_list,
         "3": loan_books,
         "4": return_books,
@@ -80,15 +80,14 @@ class LibrarySystem:
             if result == -1:
                 break
 
-            if type(result) == list:
-                print(result)
-
             if execute_menu_num == "9":
                 current_user_info = self.MENU[execute_menu_num]()
 
                 if current_user_info is None:
                     self.user = current_user_info
                     break
+
+            move_input = input("\n   이전 메뉴로 돌아갑니다. 아무 키나 눌러주세요.")
 
     def terminate(self):
         print("\n   =======            시스템 종료 화면            =======\n")
