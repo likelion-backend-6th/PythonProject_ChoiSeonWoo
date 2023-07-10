@@ -1,9 +1,10 @@
-from typing import List, Optional, Dict, Callable
+from typing import List, Dict, Callable
 
 from books.utils import fetch_books_list, search_book_list, loan_books, return_books
 from common.database import create_table
 from common.settings import TABLES, CREATE_QUERY_LISTS
-from common.validation import menu_num_validation, USER_MENU_NUM_LIST, USER_MENU_INIT_MESSAGE
+from common.validation import menu_num_validation, USER_MENU_NUM_LIST, USER_MENU_INIT_MESSAGE, \
+                              BOOK_MENU_NUM_LIST, BOOK_MENU_INIT_MESSAGE
 from users.utils import sign_up, login, logout
 
 
@@ -56,7 +57,24 @@ class LibrarySystem:
                 break
 
     def manage_book(self):
-        pass
+        print(self.MESSAGE["manage_book"])
+        while True:
+            result = 0
+            execute_menu_num = menu_num_validation(BOOK_MENU_NUM_LIST, BOOK_MENU_INIT_MESSAGE)
+
+            if execute_menu_num in ["1", "2"]:
+                result = self.MENU[execute_menu_num]()
+            elif execute_menu_num in ["3", "4"]:
+                result = self.MENU[execute_menu_num](self.user[0][0])
+
+            if result == -1:
+                break
+
+            if execute_menu_num == "9":
+                current_user_info = self.MENU[execute_menu_num]()
+                if current_user_info is None:
+                    self.user = current_user_info
+                    break
 
     def main(self):
         print(self.MESSAGE["welcome"])
