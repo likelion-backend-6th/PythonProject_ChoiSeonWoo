@@ -4,12 +4,12 @@ from typing import List
 from books.models import Books
 
 
-FETCH_TYPE_MESSAGE = "   희망하시는 조회 대상 도서 정보의 번호를 입력해주세요.\n" \
+FETCH_TYPE_MESSAGE = "\n   희망하시는 조회 대상 도서 정보의 번호를 입력해주세요.\n" \
                      "   [  1. 모든 도서  2. 현재 대출 가능한 도서  ]\n" \
                      "   (이전 메뉴로 돌아가려면 '-1'을 입력해주세요.)\n" \
                      "   -->  번호 입력  :  "
 
-SEARCH_TYPE_MESSAGE = "   검색을 희망하는 항목에 대한 번호를 입력해주세요.\n" \
+SEARCH_TYPE_MESSAGE = "\n   검색을 희망하는 항목에 대한 번호를 입력해주세요.\n" \
                       "   [  1. ID  2. 제목  ]\n" \
                       "   (이전 메뉴로 돌아가려면 '-1'을 입력해주세요.)\n" \
                       "   -->  번호 입력  :  "
@@ -48,7 +48,7 @@ def type_validation(message: str):
 
 def search_validation(search_type: int, book_list: list):
     search_type_list = {1: "ID", 2: "제목"}
-    init_message = f"   도서의 {search_type_list[search_type]} 을/를 입력해주세요.\n" \
+    init_message = f"\n   도서의 {search_type_list[search_type]} 을/를 입력해주세요.\n" \
                     "   (이전 메뉴로 돌아가려면 '-1'을 입력해주세요.)\n" \
                    f"   -->  {search_type_list[search_type]} 입력  :  "
     cnt = 0
@@ -64,7 +64,8 @@ def search_validation(search_type: int, book_list: list):
             elif search_type == 2:
                 book_list: List = list(filter(lambda x: item in x[1], book_list))
             if not book_list:
-                print(f"\n해당 {search_type_list[search_type]} (으)로 검색한 도서는 존재하지 않습니다.")
+                print(f"\n   해당 {search_type_list[search_type]} (으)로 검색한 도서는 존재하지 않습니다.\n   이전 메뉴로 돌아갑니다.")
+                return []
             return book_list
 
         if search_type == 1 and not item.isdigit():
@@ -90,7 +91,7 @@ def search_validation(search_type: int, book_list: list):
 
 def loan_book_ids_validation():
     loanable_book_id_list = list(map(lambda x: x[0], Books().get(is_available=True)))
-    init_message = "   대출을 희망하는 도서의 ID를 입력해주세요.\n" \
+    init_message = "\n   대출을 희망하는 도서의 ID를 입력해주세요.\n" \
                    "   여러 권을 대출하고자 하는 경우, 쉼표(,)로 구분하여 ID를 입력해주세요.\n" \
                    "   (이전 메뉴로 돌아가려면 '-1'을 입력해주세요.)\n" \
                    "   -->  ID 입력  :  "
@@ -101,16 +102,19 @@ def loan_book_ids_validation():
         book_ids = input(message).replace(" ", "")
 
         try:
-            if int(book_ids) == -1:
-                return -1
             book_id_list = list(map(int, book_ids.split(",")))
+
+            if book_id_list[0] == -1:
+                return -1
+
             if len(book_id_list) <= 1 or len(book_id_list) == len(set(book_id_list)):
                 if all(book_id in loanable_book_id_list for book_id in book_id_list):
                     return book_id_list
                 else:
-                    error_message = "\n   요청하신 ID에 해당하는 대출 가능한 도서가 존재하지 않습니다.\n   "
+                    error_message = "\n   요청하신 ID의 도서(들) 중 대출 불가한 도서가 포함되어 있습니다.\n   "
             else:
                 error_message = "\n   숫자를 중복 입력 입력하였습니다.\n   "
+
         except ValueError:
             error_message = "\n   잘못된 입력입니다.\n   "
 
@@ -129,9 +133,11 @@ def loan_book_ids_validation():
             return -1
 
 
-def return_book_ids_validation(user_id):
-    returnable_book_id_list = list(map(lambda x: x[0], Books().get(is_available=False, user_id=user_id)))
-    init_message = "   반납을 희망하는 도서의 ID를 입력해주세요.\n" \
+def return_book_ids_validation(user_id, retunable_book_list):
+
+    returnable_book_id_list = list(map(lambda x: x[0], retunable_book_list))
+
+    init_message = "\n   반납을 희망하는 도서의 ID를 입력해주세요.\n" \
                    "   여러 권을 반납하고자 하는 경우, 쉼표(,)로 구분하여 ID를 입력해주세요.\n" \
                    "   (이전 메뉴로 돌아가려면 '-1'을 입력해주세요.)\n" \
                    "   -->  ID 입력  :  "
@@ -142,9 +148,11 @@ def return_book_ids_validation(user_id):
         book_ids = input(message).replace(" ", "")
 
         try:
-            if int(book_ids) == -1:
-                return -1
             book_id_list = list(map(int, book_ids.split(",")))
+
+            if book_id_list[0] == -1:
+                return -1
+
             if len(book_id_list) <= 1 or len(book_id_list) == len(set(book_id_list)):
                 if all(book_id in returnable_book_id_list for book_id in book_id_list):
                     return book_id_list
@@ -152,11 +160,12 @@ def return_book_ids_validation(user_id):
                     error_message = "\n   요청하신 ID에 해당하는 반납 가능한 도서가 존재하지 않습니다.\n   "
             else:
                 error_message = "\n   숫자를 중복 입력 입력하였습니다.\n   "
+
         except ValueError:
             error_message = "\n   잘못된 입력입니다.\n   "
 
         cnt += 1
-        message = error_message + f"확인 후 ID를 다시 입력해주세요. ({cnt}/3)\n" \
+        message = error_message + f"\n   확인 후 ID를 다시 입력해주세요. ({cnt}/3)\n" \
                                    "   여러 권을 반납하고자 하는 경우, 쉼표(,)로 구분하여 ID를 입력해주세요.\n" \
                                    "   (이전 메뉴로 돌아가려면 '-1'을 입력해주세요.)\n" \
                                    "   -->  ID 입력  :  "
