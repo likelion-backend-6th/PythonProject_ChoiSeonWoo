@@ -22,17 +22,17 @@ class PostgreSQL:
                 user=settings.POSTGRES_USER,
                 password=settings.POSTGRES_PASSWORD
             )
-            print(f"Database is connected") if settings.DEBUG else None
+            print(f"\n   >>>  Database is connected") if settings.DEBUG else None
             return connection
         except Error as e:
-            print(f"Database Error '{e}' occured") if settings.DEBUG else None
+            print(f"\n   >>>  Database Error '{e}' occured") if settings.DEBUG else None
             sys.exit(1)
 
     def close(self):
         if self.connection:
             self.cursor.close()
             self.connection.close()
-            print("Connection closed") if settings.DEBUG else None
+            print("\n   >>>  Connection closed\n  ----------------------------\n") if settings.DEBUG else None
 
 
 class DatabaseManager:
@@ -40,7 +40,7 @@ class DatabaseManager:
         self.db = PostgreSQL()
         self.table = table_
         self.query = query
-        print(f"\n쿼리문: {self.query}\n") if settings.DEBUG else None
+        print(f"\n   쿼리문:\n{self.query}\n") if settings.DEBUG else None
 
     def execute_query(self):
         try:
@@ -51,9 +51,9 @@ class DatabaseManager:
             elif type(self.query) == str:
                 self.db.cursor.execute(self.query)
                 self.db.connection.commit()
-            print("\nQuery executed successfully\n") if settings.DEBUG else None
+            print("\n   >>>  Query executed successfully") if settings.DEBUG else None
         except Error as e:
-            print(f"\nExecutionQueryError about {self.table}'{e} occured\n") if settings.DEBUG else None
+            print(f"\n   >>>  ExecutionQueryError about {self.table}'{e} occured") if settings.DEBUG else None
         else:
             self.db.close()
 
@@ -61,10 +61,10 @@ class DatabaseManager:
         try:
             self.db.cursor.execute(self.query)
             result = self.db.cursor.fetchall()
-            print("\nAll Data fetched Successfully\n") if settings.DEBUG else None
+            print("\n   >>>  All Data fetched Successfully") if settings.DEBUG else None
             return result
         except Error as e:
-            print(f"\nFetchQueryError about {self.table} '{e} occured\n") if settings.DEBUG else None
+            print(f"\n   >>>  FetchQueryError about {self.table} '{e} occured") if settings.DEBUG else None
         finally:
             self.db.close()
 
@@ -72,10 +72,10 @@ class DatabaseManager:
         try:
             self.db.cursor.execute(self.query)
             result = self.db.cursor.fetchmany(size)
-            print("\nMultiple Data fetched Successfully\n")
+            print("\n   >>>  Multiple Data fetched Successfully")
             return result
         except Error as e:
-            print(f"\nFetchQueryError about {self.table} '{e} occured\n") if settings.DEBUG else None
+            print(f"\n   >>>  FetchQueryError about {self.table} '{e} occured") if settings.DEBUG else None
         finally:
             self.db.close()
 
@@ -83,9 +83,9 @@ class DatabaseManager:
         try:
             self.db.cursor.execute(self.query)
             result = self.db.cursor.fetchone()
-            print("\nSingle Data fetched Successfully\n") if settings.DEBUG else None
+            print("\n   >>>  Single Data fetched Successfully") if settings.DEBUG else None
             return result
         except Error as e:
-            print(f"\nFetchQueryError about {self.table} '{e} occured\n") if settings.DEBUG else None
+            print(f"\n   >>>  FetchQueryError about {self.table} '{e} occured") if settings.DEBUG else None
         finally:
             self.db.close()

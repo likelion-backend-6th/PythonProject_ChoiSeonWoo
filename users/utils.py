@@ -55,7 +55,7 @@ def login() -> object:
     if password == "-1":
         return -1
 
-    print(f"\n   {user[0][2]}님, 어서오세요. 환영합니다")
+    print(f"\n   {user[0][2]}님, 어서오세요!  환영합니다. :) ")
     return user
 
 
