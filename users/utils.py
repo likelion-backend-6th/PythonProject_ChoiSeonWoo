@@ -62,10 +62,10 @@ def login() -> object:
 def logout():
     print("\n   =======            로그아웃을 진행합니다.            ========\n")
 
-    logout_bool = bool_validation(LOGOUT_MESSAGE)
+    is_loggedout = bool_validation(LOGOUT_MESSAGE)
 
-    if logout_bool:
-        return print("   로그아웃 되었습니다.")
+    if is_loggedout:
+        return print("   로그아웃 되었습니다.\n   초기 화면으로 돌아갑니다.")
     else:
         return True
 
