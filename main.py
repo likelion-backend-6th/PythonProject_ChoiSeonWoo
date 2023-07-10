@@ -1,9 +1,8 @@
 from typing import List, Dict, Callable
 
 from books.utils import fetch_books_list, search_book_list, loan_books, return_books
-from common.database import create_table
+from common.utils import create_table, stand_by
 from common.settings import TABLES, CREATE_QUERY_LISTS
-from common.utils import stand_by
 from common.validation import menu_num_validation, USER_MENU_NUM_LIST, USER_MENU_INIT_MESSAGE, \
     BOOK_MENU_NUM_LIST, BOOK_MENU_INIT_MESSAGE, bool_validation, TERMINATE_MESSAGE
 from users.utils import sign_up, login, logout
@@ -80,6 +79,9 @@ class LibrarySystem:
 
             if result == -1:
                 break
+
+            if type(result) == list:
+                print(result)
 
             if execute_menu_num == "9":
                 current_user_info = self.MENU[execute_menu_num]()
