@@ -155,6 +155,13 @@
 - [37. 상위 메뉴로의 이동에 대한 아이디어 고찰](https://browneyed.notion.site/37-e5c1d88381904d19860940c0847fe732?pvs=4)
 - [38. logout 관련 입력값에 대한 유효성 검증 함수 구현 및 적용](https://browneyed.notion.site/38-logout-658e8798e866466a99b4a88231e6631a?pvs=4)
 - [39. 이전 메뉴로 돌아가기 - 입력값 처리](https://browneyed.notion.site/39-aed0ccf84beb4648a8a27be43652e550?pvs=4)
+- [40. 메인 클래스 - 유저 관리 기능 메서드 구현](https://browneyed.notion.site/40-8c7bb442726143a2824ee9ac7f8caafa?pvs=4)
+- [41. 메인 클래스 - 도서 관리 기능 메서드 구현](https://browneyed.notion.site/41-333435346eeb4afe943df745acfcf55d?pvs=4)
+- [42. 메인 클래스 - 전체 관리 기능 메서드 구현](https://browneyed.notion.site/42-97bbcfe16f3e4bedb62a3029a80ea366?pvs=4)
+- [43. 시스템 종료 여부 입력값에 대한 유효성 검증 함수 구현](https://browneyed.notion.site/43-6e56af810c1946f384a7dbd335d9c35a?pvs=4)
+- [44. 시스템 종료 함수 구현](https://browneyed.notion.site/44-185ae1832cc5466bb724d85e03d5e284?pvs=4)
+- [45. 시스템 대기 여부 입력값에 대한 유효성 검증 함수 구현](https://browneyed.notion.site/45-ffbdc47f912d44a6a9f9f84b964a8880?pvs=4)
+- [46. 시스템 대기 함수 구현](https://browneyed.notion.site/46-2331026d31574c03a5562e1b24bf59c2?pvs=4)
 
 
 
