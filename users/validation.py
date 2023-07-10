@@ -37,7 +37,7 @@ def username_validation():
 
 
 def password_validation():
-    init_message = "   가입에 사용할 비밀번호를 입력해주세요.\n" \
+    init_message = "\n   가입에 사용할 비밀번호를 입력해주세요.\n" \
                    "   (이전 메뉴로 돌아가려면 '-1'을 입력해주세요.)\n" \
                    "   --->  비밀번호 입력  :  "
     cnt = 0
@@ -99,7 +99,7 @@ def user_validation():
 
 
 def password_validation2(user: List):
-    init_message = "   비밀번호를 입력해주세요.\n" \
+    init_message = "\n   비밀번호를 입력해주세요.\n" \
                    "   (이전 메뉴로 돌아가려면 '-1'을 입력해주세요.)\n" \
                    "   --->  입력  :  "
     cnt = 0

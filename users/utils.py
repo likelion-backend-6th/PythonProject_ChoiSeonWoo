@@ -16,7 +16,7 @@ def sign_up():
     elif username == "-1":
         return -1
 
-    fullname = input("   성함을 입력해주세요. : ")
+    fullname = input("\n   성함을 입력해주세요. : ")
 
     if fullname == "-1":
         return -1
