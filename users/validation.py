@@ -1,7 +1,7 @@
 import re
 from typing import List
-from time import sleep
 
+from common.utils import waiting
 from users.models import Users
 
 
@@ -38,10 +38,7 @@ def username_validation():
         if cnt == 3:
             message, cnt = init_message, 0
             print("   3회 이상 실패하였으므로 상위 메뉴로 돌아갑니다.")
-            sleep(0.5)
-            for i in range(3):
-                print(f"   {3 - i}")
-                sleep(0.3)
+            waiting()
             return "-1"
 
 
@@ -69,10 +66,8 @@ def fullname_validation():
         if cnt == 3:
             message, cnt = init_message, 0
             print("   3회 이상 실패하였으므로 상위 메뉴로 돌아갑니다.")
-            sleep(0.5)
-            for i in range(3):
-                print(f"   {3 - i}")
-                sleep(0.3)
+            waiting()
+
             return "-1"
 
 
@@ -100,10 +95,8 @@ def password_validation():
         if cnt == 3:
             message, cnt = init_message, 0
             print("   3회 이상 실패하였으므로 상위 메뉴로 돌아갑니다.")
-            sleep(0.5)
-            for i in range(3):
-                print(f"   {3 - i}")
-                sleep(0.3)
+            waiting()
+
             return "-1"
 
 
@@ -134,10 +127,8 @@ def user_validation():
         if cnt == 3:
             message, cnt = init_message, 0
             print("   3회 이상 실패하였으므로 상위 메뉴로 돌아갑니다.")
-            sleep(0.5)
-            for i in range(3):
-                print(f"   {3 - i}")
-                sleep(0.3)
+            waiting()
+
             return "-1"
 
 
@@ -162,10 +153,8 @@ def password_validation2(user: List):
 
         if cnt == 3:
             print("   3회 이상 실패하였으므로 상위 메뉴로 돌아갑니다.")
-            sleep(0.5)
-            for i in range(3):
-                print(f"   {3 - i}")
-                sleep(0.3)
+            waiting()
+
             return "-1"
 
 
@@ -197,8 +186,6 @@ def user_id_validation():
 
         if cnt == 3:
             print("   3회 이상 실패하였으므로 상위 메뉴로 돌아갑니다.")
-            sleep(0.5)
-            for i in range(3):
-                print(f"   {3 - i}")
-                sleep(0.3)
+            waiting()
+
             return -1

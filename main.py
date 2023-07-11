@@ -1,14 +1,15 @@
 from typing import List, Dict, Callable
 
-from books.utils import fetch_book_list, search_book_list, loan_books, return_books, fetch_my_loan_book_list, \
+from books.core import fetch_book_list, search_book_list, loan_books, return_books, fetch_my_loan_book_list, \
                         fetch_book_in_admin, create_book_in_admin, update_book_in_admin, \
                         fetch_loan_in_admin, create_loan_in_admin, update_loan_in_admin
-from common.utils import create_table, stand_by
+from common.core import create_table, stand_by
 from common.settings import TABLES, CREATE_QUERY_LISTS, ADMIN_USER_ID_LIST
+from common.utils import waiting, clearing, wait_clear, clear_wait_clear
 from common.validation import USER_MENU_NUM_LIST, USER_MENU_INIT_MESSAGE, BOOK_MENU_NUM_LIST, BOOK_MENU_INIT_MESSAGE, \
                               ADMIN_MENU_NUM_LIST, ADMIN_MENU_INIT_MESSAGE, TERMINATE_MESSAGE, \
                               menu_num_validation, bool_validation
-from users.utils import sign_up, login, logout, fetch_user_in_admin, create_user_in_admin, update_user_in_admin
+from users.core import sign_up, login, logout, fetch_user_in_admin, create_user_in_admin, update_user_in_admin
 
 
 class LibrarySystem:
@@ -47,12 +48,14 @@ class LibrarySystem:
         while not self.user:
             execute_menu_num = menu_num_validation(USER_MENU_NUM_LIST, USER_MENU_INIT_MESSAGE)
 
+            clearing()
             if execute_menu_num == "007":
                 result = self.terminate()
             else:
                 result = self.MENU[execute_menu_num]()
 
             if result == -1:
+                clearing()
                 print(self.MESSAGE["manage_user"])
                 continue
             else:
@@ -68,6 +71,8 @@ class LibrarySystem:
                 execute_menu_num = menu_num_validation(ADMIN_MENU_NUM_LIST, ADMIN_MENU_INIT_MESSAGE)
             else:
                 execute_menu_num = menu_num_validation(BOOK_MENU_NUM_LIST, BOOK_MENU_INIT_MESSAGE)
+
+            clearing()
 
             if execute_menu_num == "007":
                 result = self.terminate()
@@ -92,6 +97,7 @@ class LibrarySystem:
                     break
 
             move_input = input("\n   이전 메뉴로 돌아갑니다. 아무 키나 눌러주세요.")
+            clearing()
 
     def terminate(self):
         print("\n   =======            시스템 종료 화면            =======\n")
@@ -99,19 +105,21 @@ class LibrarySystem:
 
         if is_stood_by:
             self.user = None
-
+            clearing()
             return stand_by()
         else:
             return -1
 
     def main(self):
+        clearing()
         print(self.MESSAGE["welcome"])
         create_table(TABLES, CREATE_QUERY_LISTS)
 
         while True:
             if not self.user:
+                wait_clear()
                 self.manage_user()
-
+            wait_clear()
             self.manage_book()
 
             if self.user:
