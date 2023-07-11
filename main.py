@@ -1,13 +1,14 @@
 from typing import List, Dict, Callable
 
-from books.utils import fetch_book_list, search_book_list, loan_books, return_books, fetch_my_loan_book_list
+from books.utils import fetch_book_list, search_book_list, loan_books, return_books, fetch_my_loan_book_list, \
+                        fetch_book_in_admin, create_book_in_admin, update_book_in_admin, \
+                        fetch_loan_in_admin, create_loan_in_admin, update_loan_in_admin
 from common.utils import create_table, stand_by
 from common.settings import TABLES, CREATE_QUERY_LISTS, ADMIN_USER_ID_LIST
 from common.validation import USER_MENU_NUM_LIST, USER_MENU_INIT_MESSAGE, BOOK_MENU_NUM_LIST, BOOK_MENU_INIT_MESSAGE, \
                               ADMIN_MENU_NUM_LIST, ADMIN_MENU_INIT_MESSAGE, TERMINATE_MESSAGE, \
                               menu_num_validation, bool_validation
-
-from users.utils import sign_up, login, logout, fetch_user, create_user, update_user
+from users.utils import sign_up, login, logout, fetch_user_in_admin, create_user_in_admin, update_user_in_admin
 
 
 class LibrarySystem:
@@ -20,17 +21,11 @@ class LibrarySystem:
     }
 
     MENU: Dict[str, Callable] = {
-        "1": fetch_book_list,
-        "2": search_book_list,
-        "3": loan_books,
-        "4": return_books,
-        "5": fetch_my_loan_book_list,
-        "7": sign_up,
-        "8": login,
-        "9": logout,
-        "11": fetch_user,
-        "12": create_user,
-        "13": update_user,
+        "1": fetch_book_list, "2": search_book_list, "3": loan_books, "4": return_books, "5": fetch_my_loan_book_list,
+        "7": sign_up,  "8": login,  "9": logout,
+        "11": fetch_user_in_admin,  "12": create_user_in_admin,  "13": update_user_in_admin,
+        "21": fetch_book_in_admin,  "22": create_book_in_admin,  "23": update_book_in_admin,
+        "31": fetch_loan_in_admin,  "32": create_loan_in_admin,  "33": update_loan_in_admin,
     }
 
     MESSAGE: Dict[str, str] = {
