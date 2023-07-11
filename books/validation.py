@@ -4,10 +4,14 @@ from typing import List
 from books.models import Books
 
 
+FETCH_TYPE = [1, 2, 3, -1]
+
 FETCH_TYPE_MESSAGE = "\n   희망하시는 조회 대상 도서 정보의 번호를 입력해주세요.\n" \
-                     "   [  1. 모든 도서  2. 현재 대출 가능한 도서  ]\n" \
+                     "   [  1. 모든 도서  2. 현재 대출 가능한 도서  3. 나의 대출 도서  ]\n" \
                      "   (상위 메뉴로 돌아가려면 '-1'을 입력해주세요.)\n" \
                      "   -->  번호 입력  :  "
+
+SEARCH_TYPE = [1, 2, -1]
 
 SEARCH_TYPE_MESSAGE = "\n   검색을 희망하는 항목에 대한 번호를 입력해주세요.\n" \
                       "   [  1. ID  2. 제목  ]\n" \
@@ -15,7 +19,7 @@ SEARCH_TYPE_MESSAGE = "\n   검색을 희망하는 항목에 대한 번호를 �
                       "   -->  번호 입력  :  "
 
 
-def type_validation(message: str):
+def type_validation(type_list: List, message: str):
     init_message = message
     cnt = 0
 
@@ -24,7 +28,7 @@ def type_validation(message: str):
     while True:
         try:
             type_ = int(input(message))
-            if type_ in [1, 2, -1]:
+            if type_ in type_list:
                 return type_
             else:
                 error_message = "\n   번호를 잘못 선택하였습니다.\n"
