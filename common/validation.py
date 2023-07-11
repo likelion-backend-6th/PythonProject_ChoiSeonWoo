@@ -7,16 +7,17 @@ BOOK_MENU_NUM_LIST = ["1", "2", "3", "4", "5", "9", "007"]
 BOOK_MENU_INIT_MESSAGE = "   1. 도서 조회   2. 도서 검색   3. 도서 대출   4. 도서 반납   5. 나의 대출 도서\n" \
                          "   9. 로그아웃   007. 프로그램 종료\n\n"
 
-ADMIN_MENU_NUM_LIST = BOOK_MENU_NUM_LIST + ["11", "12", "13", "14", "21", "22", "23", "24", "31", "32", "33", "34"]
+ADMIN_MENU_NUM_LIST = BOOK_MENU_NUM_LIST + ["11", "12", "13", "21", "22", "23", "31", "32", "33"]
 ADMIN_MENU_INIT_MESSAGE = BOOK_MENU_INIT_MESSAGE + \
                           "   ===========              관리자 메뉴               ===========\n\n" \
-                          "   11. 유저 조회   12. 유저 등록   13. 유저 수정   14. 유저 삭제\n" \
-                          "   21. 도서 조회   22. 도서 등록   23. 도서 수정   24. 도서 삭제\n" \
-                          "   31. 대출 조회   32. 대출 등록   33. 대출 수정   34. 대출 삭제\n\n"
+                          "   11. 유저 조회   12. 유저 등록   13. 유저 수정\n" \
+                          "   21. 도서 조회   22. 도서 등록   23. 도서 수정\n" \
+                          "   31. 대출 조회   32. 대출 등록   33. 대출 수정\n\n"
 
 LOGOUT_MESSAGE = "로그아웃"
 TERMINATE_MESSAGE = "시스템을 대기모드로 전환"
 SEARCH_LOANABLE_MESSAGE = "대출 가능한 도서를 먼저 검색"
+PASSWORD_MESSAGE = "비밀번호를 변경"
 
 
 def menu_num_validation(menu_num_list: List, menu_init_message: str) -> str:
