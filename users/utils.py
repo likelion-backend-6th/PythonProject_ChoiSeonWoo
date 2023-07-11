@@ -3,11 +3,12 @@ from typing import List
 
 from common.validation import bool_validation, LOGOUT_MESSAGE
 from users.models import Users
-from users.validation import username_validation, password_validation, user_validation, password_validation2
+from users.validation import username_validation, password_validation, user_validation, password_validation2, \
+    fullname_validation
 
 
 def sign_up():
-    print("\n   =========           회원가입을 진행합니다.           =========\n")
+    print("\n   =========           회원가입을 진행합니다.           =========")
 
     username = username_validation()
 
@@ -16,7 +17,7 @@ def sign_up():
     elif username == "-1":
         return -1
 
-    fullname = input("\n   성함을 입력해주세요. : ")
+    fullname = fullname_validation()
 
     if fullname == "-1":
         return -1
