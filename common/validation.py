@@ -46,7 +46,7 @@ def menu_num_validation(menu_num_list: List, menu_init_message: str) -> str:
                                   "   -->  메뉴 입력  :  "
         if cnt == 3:
             message, cnt = init_message, 0
-            print("   3회 이상 실패하였으므로 이전 메뉴로 돌아갑니다.")
+            print("\n   3회 이상 실패하였으므로 이전 메뉴로 돌아갑니다.")
             waiting()
 
 
@@ -134,7 +134,7 @@ def existed_id_validation(target):
                                    "   -->  메뉴 입력  :  "
 
         if cnt == 3:
-            print("   3회 이상 실패하였으므로 상위 메뉴로 돌아갑니다.")
+            print("\n   3회 이상 실패하였으므로 상위 메뉴로 돌아갑니다.")
             waiting()
 
             return -1
