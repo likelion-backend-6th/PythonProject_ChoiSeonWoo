@@ -10,6 +10,11 @@ load_dotenv()
 DEBUG = False
 
 
+# 관리자 계정
+ADMIN_USER_ID_LIST = os.getenv("ADMIN_USER_ID_LIST")
+ADMIN_USER_ID_LIST = list(map(int, ADMIN_USER_ID_LIST.split(",")))
+
+
 # POSTGRES 설정
 POSTGRES_HOST = os.getenv("POSTGRES_HOST")
 POSTGRES_PORT = os.getenv("POSTGRES_PORT")

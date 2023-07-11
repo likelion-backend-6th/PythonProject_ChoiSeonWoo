@@ -3,9 +3,10 @@ from typing import List, Optional, Tuple
 
 from books.models import Books, Loans
 from books.validation import FETCH_TYPE, FETCH_TYPE_MESSAGE, SEARCH_TYPE, SEARCH_TYPE_MESSAGE, \
-    type_validation, search_validation, loan_book_ids_validation, return_book_ids_validation
+    type_validation, search_validation, loan_book_ids_validation, return_book_ids_validation, \
+    name_validation, datetime_validation
 from common.utils import render_table
-from common.validation import bool_validation, SEARCH_LOANABLE_MESSAGE
+from common.validation import SEARCH_LOANABLE_MESSAGE, bool_validation, existed_id_validation
 from users.models import Users
 
 
@@ -45,7 +46,7 @@ def change_loan_list(loan_list: List) -> List:
     for loan in loan_list:
         if type(loan[3] == datetime):
             loan_date = loan[3].strftime("%Y년 %m월 %d일 %H시 %M분")
-            return_date = loan[4].strftime("%Y년 %m월 %d일") if loan[4] else ''
+            return_date = loan[4].strftime("%Y년 %m월 %d일 %H시 %M분") if loan[4] else ' - '
             loan = list(loan[:3]) + [loan_date, return_date]
 
             result.append(loan)
@@ -188,3 +189,151 @@ def fetch_my_loan_book_list(user: Tuple):
     print(render_table(change_book_list(current_loan_books, 2), 'books'))
 
     return current_loan_books
+
+
+def fetch_book_in_admin():
+    print("\n   =========           모든 도서 정보를 조회합니다.           =========")
+
+    books = Books().get()
+
+    print(render_table(change_book_list(books, 3), "books"))
+
+    return books
+
+
+def create_book_in_admin():
+    print("\n   =========           도서 정보를 등록합니다.           =========")
+
+    title = name_validation("제목")
+    if title == -1:
+        return -1
+
+    author = name_validation("저자")
+    if author == -1:
+        return -1
+
+    publisher = name_validation("출판사")
+    if publisher == -1:
+        return -1
+
+    new_book = Books(title, author, publisher).post()
+
+    book = Books().get(order_by_info=("b.id", "DESC"), size=1)
+
+    print("\n   도서 정보 등록이 완료되었습니다.")
+    print(render_table(change_book_list(book, 1), "books"))
+
+    return book
+
+
+def update_book_in_admin():
+    print("\n   =========           도서 정보를 수정합니다.           =========")
+
+    book = existed_id_validation("books")
+
+    if book == -1:
+        return -1
+
+    title = name_validation("제목")
+    if title == -1:
+        return -1
+
+    author = name_validation("저자")
+    if author == -1:
+        return -1
+
+    publisher = name_validation("출판사")
+    if publisher == -1:
+        return -1
+
+    Books().put(id=book[0], new_title=title, new_author=author, new_publisher=publisher)
+
+    updated_book = Books().get(id=book[0])
+
+    print("\n   도서 정보 수정이 완료되었습니다.")
+    print(render_table(change_book_list(updated_book, 1), "books"))
+
+    return updated_book
+
+
+def fetch_loan_in_admin():
+    print("\n   =========           모든 대출 정보를 조회합니다.           =========")
+
+    loans = Loans().get()
+
+    print(render_table(change_loan_list(loans), "loans"))
+
+    return loans
+
+
+def create_loan_in_admin():
+    print("\n   =========           대출 정보를 등록합니다.           =========")
+
+    user = existed_id_validation("users")
+    if user == -1:
+        return -1
+
+    while True:
+        book = existed_id_validation("books")
+        if book == -1:
+            return -1
+
+        check_book = Books().get(id=book[0])
+        if not check_book[0][4]:
+            print("\n  현재 대출중인 도서이므로 대출 정보 생성이 불가합니다.\n")
+            continue
+        else:
+            break
+
+    loan_date = datetime_validation("대출일자", "현재 시각을 입력하려면")
+    if loan_date == -1:
+        return -1
+    loan_date = datetime.now() if loan_date is None else loan_date
+
+    return_date = datetime_validation("반납일자", "반납일자를 미지정하려면")
+    if return_date == -1:
+        return -1
+
+    new_loan = Loans(user[0], book[0], loan_date, return_date).post()
+    update_book = Books().put(id=book[0])
+
+    loan = Loans().get(order_by_info=("id", "DESC"), size=1)
+
+    print("\n   대출 정보 등록이 완료되었습니다.")
+    print(render_table(change_loan_list(loan), "loans"))
+
+    return book
+
+
+def update_loan_in_admin():
+    print("\n   =========           대출 정보를 수정합니다.           =========")
+
+    loan = existed_id_validation("loans")
+    if loan == -1:
+        return -1
+
+    user = existed_id_validation("users")
+    if user == -1:
+        return -1
+
+    book = existed_id_validation("books")
+    if book == -1:
+        return -1
+
+    loan_date = datetime_validation("대출일자", "현재 시각을 입력하려면")
+    if loan_date == -1:
+        return -1
+
+    return_date = datetime_validation("반납일자", "반납일자를 미지정하려면")
+    if return_date == -1:
+        return -1
+
+    Loans().put(id=loan[0], user_id=user[0], book_id=book[0], loan_date=loan_date, return_date=return_date, return_update=True)
+    updated_book = Books().put  (id=book[0])
+
+    updated_loan = Loans().get(id=loan[0])
+
+    print("\n   대출 정보 수정이 완료되었습니다.")
+    print(render_table(change_loan_list(updated_loan), "loans"))
+
+    return updated_loan

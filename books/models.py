@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import Optional, Union, Tuple, List
+from typing import Optional, Tuple, List
 
 from common.database import DatabaseManager
 
@@ -71,8 +71,10 @@ class Books:
         return books
 
     def post(self):
-        query = f"INSERT INTO books (title, author, publisher) " \
-                 "VALUES ('{self.title}', '{self.author}', '{self.publisher}');"
+        query = f"""
+                    INSERT INTO books (title, author, publisher)
+                    VALUES ('{self.title}', '{self.author}', '{self.publisher}');
+                 """
         DatabaseManager(self.table, query).execute_query()
 
     def put(
@@ -120,8 +122,8 @@ class Loans:
             self,
             user_id: Optional[int] = None,
             book_id: Optional[int] = None,
-            loan_date: Optional[datetime] = None,
-            return_date: Optional[datetime] = None,
+            loan_date: datetime = datetime.now(),
+            return_date: Optional[datetime] = None
     ):
         self.table = "loans"
         self.user_id = user_id
@@ -151,10 +153,11 @@ class Loans:
                 extra_query.append(f"book_id = '{book_id}'")
             if loan_date_info:
                 extra_query.append(f"loan_date {loan_date_info[1]} '{loan_date_info[0]}'")
-            if return_date_info and return_date_info[0] == "NULL":
-                extra_query.append(f"return_date is {return_date_info[0]}")
-            elif return_date_info:
-                extra_query.append(f"return_date {return_date_info[1]} '{return_date_info[0]}'")
+            if type(return_date_info) == Tuple:
+                if return_date_info[1] and return_date_info[0] == "NULL":
+                    extra_query.append(f"return_date is {return_date_info[0]}")
+                elif type(return_date_info[0]) == datetime :
+                    extra_query.append(f"return_date {return_date_info[1]} '{return_date_info[0]}'")
 
         extra_query = "WHERE " + " AND ".join(extra_query) if extra_query else ""
 
@@ -171,19 +174,13 @@ class Loans:
         return loans
 
     def post(self):
-        query_part1 = "INSERT INTO loans (user_id, book_id"
-        query_part2 = f" VALUES ('{self.user_id}', '{self.book_id}'"
-        loan_date_ = f", '{self.loan_date}'" if self.loan_date else ""
-        return_date_ = f"'{self.return_date}'" if self.return_date else "NULL"
+        query = f"""
+                    INSERT INTO loans (user_id, book_id, loan_date, return_date)
+                    VALUES ('{self.user_id}', '{self.book_id}', '{self.loan_date}'
+                 """
+        return_date_ = f", '{self.return_date}');" if self.return_date else ", NULL);"
 
-        if loan_date_:
-            query_part1 += ", loan_date"
-            query_part2 += loan_date_
-
-        query_part1 += ", return_date)"
-        query_part2 += f", {return_date_});"
-
-        query = query_part1 + query_part2
+        query += return_date_
 
         DatabaseManager(self.table, query).execute_query()
 
