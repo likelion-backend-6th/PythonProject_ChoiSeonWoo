@@ -6,12 +6,12 @@ from books.models import Books
 
 FETCH_TYPE_MESSAGE = "\n   희망하시는 조회 대상 도서 정보의 번호를 입력해주세요.\n" \
                      "   [  1. 모든 도서  2. 현재 대출 가능한 도서  ]\n" \
-                     "   (이전 메뉴로 돌아가려면 '-1'을 입력해주세요.)\n" \
+                     "   (상위 메뉴로 돌아가려면 '-1'을 입력해주세요.)\n" \
                      "   -->  번호 입력  :  "
 
 SEARCH_TYPE_MESSAGE = "\n   검색을 희망하는 항목에 대한 번호를 입력해주세요.\n" \
                       "   [  1. ID  2. 제목  ]\n" \
-                      "   (이전 메뉴로 돌아가려면 '-1'을 입력해주세요.)\n" \
+                      "   (상위 메뉴로 돌아가려면 '-1'을 입력해주세요.)\n" \
                       "   -->  번호 입력  :  "
 
 
@@ -33,12 +33,12 @@ def type_validation(message: str):
 
         cnt += 1
         message = error_message + f"   확인 후 번호를 다시 입력해주세요. ({cnt}/3)\n" \
-                                   "   (이전 메뉴로 돌아가려면 '-1'을 입력해주세요.)\n" \
+                                   "   (상위 메뉴로 돌아가려면 '-1'을 입력해주세요.)\n" \
                                    "   -->  메뉴 입력  :  "
 
         if cnt == 3:
             message, cnt = init_message, 0
-            print("\n   3회 이상 실패하였으므로 이전 메뉴로 돌아갑니다.")
+            print("\n   3회 이상 실패하였으므로 상위 메뉴로 돌아갑니다.")
             sleep(0.5)
             for i in range(3):
                 print(f"   {3 - i}")
@@ -49,22 +49,22 @@ def type_validation(message: str):
 def search_validation(search_type: int, book_list: list):
     search_type_list = {1: "ID", 2: "제목"}
     init_message = f"\n   도서의 {search_type_list[search_type]} 을/를 입력해주세요.\n" \
-                    "   (이전 메뉴로 돌아가려면 '-1'을 입력해주세요.)\n" \
+                    "   (상위 메뉴로 돌아가려면 '-1'을 입력해주세요.)\n" \
                    f"   -->  {search_type_list[search_type]} 입력  :  "
     cnt = 0
     message = init_message
 
     while True:
         item = input(message).strip()
-        if item.isdigit() and int(item) == -1:
+        if item == "-1":
             return -1
-        if search_type == 2 or (search_type == 1 and item.isdigit()):
+        if (search_type == 1 and item.isdigit()) or search_type == 2:
             if search_type == 1:
                 book_list: List = list(filter(lambda x: x[0] == int(item), book_list))
             elif search_type == 2:
                 book_list: List = list(filter(lambda x: item in x[1], book_list))
             if not book_list:
-                print(f"\n   해당 {search_type_list[search_type]} (으)로 검색한 도서는 존재하지 않습니다.\n   이전 메뉴로 돌아갑니다.")
+                print(f"\n   해당 {search_type_list[search_type]} (으)로 검색한 도서는 존재하지 않습니다.\n   상위 메뉴로 돌아갑니다.")
                 return []
             return book_list
 
@@ -76,12 +76,12 @@ def search_validation(search_type: int, book_list: list):
         cnt += 1
         message = error_message +  \
                   f"   확인 후 다시 입력해주세요. ({cnt}/3)\n" + \
-                   "   (이전 메뉴로 돌아가려면 '-1'을 입력해주세요.)\n" \
+                   "   (상위 메뉴로 돌아가려면 '-1'을 입력해주세요.)\n" \
                   f"   -->  {search_type_list[search_type]} 입력  :  "
 
         if cnt == 3:
             message, cnt = init_message, 0
-            print("\n   3회 이상 실패하였으므로 이전 메뉴로 돌아갑니다.")
+            print("\n   3회 이상 실패하였으므로 상위 메뉴로 돌아갑니다.")
             sleep(0.5)
             for i in range(3):
                 print(f"   {3 - i}")
@@ -93,7 +93,7 @@ def loan_book_ids_validation():
     loanable_book_id_list = list(map(lambda x: x[0], Books().get(is_available=True)))
     init_message = "\n   대출을 희망하는 도서의 ID를 입력해주세요.\n" \
                    "   여러 권을 대출하고자 하는 경우, 쉼표(,)로 구분하여 ID를 입력해주세요.\n" \
-                   "   (이전 메뉴로 돌아가려면 '-1'을 입력해주세요.)\n" \
+                   "   (상위 메뉴로 돌아가려면 '-1'을 입력해주세요.)\n" \
                    "   -->  ID 입력  :  "
     cnt = 0
     message = init_message
@@ -121,11 +121,11 @@ def loan_book_ids_validation():
         cnt += 1
         message = error_message + f"확인 후 ID를 다시 입력해주세요. ({cnt}/3)\n" \
                                   "   여러 권을 대출하고자 하는 경우, 쉼표(,)로 구분하여 ID를 입력해주세요.\n" \
-                                  "   (이전 메뉴로 돌아가려면 '-1'을 입력해주세요.)\n" \
+                                  "   (상위 메뉴로 돌아가려면 '-1'을 입력해주세요.)\n" \
                                   "   -->  ID 입력  :  "
         if cnt == 3:
             message, cnt = init_message, 0
-            print("\n   3회 이상 실패하였으므로 이전 메뉴로 돌아갑니다.")
+            print("\n   3회 이상 실패하였으므로 상위 메뉴로 돌아갑니다.")
             sleep(0.5)
             for i in range(3):
                 print(f"   {3 - i}")
@@ -139,7 +139,7 @@ def return_book_ids_validation(user_id, retunable_book_list):
 
     init_message = "\n   반납을 희망하는 도서의 ID를 입력해주세요.\n" \
                    "   여러 권을 반납하고자 하는 경우, 쉼표(,)로 구분하여 ID를 입력해주세요.\n" \
-                   "   (이전 메뉴로 돌아가려면 '-1'을 입력해주세요.)\n" \
+                   "   (상위 메뉴로 돌아가려면 '-1'을 입력해주세요.)\n" \
                    "   -->  ID 입력  :  "
     cnt = 0
     message = init_message
@@ -167,11 +167,11 @@ def return_book_ids_validation(user_id, retunable_book_list):
         cnt += 1
         message = error_message + f"\n   확인 후 ID를 다시 입력해주세요. ({cnt}/3)\n" \
                                    "   여러 권을 반납하고자 하는 경우, 쉼표(,)로 구분하여 ID를 입력해주세요.\n" \
-                                   "   (이전 메뉴로 돌아가려면 '-1'을 입력해주세요.)\n" \
+                                   "   (상위 메뉴로 돌아가려면 '-1'을 입력해주세요.)\n" \
                                    "   -->  ID 입력  :  "
         if cnt == 3:
             message, cnt = init_message, 0
-            print("\n   3회 이상 실패하였으므로 이전 메뉴로 돌아갑니다.")
+            print("\n   3회 이상 실패하였으므로 상위 메뉴로 돌아갑니다.")
             sleep(0.5)
             for i in range(3):
                 print(f"   {3 - i}")
