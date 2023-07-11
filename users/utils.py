@@ -1,11 +1,10 @@
 from time import sleep
-from typing import List
 
 from common.utils import render_table
-from common.validation import bool_validation, LOGOUT_MESSAGE, PASSWORD_MESSAGE
+from common.validation import LOGOUT_MESSAGE, PASSWORD_MESSAGE, bool_validation, existed_id_validation
 from users.models import Users
 from users.validation import username_validation, password_validation, user_validation, password_validation2, \
-    fullname_validation, user_id_validation
+    fullname_validation
 
 
 def sign_up():
@@ -70,16 +69,16 @@ def logout():
         return True
 
 
-def fetch_user():
+def fetch_user_in_admin():
     print("\n   =======            모든 유저 정보를 조회합니다.            ========\n")
 
-    user = Users().get()
+    users = Users().get()
 
-    print(render_table(user, "users"))
+    print(render_table(users, "users"))
 
-    return user
+    return users
 
-def create_user():
+def create_user_in_admin():
     print("\n   =========           유저 정보를 등록합니다.           =========")
 
     username = username_validation()
@@ -99,9 +98,7 @@ def create_user():
     if password == "-1":
         return -1
 
-    new_user = Users(username, fullname, password)
-    new_user.post()
-
+    new_user = Users(username, fullname, password).post()
 
     user = Users().get(username=username)
 
@@ -111,10 +108,10 @@ def create_user():
     return user
 
 
-def update_user():
+def update_user_in_admin():
     print("\n   =========           유저 정보를 수정합니다.           =========")
 
-    user = user_id_validation()
+    user = existed_id_validation("users")
 
     if user == -1:
         return -1
@@ -140,4 +137,4 @@ def update_user():
     print("\n   유저 정보 수정이 완료되었습니다.")
     print(render_table(updated_user, "users"))
 
-    return user
+    return updated_user
