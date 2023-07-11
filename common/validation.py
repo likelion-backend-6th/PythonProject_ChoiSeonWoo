@@ -1,6 +1,9 @@
 from time import sleep
 from typing import List, Optional
 
+from books.models import Books, Loans
+from users.models import Users
+
 USER_MENU_NUM_LIST = ["7", "8", "007"]
 USER_MENU_INIT_MESSAGE = "   7. 회원가입   8. 로그인   007. 프로그램 종료\n\n"
 BOOK_MENU_NUM_LIST = ["1", "2", "3", "4", "5", "9", "007"]
@@ -102,3 +105,46 @@ def stand_by_validation() -> int:
                 print(f"   {3 - i}")
                 sleep(0.5)
             return 2
+
+
+def existed_id_validation(target):
+    item_list = {
+        "users": ["유저", Users],
+        "books": ["도서", Books],
+        "loans": ["대출", Loans]
+    }
+
+    init_message = f"\n   {item_list[target][0]}의 ID를 입력해주세요.\n" \
+                   "   (상위 메뉴로 돌아가려면 '-1'을 입력해주세요.)\n" \
+                   "   --->  입력  :  "
+    cnt = 0
+    if target == "loans":
+        item_list[target][1]().get(return_date_info=("NULL", True))
+    objects = item_list[target][1]().get()
+    message = init_message
+
+    while True:
+        try:
+            object_id = int(input(message))
+            if object_id == -1:
+                return -1
+            elif all(object_[0] != object_id for object_ in objects):
+                error_message = f"\n   해당 ID의 {item_list[target][0]} 이/가 존재하지 않습니다.\n"
+            for object_ in objects:
+                if object_[0] == object_id:
+                    return object_
+        except ValueError:
+            error_message = "\n   ID는 숫자만 입력해야 합니다.\n"
+
+        cnt += 1
+        message = error_message + f"   확인 후 ID를 다시 입력해주세요. ({cnt}/3)\n" \
+                                   "   (상위 메뉴로 돌아가려면 '-1'을 입력해주세요.)\n" \
+                                   "   -->  메뉴 입력  :  "
+
+        if cnt == 3:
+            print("   3회 이상 실패하였으므로 상위 메뉴로 돌아갑니다.")
+            sleep(0.5)
+            for i in range(3):
+                print(f"   {3 - i}")
+                sleep(0.3)
+            return -1
