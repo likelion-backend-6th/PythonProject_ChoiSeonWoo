@@ -1,5 +1,6 @@
 import csv
 import sys
+from time import sleep
 from typing import List
 from tabulate import tabulate
 
@@ -22,6 +23,9 @@ def stand_by():
             wait_clear()
             return -1
         if is_stood_by == 3:
+            sleep(0.3)
+            print("\n   =======            시스템을 종료합니다.            =======")
+            wait_clear()
             sys.exit()
         clearing()
 

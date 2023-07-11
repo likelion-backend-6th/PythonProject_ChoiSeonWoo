@@ -64,6 +64,7 @@ def logout():
     is_loggedout = bool_validation(LOGOUT_MESSAGE)
 
     if is_loggedout:
+        print("\n   오늘도 저희 서비스를 이용해주셔서 감사합니다.")
         print("\n   로그아웃 되었습니다.\n   초기 화면으로 돌아갑니다.")
         return wait_clear()
     else:
