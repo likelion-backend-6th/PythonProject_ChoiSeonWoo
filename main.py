@@ -2,24 +2,21 @@ from typing import List, Dict, Callable
 
 from books.utils import fetch_book_list, search_book_list, loan_books, return_books, fetch_my_loan_book_list
 from common.utils import create_table, stand_by
-from common.settings import TABLES, CREATE_QUERY_LISTS
+from common.settings import TABLES, CREATE_QUERY_LISTS, ADMIN_USER_ID_LIST
 from common.validation import menu_num_validation, USER_MENU_NUM_LIST, USER_MENU_INIT_MESSAGE, \
-    BOOK_MENU_NUM_LIST, BOOK_MENU_INIT_MESSAGE, bool_validation, TERMINATE_MESSAGE
+    ADMIN_MENU_NUM_LIST, ADMIN_MENU_INIT_MESSAGE, BOOK_MENU_NUM_LIST, BOOK_MENU_INIT_MESSAGE, \
+    bool_validation, TERMINATE_MESSAGE
+
 from users.utils import sign_up, login, logout
 
 
 class LibrarySystem:
     MENU_INFO: Dict[str, str] = {
-        "1": "도서 조회",
-        "2": "도서 검색",
-        "3": "도서 대출",
-        "4": "도서 반납",
-        "5": "나의 대출 도서",
-        "7": "회원 가입",
-        "8": "로그인",
-        "9": "로그아웃",
-        "-1": "이전 메뉴",
-        "007": "프로그램 종료",
+        "1": "도서 조회",   "2": "도서 검색",   "3": "도서 대출",    "4": "도서 반납",    "5": "나의 대출 도서",
+        "7": "회원 가입",   "8": "로그인",      "9": "로그아웃",    "-1": "이전 메뉴",    "007": "프로그램 종료",
+        "11": "유저 조회",  "12": "유저 등록",  "13": "유저 수정",  "14": "유저 삭제",
+        "21": "도서 조회",  "22": "도서 등록",  "23": "도서 수정",  "24": "도서 삭제",
+        "31": "대출 조회",  "32": "대출 등록",  "33": "대출 수정",  "34": "대출 삭제",
     }
 
     MENU: Dict[str, Callable] = {
@@ -69,7 +66,10 @@ class LibrarySystem:
         while True:
             print(self.MESSAGE["manage_book"])
             result = 0
-            execute_menu_num = menu_num_validation(BOOK_MENU_NUM_LIST, BOOK_MENU_INIT_MESSAGE)
+            if self.user[0][0] in ADMIN_USER_ID_LIST:
+                execute_menu_num = menu_num_validation(ADMIN_MENU_NUM_LIST, ADMIN_MENU_INIT_MESSAGE)
+            else:
+                execute_menu_num = menu_num_validation(BOOK_MENU_NUM_LIST, BOOK_MENU_INIT_MESSAGE)
 
             if execute_menu_num == "007":
                 result = self.terminate()
