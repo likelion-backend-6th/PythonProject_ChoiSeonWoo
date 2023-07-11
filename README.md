@@ -115,6 +115,41 @@
 
 <br>
 
+## 📺 동작 화면
+
+<br>
+
+| 관리자 접속 시 화면 | 일반 사용자 접속 시 화면   |
+|:-----------:|:-----------:|
+| ![00  관리자 접속 시 화면](https://github.com/likelion-backend-6th/PythonProject_ChoiSeonWoo/assets/104040502/ba30c410-3cb8-466c-88c7-bc4cdf131865) | ![00  일반 사용자 접속 시 화면](https://github.com/likelion-backend-6th/PythonProject_ChoiSeonWoo/assets/104040502/2d4ee6d5-99d7-4d3a-a4e5-22ca8c846ec0) |
+
+| 프로그램 실행 및 로그인 | 회원가입  |
+|:-----------:|:-----------:|
+| ![01  프로그램 실행 및 로그인](https://github.com/likelion-backend-6th/PythonProject_ChoiSeonWoo/assets/104040502/aa3360f0-5f0f-4e13-a47f-d63926a50321) | ![02  회원가입](https://github.com/likelion-backend-6th/PythonProject_ChoiSeonWoo/assets/104040502/0bfbbc45-2b43-41cc-85ed-291075f97f90) |
+
+| 일반 사용자 로그인 | 로그인 ↔ 회원가입 메뉴 전환 |
+|:-----------:|:-----------:|
+| ![03  일반 사용자 로그인](https://github.com/likelion-backend-6th/PythonProject_ChoiSeonWoo/assets/104040502/e618aaf6-b57c-4004-b6f3-e75e2d87e73d) | ![04  로그인 ↔ 회원가입 메뉴 전환](https://github.com/likelion-backend-6th/PythonProject_ChoiSeonWoo/assets/104040502/d24607c9-3ac7-461c-98fa-59ad907b14df) |
+
+| 도서 조회 | 도서 검색 |
+|:-----------:|:-----------:|
+| ![06  도서 조회](https://github.com/likelion-backend-6th/PythonProject_ChoiSeonWoo/assets/104040502/5b299c7d-8152-4d74-b86e-9b3590ef0187) | ![07  도서 검색](https://github.com/likelion-backend-6th/PythonProject_ChoiSeonWoo/assets/104040502/c1ae7126-90fd-4afd-90f0-564ea9a23674) |
+
+| 도서 대여 | 도서 반납 |
+|:-----------:|:-----------:|
+| ![08  도서 대여](https://github.com/likelion-backend-6th/PythonProject_ChoiSeonWoo/assets/104040502/63bf4b2d-c467-4eee-84da-e596bdf38bd4) | ![09  도서 반납](https://github.com/likelion-backend-6th/PythonProject_ChoiSeonWoo/assets/104040502/3b41e50e-821f-49e5-8c83-9b225d555aa4) |
+
+| 나의 대출 도서 조회 | 유효성 검증 |
+|:-----------:|:-----------:|
+| ![09  도서 반납](https://github.com/likelion-backend-6th/PythonProject_ChoiSeonWoo/assets/104040502/4973d423-39ab-46bd-861a-ea17010b1dc3) | ![12  시스템 대기／종료](https://github.com/likelion-backend-6th/PythonProject_ChoiSeonWoo/assets/104040502/03bbefae-d357-48d9-8fa3-f09c472293c1) |
+
+| 로그아웃 | 시스템 대기／종료 |
+|:-----------:|:-----------:|
+| ![11  로그아웃](https://github.com/likelion-backend-6th/PythonProject_ChoiSeonWoo/assets/104040502/5ee301fa-9a4a-4e76-8c00-19e2039a1e7d) | ![12  시스템 대기／종료](https://github.com/likelion-backend-6th/PythonProject_ChoiSeonWoo/assets/104040502/f007fbec-87c0-43f1-a14d-f5d5b67bf4c4) |
+
+<br>
+<br>
+
 ## 📌 Notion
 - [01. github 관련 설정](https://browneyed.notion.site/01-github-d3648c9203474a72a7186b30490bc5b6?pvs=4)
 - [02. 프로젝트 구조 설정](https://browneyed.notion.site/02-195e169e850a4a5685b8d2baa5d3d235?pvs=4)
