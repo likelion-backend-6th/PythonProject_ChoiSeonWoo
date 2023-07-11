@@ -5,8 +5,8 @@ from typing import List, Union, Optional
 from tabulate import tabulate
 
 from books.models import Books, Loans
-from books.validation import FETCH_TYPE_MESSAGE, SEARCH_TYPE_MESSAGE, type_validation, search_validation, \
-    loan_book_ids_validation, return_book_ids_validation
+from books.validation import FETCH_TYPE, FETCH_TYPE_MESSAGE, SEARCH_TYPE, SEARCH_TYPE_MESSAGE, \
+     type_validation, search_validation, loan_book_ids_validation, return_book_ids_validation
 from common.utils import render_table
 from common.validation import bool_validation, SEARCH_LOANABLE_MESSAGE
 from users.models import Users
@@ -56,9 +56,9 @@ def change_loan_list(loan_list: List) -> List:
     return result if result else loan_list
 
 
-def fetch_book_list() -> List | int:
+def fetch_book_list(user_id: Optional[int] = None) -> List | int:
     print("\n   =========           도서 조회를 진행합니다.          =========")
-    fetch_type = type_validation(FETCH_TYPE_MESSAGE)
+    fetch_type = type_validation(FETCH_TYPE, FETCH_TYPE_MESSAGE)
 
     if fetch_type == -1:
         return -1
@@ -69,8 +69,11 @@ def fetch_book_list() -> List | int:
     elif fetch_type == 2:
         book_list: List = Books().get(is_available=True)
 
-    if not book_list:
-        print("\n   현재 모든 도서가 대출중입니다.\n")
+        if not book_list:
+            print("\n   현재 모든 도서가 대출중입니다.\n")
+
+    elif fetch_type == 3:
+        book_list: List = Books().get(user_id=user_id, is_available=False)
 
     func_type = 2 if fetch_type == 1 else 1
     print("\n   [조회 결과]")
@@ -98,7 +101,7 @@ def search_book_list(book_list: Optional[List] = None) -> List | int:
         elif book_check is None:
             return -1
 
-    search_type = type_validation(SEARCH_TYPE_MESSAGE)
+    search_type = type_validation(SEARCH_TYPE, SEARCH_TYPE_MESSAGE)
     if search_type == -1:
         return -1
 
