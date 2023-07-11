@@ -46,9 +46,9 @@ class Users:
 
     def post(self):
         query = f"""
-        INSERT INTO users (username, fullname, password)
-        VALUES ('{self.username}', '{self.fullname}', '{self.password}')
-        """
+                    INSERT INTO users (username, fullname, password)
+                    VALUES ('{self.username}', '{self.fullname}', '{self.password}');
+                 """
         DatabaseManager(self.table, query).execute_query()
 
     def put(self,
