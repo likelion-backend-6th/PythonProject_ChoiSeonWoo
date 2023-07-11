@@ -3,20 +3,20 @@ from typing import List, Dict, Callable
 from books.utils import fetch_book_list, search_book_list, loan_books, return_books, fetch_my_loan_book_list
 from common.utils import create_table, stand_by
 from common.settings import TABLES, CREATE_QUERY_LISTS, ADMIN_USER_ID_LIST
-from common.validation import menu_num_validation, USER_MENU_NUM_LIST, USER_MENU_INIT_MESSAGE, \
-    ADMIN_MENU_NUM_LIST, ADMIN_MENU_INIT_MESSAGE, BOOK_MENU_NUM_LIST, BOOK_MENU_INIT_MESSAGE, \
-    bool_validation, TERMINATE_MESSAGE
+from common.validation import USER_MENU_NUM_LIST, USER_MENU_INIT_MESSAGE, BOOK_MENU_NUM_LIST, BOOK_MENU_INIT_MESSAGE, \
+                              ADMIN_MENU_NUM_LIST, ADMIN_MENU_INIT_MESSAGE, TERMINATE_MESSAGE, \
+                              menu_num_validation, bool_validation
 
-from users.utils import sign_up, login, logout
+from users.utils import sign_up, login, logout, fetch_user, create_user, update_user
 
 
 class LibrarySystem:
     MENU_INFO: Dict[str, str] = {
         "1": "도서 조회",   "2": "도서 검색",   "3": "도서 대출",    "4": "도서 반납",    "5": "나의 대출 도서",
         "7": "회원 가입",   "8": "로그인",      "9": "로그아웃",    "-1": "이전 메뉴",    "007": "프로그램 종료",
-        "11": "유저 조회",  "12": "유저 등록",  "13": "유저 수정",  "14": "유저 삭제",
-        "21": "도서 조회",  "22": "도서 등록",  "23": "도서 수정",  "24": "도서 삭제",
-        "31": "대출 조회",  "32": "대출 등록",  "33": "대출 수정",  "34": "대출 삭제",
+        "11": "유저 조회",  "12": "유저 등록",  "13": "유저 수정",
+        "21": "도서 조회",  "22": "도서 등록",  "23": "도서 수정",
+        "31": "대출 조회",  "32": "대출 등록",  "33": "대출 수정",
     }
 
     MENU: Dict[str, Callable] = {
@@ -28,6 +28,9 @@ class LibrarySystem:
         "7": sign_up,
         "8": login,
         "9": logout,
+        "11": fetch_user,
+        "12": create_user,
+        "13": update_user,
     }
 
     MESSAGE: Dict[str, str] = {
@@ -77,7 +80,10 @@ class LibrarySystem:
             elif execute_menu_num in ["1", "3", "4", "5"]:
                 result = self.MENU[execute_menu_num](self.user[0])
 
-            elif execute_menu_num == "2":
+            elif execute_menu_num in [
+                                        "2", "11", "12", "13", "14", "21", "22", "23", "24",
+                                        "31", "32", "33", "34"
+                                      ]:
                 result = self.MENU[execute_menu_num]()
 
             if result == -1:
