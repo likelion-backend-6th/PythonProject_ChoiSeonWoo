@@ -1,7 +1,7 @@
-from time import sleep
 from typing import List, Optional
 
 from books.models import Books, Loans
+from common.utils import waiting
 from users.models import Users
 
 USER_MENU_NUM_LIST = ["7", "8", "007"]
@@ -47,14 +47,11 @@ def menu_num_validation(menu_num_list: List, menu_init_message: str) -> str:
         if cnt == 3:
             message, cnt = init_message, 0
             print("   3회 이상 실패하였으므로 이전 메뉴로 돌아갑니다.")
-            sleep(0.5)
-            for i in range(3):
-                print(f"   {3 - i}")
-                sleep(0.3)
+            waiting()
 
 
 def bool_validation(execute_meessage: str) -> Optional[bool]:
-    init_message = f"   {execute_meessage} 하시겠습니까? (Y/n)\n" \
+    init_message = f"\n   {execute_meessage} 하시겠습니까? (Y/n)\n" \
                     "   --->  입력  :  "
     cnt = 0
     message = init_message
@@ -71,10 +68,7 @@ def bool_validation(execute_meessage: str) -> Optional[bool]:
 
         if cnt == 3:
             print("\n   3회 이상 실패하였으므로 이전 메뉴로 돌아갑니다.")
-            sleep(0.5)
-            for i in range(3):
-                print(f"   {3 - i}")
-                sleep(0.5)
+            waiting()
 
             return None
 
@@ -100,10 +94,8 @@ def stand_by_validation() -> int:
         if cnt == 3:
             message, cnt = init_message, 0
             print("\n   잠시 후 다시 이용해주세요.")
-            sleep(0.5)
-            for i in range(3):
-                print(f"   {3 - i}")
-                sleep(0.5)
+            waiting()
+
             return 2
 
 
@@ -143,8 +135,6 @@ def existed_id_validation(target):
 
         if cnt == 3:
             print("   3회 이상 실패하였으므로 상위 메뉴로 돌아갑니다.")
-            sleep(0.5)
-            for i in range(3):
-                print(f"   {3 - i}")
-                sleep(0.3)
+            waiting()
+
             return -1

@@ -1,9 +1,9 @@
 import re
 from datetime import datetime
-from time import sleep
 from typing import List
 
 from books.models import Books
+from common.utils import waiting
 
 FETCH_TYPE = [1, 2, 3, -1]
 
@@ -44,10 +44,8 @@ def type_validation(type_list: List, message: str):
         if cnt == 3:
             message, cnt = init_message, 0
             print("\n   3회 이상 실패하였으므로 상위 메뉴로 돌아갑니다.")
-            sleep(0.5)
-            for i in range(3):
-                print(f"   {3 - i}")
-                sleep(0.3)
+            waiting()
+
             return -1
 
 
@@ -87,10 +85,8 @@ def search_validation(search_type: int, book_list: list):
         if cnt == 3:
             message, cnt = init_message, 0
             print("\n   3회 이상 실패하였으므로 상위 메뉴로 돌아갑니다.")
-            sleep(0.5)
-            for i in range(3):
-                print(f"   {3 - i}")
-                sleep(0.3)
+            waiting()
+
             return -1
 
 
@@ -131,10 +127,8 @@ def loan_book_ids_validation():
         if cnt == 3:
             message, cnt = init_message, 0
             print("\n   3회 이상 실패하였으므로 상위 메뉴로 돌아갑니다.")
-            sleep(0.5)
-            for i in range(3):
-                print(f"   {3 - i}")
-                sleep(0.3)
+            waiting()
+
             return -1
 
 
@@ -177,10 +171,8 @@ def return_book_ids_validation(user_id, retunable_book_list):
         if cnt == 3:
             message, cnt = init_message, 0
             print("\n   3회 이상 실패하였으므로 상위 메뉴로 돌아갑니다.")
-            sleep(0.5)
-            for i in range(3):
-                print(f"   {3 - i}")
-                sleep(0.3)
+            waiting()
+
             return -1
 
 
@@ -207,10 +199,8 @@ def name_validation(name):
         if cnt == 3:
             message, cnt = init_message, 0
             print("   3회 이상 실패하였으므로 상위 메뉴로 돌아갑니다.")
-            sleep(0.5)
-            for i in range(3):
-                print(f"   {3 - i}")
-                sleep(0.3)
+            waiting()
+
             return "-1"
 
 
@@ -245,8 +235,6 @@ def datetime_validation(name, message):
 
         if cnt == 3:
             print("   3회 이상 실패하였으므로 상위 메뉴로 돌아갑니다.")
-            sleep(0.5)
-            for i in range(3):
-                print(f"   {3 - i}")
-                sleep(0.3)
+            waiting()
+
             return -1
