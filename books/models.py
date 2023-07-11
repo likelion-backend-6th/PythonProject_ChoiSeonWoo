@@ -65,7 +65,7 @@ class Books:
 
         limit_query = f" LIMIT {size};" if size else ";"
         query += limit_query
-        print(query)
+
         books = DatabaseManager(self.table, query).fetch_all()
 
         return books
@@ -97,7 +97,7 @@ class Books:
         else:
             change_isavailable = "is_available = NOT is_available"
             query += change_isavailable + end_query
-        print(query)
+
         DatabaseManager(self.table, query).execute_query()
 
     def handle_complex_query(
@@ -165,7 +165,7 @@ class Loans:
 
         limit_query = f" LIMIT {size};" if size else ";"
         query += limit_query
-        print(query)
+
         loans = DatabaseManager(self.table, query).fetch_all()
 
         return loans
@@ -184,7 +184,7 @@ class Loans:
         query_part2 += f", {return_date_});"
 
         query = query_part1 + query_part2
-        print(query)
+
         DatabaseManager(self.table, query).execute_query()
 
     def put(
@@ -216,7 +216,7 @@ class Loans:
             extra_query.append(f"return_date = {return_date_}")
 
         query += ', '.join(extra_query) + end_query
-        print(query)
+
         DatabaseManager(self.table, query).execute_query()
 
     def handle_complex_query(

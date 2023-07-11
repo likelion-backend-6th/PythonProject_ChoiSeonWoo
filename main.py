@@ -1,9 +1,8 @@
 from typing import List, Dict, Callable
 
-from books.utils import fetch_books_list, search_book_list, loan_books, return_books
-from common.database import create_table
+from books.utils import fetch_book_list, search_book_list, loan_books, return_books
+from common.utils import create_table, stand_by
 from common.settings import TABLES, CREATE_QUERY_LISTS
-from common.utils import stand_by
 from common.validation import menu_num_validation, USER_MENU_NUM_LIST, USER_MENU_INIT_MESSAGE, \
     BOOK_MENU_NUM_LIST, BOOK_MENU_INIT_MESSAGE, bool_validation, TERMINATE_MESSAGE
 from users.utils import sign_up, login, logout
@@ -23,7 +22,7 @@ class LibrarySystem:
     }
 
     MENU: Dict[str, Callable] = {
-        "1": fetch_books_list,
+        "1": fetch_book_list,
         "2": search_book_list,
         "3": loan_books,
         "4": return_books,
@@ -87,6 +86,8 @@ class LibrarySystem:
                 if current_user_info is None:
                     self.user = current_user_info
                     break
+
+            move_input = input("\n   이전 메뉴로 돌아갑니다. 아무 키나 눌러주세요.")
 
     def terminate(self):
         print("\n   =======            시스템 종료 화면            =======\n")

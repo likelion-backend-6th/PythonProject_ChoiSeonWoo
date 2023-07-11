@@ -9,6 +9,7 @@ BOOK_MENU_INIT_MESSAGE = "   1. 도서 조회   2. 도서 검색   3. 도서 대
 
 LOGOUT_MESSAGE = "로그아웃"
 TERMINATE_MESSAGE = "시스템을 대기모드로 전환"
+SEARCH_LOANABLE_MESSAGE = "대출 가능한 도서를 먼저 검색"
 
 
 def menu_num_validation(menu_num_list: List, menu_init_message: str) -> str:
@@ -34,7 +35,7 @@ def menu_num_validation(menu_num_list: List, menu_init_message: str) -> str:
                                   "   -->  메뉴 입력  :  "
         if cnt == 3:
             message, cnt = init_message, 0
-            print("   3회 이상 실패하였으므로 초기 메뉴로 돌아갑니다.")
+            print("   3회 이상 실패하였으므로 이전 메뉴로 돌아갑니다.")
             sleep(0.5)
             for i in range(3):
                 print(f"   {3 - i}")
@@ -54,11 +55,11 @@ def bool_validation(execute_meessage: str) -> Optional[bool]:
         elif bool_type.lower() in ["n", "no", "아니오"]:
             return False
         cnt += 1
-        message = f"\n   {execute_meessage} 여부를 바르게 입력해주세요. ({cnt}/3)\n" \
+        message = f"\n   올바른 값을 입력해주세요. ({cnt}/3)\n" \
                   "   -->  (Y/N) 입력  :  "
 
         if cnt == 3:
-            print("\n   3회 이상 실패하였으므로 초기 메뉴로 돌아갑니다.")
+            print("\n   3회 이상 실패하였으므로 이전 메뉴로 돌아갑니다.")
             sleep(0.5)
             for i in range(3):
                 print(f"   {3 - i}")
