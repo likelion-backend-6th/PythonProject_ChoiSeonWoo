@@ -1,8 +1,9 @@
+import re
+from datetime import datetime
 from time import sleep
 from typing import List
 
 from books.models import Books
-
 
 FETCH_TYPE = [1, 2, 3, -1]
 
@@ -176,6 +177,74 @@ def return_book_ids_validation(user_id, retunable_book_list):
         if cnt == 3:
             message, cnt = init_message, 0
             print("\n   3회 이상 실패하였으므로 상위 메뉴로 돌아갑니다.")
+            sleep(0.5)
+            for i in range(3):
+                print(f"   {3 - i}")
+                sleep(0.3)
+            return -1
+
+
+def name_validation(name):
+    init_message = f"\n   {name} 을/를 입력해주세요.\n" \
+                    "   (상위 메뉴로 돌아가려면 '-1'을 입력해주세요.)\n" \
+                   f"   -->  {name} 입력  :  "
+    cnt = 0
+    message = init_message
+    match = "^[가-힣]{1}$|^[가-힣]{1}[가-힣\s]{0,}[가-힣]{1}$|^[A-Za-z]{1}$|^[A-Za-z]{1}[A-Za-z\s]{1,}[A-Za-z]{1,}$"
+    validation = re.compile(match)
+
+    while True:
+        name = input(message)
+        if name == "-1" or validation.match(name) is not None:
+            return name
+
+        cnt += 1
+        message = f"\n   1자 이상의 한글 혹은 3자 이상의 영문으로 작성해주세요. ({cnt}/3)\n" \
+                  f"   확인 후 {name} 을/를 다시 입력해주세요.\n" \
+                   "   (상위 메뉴로 돌아가려면 '-1'을 입력해주세요.)\n" \
+                  f"   -->  {name} 입력  :  "
+
+        if cnt == 3:
+            message, cnt = init_message, 0
+            print("   3회 이상 실패하였으므로 상위 메뉴로 돌아갑니다.")
+            sleep(0.5)
+            for i in range(3):
+                print(f"   {3 - i}")
+                sleep(0.3)
+            return "-1"
+
+
+def datetime_validation(name, message):
+    init_message = f"\n   'yyyy, mm, dd, hh, mm, ss'  형식으로 {name}의 일시를 입력해주세요.\n" \
+                   f"   {message} Enter를 바로 눌러주세요.\n" \
+                    "   (상위 메뉴로 돌아가려면 '-1'을 입력해주세요.)\n" \
+                    "   --->  입력  :  "
+
+    cnt = 0
+    message = init_message
+
+    while True:
+        try:
+            input_data = input(message)
+
+            if not input_data:
+                return None
+            if input_data == "-1":
+                return -1
+            else:
+                date_data = list(map(int,input_data.replace(" ", "").split(",")))
+                return datetime(*date_data)
+        except ValueError:
+                error_message = "\n   'yyyy, mm, dd, hh, mm, ss'  형식으로 입력해주세요." \
+                                "\n   시, 분, 초는 미입력 시 0으로 자동 입력됩니다.\n"
+
+        cnt += 1
+        message = error_message + f"   확인 후 다시 입력해주세요. ({cnt}/3)\n" \
+                                  "   (상위 메뉴로 돌아가려면 '-1'을 입력해주세요.)\n" \
+                                  "   -->  메뉴 입력  :  "
+
+        if cnt == 3:
+            print("   3회 이상 실패하였으므로 상위 메뉴로 돌아갑니다.")
             sleep(0.5)
             for i in range(3):
                 print(f"   {3 - i}")
