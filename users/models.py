@@ -60,12 +60,14 @@ class Users:
         query = f"UPDATE users SET fullname = '{fullname}' "
 
         if password:
-            query += f", password = '{password}' WHERE "
+            query += f", password = '{password}'"
 
         if id:
-            query += f"id = {id};"
+            query += f"WHERE id = {id}"
         elif username:
-            query += f"username = '{username};"
+            query += f"WHERE username = '{username}"
+
+        query += ";"
 
         DatabaseManager(self.table, query).execute_query()
 
