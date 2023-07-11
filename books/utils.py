@@ -7,6 +7,7 @@ from tabulate import tabulate
 from books.models import Books, Loans
 from books.validation import FETCH_TYPE_MESSAGE, SEARCH_TYPE_MESSAGE, type_validation, search_validation, \
     loan_book_ids_validation, return_book_ids_validation
+from common.utils import render_table
 from common.validation import bool_validation, SEARCH_LOANABLE_MESSAGE
 from users.models import Users
 
@@ -53,25 +54,6 @@ def change_loan_list(loan_list: List) -> List:
             result.append(loan)
 
     return result if result else loan_list
-
-
-def render_table(data, table_name):
-    headers = []
-    if table_name =="users":
-        headers = ["No.", "ID", "사용자명", "성함"]
-    elif table_name =="books":
-        headers = ["NO.", "ID", "제목", "저자", "출판사", "대출가능여부", "대출일"]
-        headers = headers[:len(data[0])+1]
-    elif table_name == "loans":
-        headers = ["NO.", "ID", "사용자 ID", "도서 ID", "대출일", "반납일"]
-
-    table = tabulate(data, headers=headers, tablefmt="fancy_grid",
-                     showindex=True, numalign='center', stralign='left', maxcolwidths=30)
-    table_lines = table.split("\n")
-    table_lines_modified = ["   " + line for line in table_lines]
-    table = "\n".join(table_lines_modified)
-
-    return table
 
 
 def fetch_book_list() -> List | int:
