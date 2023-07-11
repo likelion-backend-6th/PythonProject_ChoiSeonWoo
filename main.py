@@ -1,6 +1,6 @@
 from typing import List, Dict, Callable
 
-from books.utils import fetch_book_list, search_book_list, loan_books, return_books
+from books.utils import fetch_book_list, search_book_list, loan_books, return_books, fetch_my_loan_book_list
 from common.utils import create_table, stand_by
 from common.settings import TABLES, CREATE_QUERY_LISTS
 from common.validation import menu_num_validation, USER_MENU_NUM_LIST, USER_MENU_INIT_MESSAGE, \
@@ -14,6 +14,7 @@ class LibrarySystem:
         "2": "도서 검색",
         "3": "도서 대출",
         "4": "도서 반납",
+        "5": "나의 대출 도서",
         "7": "회원 가입",
         "8": "로그인",
         "9": "로그아웃",
@@ -26,6 +27,7 @@ class LibrarySystem:
         "2": search_book_list,
         "3": loan_books,
         "4": return_books,
+        "5": fetch_my_loan_book_list,
         "7": sign_up,
         "8": login,
         "9": logout,
@@ -72,10 +74,11 @@ class LibrarySystem:
             if execute_menu_num == "007":
                 result = self.terminate()
 
-            elif execute_menu_num in ["1", "2"]:
+            elif execute_menu_num in ["1", "3", "4", "5"]:
+                result = self.MENU[execute_menu_num](self.user[0])
+
+            elif execute_menu_num == "2":
                 result = self.MENU[execute_menu_num]()
-            elif execute_menu_num in ["3", "4"]:
-                result = self.MENU[execute_menu_num](self.user[0][0])
 
             if result == -1:
                 break
