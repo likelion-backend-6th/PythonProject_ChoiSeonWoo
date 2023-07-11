@@ -5,7 +5,7 @@ from books.models import Books, Loans
 from books.validation import FETCH_TYPE, FETCH_TYPE_MESSAGE, SEARCH_TYPE, SEARCH_TYPE_MESSAGE, \
     type_validation, search_validation, loan_book_ids_validation, return_book_ids_validation, \
     name_validation, datetime_validation
-from common.utils import render_table
+from common.core import render_table
 from common.validation import SEARCH_LOANABLE_MESSAGE, bool_validation, existed_id_validation
 from users.models import Users
 

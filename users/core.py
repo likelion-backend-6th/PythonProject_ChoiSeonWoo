@@ -1,6 +1,5 @@
-from time import sleep
-
-from common.utils import render_table
+from common.core import render_table
+from common.utils import waiting, clearing, wait_clear
 from common.validation import LOGOUT_MESSAGE, PASSWORD_MESSAGE, bool_validation, existed_id_validation
 from users.models import Users
 from users.validation import username_validation, password_validation, user_validation, password_validation2, \
@@ -13,6 +12,7 @@ def sign_up():
     username = username_validation()
 
     if username == "8":
+        clearing()
         return login()
     elif username == "-1":
         return -1
@@ -32,10 +32,8 @@ def sign_up():
 
     print("\n   회원가입이 완료되었습니다.\n"
           "   이어서 로그인을 바로 진행하도록 하겠습니다.")
-    sleep(0.5)
-    for i in range(3):
-        print(f"   {3 - i}")
-        sleep(0.5)
+    wait_clear()
+
     return login()
 
 
@@ -45,6 +43,7 @@ def login() -> object:
     user = user_validation()
 
     if user == "7":
+        clearing()
         return sign_up()
     elif user == "-1":
         return -1
@@ -54,6 +53,7 @@ def login() -> object:
     if password == "-1":
         return -1
 
+    clearing()
     print(f"\n   {user[0][2]}님, 어서오세요!  환영합니다. :) ")
     return user
 
@@ -64,7 +64,8 @@ def logout():
     is_loggedout = bool_validation(LOGOUT_MESSAGE)
 
     if is_loggedout:
-        return print("\n   로그아웃 되었습니다.\n   초기 화면으로 돌아갑니다.")
+        print("\n   로그아웃 되었습니다.\n   초기 화면으로 돌아갑니다.")
+        return wait_clear()
     else:
         return True
 
