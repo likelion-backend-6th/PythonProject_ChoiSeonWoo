@@ -41,7 +41,7 @@ def username_validation():
             sleep(0.5)
             for i in range(3):
                 print(f"   {3 - i}")
-                sleep(0.5)
+                sleep(0.3)
             return "-1"
 
 
@@ -72,13 +72,13 @@ def fullname_validation():
             sleep(0.5)
             for i in range(3):
                 print(f"   {3 - i}")
-                sleep(0.5)
+                sleep(0.3)
             return "-1"
 
 
 
 def password_validation():
-    init_message = "\n   가입에 사용할 비밀번호를 입력해주세요.\n" \
+    init_message = "\n   사용할 비밀번호를 입력해주세요.\n" \
                    "   (상위 메뉴로 돌아가려면 '-1'을 입력해주세요.)\n" \
                    "   --->  비밀번호 입력  :  "
     cnt = 0
@@ -103,7 +103,7 @@ def password_validation():
             sleep(0.5)
             for i in range(3):
                 print(f"   {3 - i}")
-                sleep(0.5)
+                sleep(0.3)
             return "-1"
 
 
@@ -137,7 +137,7 @@ def user_validation():
             sleep(0.5)
             for i in range(3):
                 print(f"   {3 - i}")
-                sleep(0.5)
+                sleep(0.3)
             return "-1"
 
 
@@ -165,5 +165,40 @@ def password_validation2(user: List):
             sleep(0.5)
             for i in range(3):
                 print(f"   {3 - i}")
-                sleep(0.5)
+                sleep(0.3)
             return "-1"
+
+
+def user_id_validation():
+    init_message = "\n   유저의 ID를 입력해주세요.\n" \
+                   "   (상위 메뉴로 돌아가려면 '-1'을 입력해주세요.)\n" \
+                   "   --->  입력  :  "
+    cnt = 0
+    users = Users().get()
+    message = init_message
+
+    while True:
+        try:
+            user_id = int(input(message))
+            if user_id == -1:
+                return -1
+            elif all(user[0] != user_id for user in users):
+                error_message = "\n   해당 ID의 유저가 존재하지 않습니다.\n"
+            for user in users:
+                if user[0] == user_id:
+                    return user
+        except ValueError:
+            error_message = "\n   ID는 숫자만 입력해야 합니다.\n"
+
+        cnt += 1
+        message = error_message + f"   확인 후 ID를 다시 입력해주세요. ({cnt}/3)\n" \
+                                   "   (상위 메뉴로 돌아가려면 '-1'을 입력해주세요.)\n" \
+                                   "   -->  메뉴 입력  :  "
+
+        if cnt == 3:
+            print("   3회 이상 실패하였으므로 상위 메뉴로 돌아갑니다.")
+            sleep(0.5)
+            for i in range(3):
+                print(f"   {3 - i}")
+                sleep(0.3)
+            return -1
