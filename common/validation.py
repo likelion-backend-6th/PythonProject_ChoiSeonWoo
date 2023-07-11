@@ -3,8 +3,8 @@ from typing import List, Optional
 
 USER_MENU_NUM_LIST = ["7", "8", "007"]
 USER_MENU_INIT_MESSAGE = "   7. 회원가입   8. 로그인   007. 프로그램 종료\n"
-BOOK_MENU_NUM_LIST = ["1", "2", "3", "4", "9", "007"]
-BOOK_MENU_INIT_MESSAGE = "   1. 도서 조회   2. 도서 검색   3. 도서 대출   4. 도서 반납\n" \
+BOOK_MENU_NUM_LIST = ["1", "2", "3", "4", "5", "9", "007"]
+BOOK_MENU_INIT_MESSAGE = "   1. 도서 조회   2. 도서 검색   3. 도서 대출   4. 도서 반납   5. 나의 대출 도서\n" \
                          "   9. 로그아웃   007. 프로그램 종료\n"
 
 LOGOUT_MESSAGE = "로그아웃"

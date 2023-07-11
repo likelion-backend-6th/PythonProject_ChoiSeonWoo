@@ -1,12 +1,9 @@
 from datetime import datetime
-from time import sleep
-from typing import List, Union, Optional
-
-from tabulate import tabulate
+from typing import List, Optional, Tuple
 
 from books.models import Books, Loans
 from books.validation import FETCH_TYPE, FETCH_TYPE_MESSAGE, SEARCH_TYPE, SEARCH_TYPE_MESSAGE, \
-     type_validation, search_validation, loan_book_ids_validation, return_book_ids_validation
+    type_validation, search_validation, loan_book_ids_validation, return_book_ids_validation
 from common.utils import render_table
 from common.validation import bool_validation, SEARCH_LOANABLE_MESSAGE
 from users.models import Users
@@ -17,7 +14,7 @@ def change_book_list(book_list: List, func_type: int) -> List:
 
     result = []
     if not book_list:
-            book_list = [[" - "] * 6]
+        book_list = [[" - "] * 6]
 
     for book in book_list:
         if type(book[4]) == bool:
@@ -56,7 +53,7 @@ def change_loan_list(loan_list: List) -> List:
     return result if result else loan_list
 
 
-def fetch_book_list(user_id: Optional[int] = None) -> List | int:
+def fetch_book_list(user: Optional[Tuple] = None) -> List | int:
     print("\n   =========           도서 조회를 진행합니다.          =========")
     fetch_type = type_validation(FETCH_TYPE, FETCH_TYPE_MESSAGE)
 
@@ -73,9 +70,10 @@ def fetch_book_list(user_id: Optional[int] = None) -> List | int:
             print("\n   현재 모든 도서가 대출중입니다.\n")
 
     elif fetch_type == 3:
-        book_list: List = Books().get(user_id=user_id, is_available=False)
+        book_list: List = Books().get(user_id=user[0], is_available=False, order_by_info=('loan_date', 'DESC'))
 
     func_type = 2 if fetch_type == 1 else 1
+
     print("\n   [조회 결과]")
     print(render_table(change_book_list(book_list, func_type), "books"))
 
@@ -115,7 +113,7 @@ def search_book_list(book_list: Optional[List] = None) -> List | int:
     return book_list if book_list != -1 else -1
 
 
-def loan_books(user_id: int) -> List | int:
+def loan_books(user: Tuple) -> List | int:
     print("\n   =========           도서 대여를 진행합니다.          =========\n")
 
     book_check = bool_validation(SEARCH_LOANABLE_MESSAGE)
@@ -136,9 +134,9 @@ def loan_books(user_id: int) -> List | int:
     else:
         for book_id in book_id_list:
             target_book = Books().put(id=book_id)
-            new_loan = Loans(user_id, book_id).post()
+            new_loan = Loans(user[0], book_id).post()
 
-    current_loan_books = Books().get(user_id=user_id, is_available=False, order_by_info=('l.loan_date', "DESC"))
+    current_loan_books = Books().get(user_id=user[0], is_available=False, order_by_info=('l.loan_date', "DESC"))
 
     print("\n   대출이 정상적으로 완료되었습니다.")
 
@@ -148,11 +146,11 @@ def loan_books(user_id: int) -> List | int:
     return current_loan_books
 
 
-def return_books(user_id: int) -> List | int:
+def return_books(user: Tuple) -> List | int:
     print("\n   =========           도서 반납을 진행합니다.          =========\n")
 
-    retunable_book_list = Books().get(user_id=user_id, is_available=False, order_by_info=('l.loan_date', "DESC"))
-    username = Users().get(id=user_id)[0][1]
+    retunable_book_list = Books().get(user_id=user[0], is_available=False, order_by_info=('l.loan_date', "DESC"))
+    username = Users().get(id=user[0])[0][1]
 
     if not retunable_book_list:
         print(f"   {username} 님의 반납 가능한 도서가 존재하지 않습니다.\n")
@@ -161,7 +159,7 @@ def return_books(user_id: int) -> List | int:
     print(f"\n   {username} 님의 반납 가능한 도서 목록입니다.")
     print(render_table(change_book_list(retunable_book_list, 2), 'books'))
 
-    book_id_list = return_book_ids_validation(user_id, retunable_book_list)
+    book_id_list = return_book_ids_validation(user[0], retunable_book_list)
 
     if book_id_list == -1:
         return -1
@@ -171,11 +169,22 @@ def return_books(user_id: int) -> List | int:
             target_book = Books().put(id=book_id)
             update_return = Loans().put(return_date=datetime.now(), return_update=True, return_book_id=book_id)
 
-    current_loan_books = Books().get(user_id=user_id, is_available=False, order_by_info=('l.loan_date', "DESC"))
+    current_loan_books = Books().get(user_id=user[0], is_available=False, order_by_info=('l.loan_date', "DESC"))
 
     print("\n   반납이 정상적으로 완료되었습니다.")
 
     print("\n   현재 대출 중인 도서의 목록입니다.")
+    print(render_table(change_book_list(current_loan_books, 2), 'books'))
+
+    return current_loan_books
+
+
+def fetch_my_loan_book_list(user: Tuple):
+    print(f"\n   =========         {user[1]}님의 현재 대출 도서 정보입니다.         =========\n")
+
+    current_loan_books = Books().get(user_id=user[0], is_available=False, order_by_info=('loan_date', 'DESC'))
+
+    print("\n   [조회 결과]")
     print(render_table(change_book_list(current_loan_books, 2), 'books'))
 
     return current_loan_books
