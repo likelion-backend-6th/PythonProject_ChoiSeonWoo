@@ -43,3 +43,13 @@ def render_table(data, table_name):
     table = "\n".join(table_lines_modified)
 
     return table
+
+
+def from_csv_to_db(file_path):
+    with open(file_path, 'r', newline='', encoding='utf-8') as csvfile:
+        reader = csv.reader(csvfile)
+        for i, row in enumerate(reader):
+            if i == 0:
+                continue
+            if row[2] and row[3] and row[4]:
+                Books(row[2], row[3], row[4]).post()
