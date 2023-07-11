@@ -108,9 +108,11 @@ def search_book_list(book_list: Optional[List] = None) -> List | int:
     else:
         book_check = bool_validation(SEARCH_LOANABLE_MESSAGE)
         if book_check:
-            book_list = Books().get(is_available=True)
+            book_list, func_type = Books().get(is_available=True), 1
             print("\n   현재 대출 가능한 도서 목록입니다.")
             print(render_table(change_book_list(book_list, 1), 'books'))
+        elif not book_check:
+            book_list, func_type = Books().get(), 2
         elif book_check is None:
             return -1
 
@@ -119,6 +121,8 @@ def search_book_list(book_list: Optional[List] = None) -> List | int:
         return -1
 
     book_list = search_validation(search_type, book_list)
+    if book_list == -1:
+        return -1
 
     print("\n   [검색 결과]")
     print(render_table(change_book_list(book_list, func_type), "books"))
