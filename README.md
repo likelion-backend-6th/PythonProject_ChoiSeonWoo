@@ -141,7 +141,7 @@
 
 | 나의 대출 도서 조회 | 유효성 검증 |
 |:-----------:|:-----------:|
-| ![10  나의 대출 도서 조회](https://github.com/likelion-backend-6th/PythonProject_ChoiSeonWoo/assets/104040502/5823b3fe-0990-42da-a20d-492d79d69340) | ![05  유효성 검증](https://github.com/likelion-backend-6th/PythonProject_ChoiSeonWoo/assets/104040502/81e18e64-142b-4311-a56e-e8e40cb52f7e) |
+| ![10  나의 대출 도서 조회](https://github.com/likelion-backend-6th/PythonProject_ChoiSeonWoo/assets/104040502/5823b3fe-0990-42da-a20d-492d79d69340) | ![05  유효성 검증](https://github.com/likelion-backend-6th/PythonProject_ChoiSeonWoo/assets/104040502/5a6642eb-13b2-4a37-ad13-64e34a336b48) |
 
 | 로그아웃 | 시스템 대기／종료 |
 |:-----------:|:-----------:|
