@@ -133,15 +133,15 @@
 
 | 도서 조회 | 도서 검색 |
 |:-----------:|:-----------:|
-| ![06  도서 조회](https://github.com/likelion-backend-6th/PythonProject_ChoiSeonWoo/assets/104040502/5b299c7d-8152-4d74-b86e-9b3590ef0187) | ![07  도서 검색](https://github.com/likelion-backend-6th/PythonProject_ChoiSeonWoo/assets/104040502/c1ae7126-90fd-4afd-90f0-564ea9a23674) |
+| ![06  도서 조회](https://github.com/likelion-backend-6th/PythonProject_ChoiSeonWoo/assets/104040502/ac38779d-b9ba-4257-b8c3-3423afba30b1) | ![07  도서 검색](https://github.com/likelion-backend-6th/PythonProject_ChoiSeonWoo/assets/104040502/3bc6dbaf-7bfa-4af4-b546-562847b2b0b8) |
 
-| 도서 대여 | 도서 반납 |
+| 도서 대출 | 도서 반납 |
 |:-----------:|:-----------:|
-| ![08  도서 대여](https://github.com/likelion-backend-6th/PythonProject_ChoiSeonWoo/assets/104040502/63bf4b2d-c467-4eee-84da-e596bdf38bd4) | ![09  도서 반납](https://github.com/likelion-backend-6th/PythonProject_ChoiSeonWoo/assets/104040502/3b41e50e-821f-49e5-8c83-9b225d555aa4) |
+| ![08  도서 대여](https://github.com/likelion-backend-6th/PythonProject_ChoiSeonWoo/assets/104040502/109df258-292a-43c3-aa21-2c5e1c2ac609) | ![09  도서 반납](https://github.com/likelion-backend-6th/PythonProject_ChoiSeonWoo/assets/104040502/9500c5d4-8478-4bc6-8ab2-0c5b4cc528bd) |
 
 | 나의 대출 도서 조회 | 유효성 검증 |
 |:-----------:|:-----------:|
-| ![09  도서 반납](https://github.com/likelion-backend-6th/PythonProject_ChoiSeonWoo/assets/104040502/4973d423-39ab-46bd-861a-ea17010b1dc3) | ![12  시스템 대기／종료](https://github.com/likelion-backend-6th/PythonProject_ChoiSeonWoo/assets/104040502/03bbefae-d357-48d9-8fa3-f09c472293c1) |
+| ![10  나의 대출 도서 조회](https://github.com/likelion-backend-6th/PythonProject_ChoiSeonWoo/assets/104040502/5823b3fe-0990-42da-a20d-492d79d69340) | ![05  유효성 검증](https://github.com/likelion-backend-6th/PythonProject_ChoiSeonWoo/assets/104040502/81e18e64-142b-4311-a56e-e8e40cb52f7e) |
 
 | 로그아웃 | 시스템 대기／종료 |
 |:-----------:|:-----------:|
