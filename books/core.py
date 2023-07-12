@@ -73,7 +73,7 @@ def fetch_book_list(user: Optional[Tuple] = None) -> List | int:
     elif fetch_type == 3:
         book_list: List = Books().get(user_id=user[0], is_available=False, order_by_info=('loan_date', 'DESC'))
 
-    func_type = 2 if fetch_type == 1 else 1
+    func_type = 1 if fetch_type == 2 else 2
 
     print("\n   [조회 결과]")
     print(render_table(change_book_list(book_list, func_type), "books"))
