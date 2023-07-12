@@ -12,55 +12,71 @@
 <br>
 
 
-## 📑 프로젝트 주요 기능
+## 📖 프로젝트 주요 기능
+
 ### 1️⃣ CLI 기반 메뉴
+
 - 사용자는 콘솔을 통해 메뉴를 선택
 - 사용자가 선택한 메뉴에 따라 해당 기능을 실행
+- 메뉴 선택을 3회 이상 잘못한 경우, 이전 메뉴로 돌아감
 - 사용자는 메뉴를 통해 프로그램을 종료 가능
 - 사용자는 메뉴를 통해 이전 메뉴로 돌아갈 수 있음
 - 메뉴 선택 시 콘솔을 삭제하며 사용자가 선택한 메뉴만 출력
 
 ### 2️⃣ 데이터 입력 기능
-- 사용자는 콘솔을 통해 유저 정보 및 도서의 정보를 입력하고 데이터베이스에 저장
+- 사용자는 콘솔을 통해 유저 정보 및 대출의 정보를 입력하고 데이터베이스에 저장
 - 사용자 정보는 사용자의 ID, 유저명, 이름, 비밀번호를 포함
 - 도서의 정보는 도서의 ID, 이름, 저자, 출판사 정보를 포함
 - 파일을 통해 도서의 정보를 입력하여 데이터베이스에 저장
 
 ### 3️⃣ 사용자 정보 기능
+
 - 사용자는 콘솔을 통해 유저명, 이름, 비밀번호를 입력하여 회원가입
 - 사용자는 콘솔을 통해 유저명, 비밀번호를 입력하여 로그인
-- 로그인 3회 실패 시, 콘솔 접속 종료
 - 로그인 상황에서 로그아웃을 입력하여 로그아웃 처리
-- 로그아웃 시 초기 메뉴로 돌아감
+- 로그아웃 시 사용자 관리 메뉴로 돌아감
 
 ### 4️⃣ 도서 정보 조회 기능
-- 사용자는 도서의 ID 혹은 이름을 입력하여 도서의 정보를 조회
+
+- 사용자는 콘솔창을 통한 입력값에 따라 3가지 종류의 도서 정보를 선택하여 해당 도서의 정보를 조회
 - 도서의 정보는 도서의 ID, 이름, 저자, 출판사 정보를 포함
-- 도서의 상태(대출 가능, 대출 중)가 표시됨.
+- 모든 도서 혹은 나의 대출도서 정보 조회 시 도서의 상태(대출 가능, 대출 중) 및 대출일이 추가 표시됨.
 - 도서의 상태는 도서가 대출 가능한 상태인지, 대출 중인 상태인지를 표현
 - 도서가 대출 중인 상태인 경우, 도서의 대출 정보를 함께 출력
 
 ### 5️⃣ 도서 대출 기능
-- 사용자는 콘솔을 통해 도서의 ID 혹은 이름을 입력하여 도서를 대출
+- 해당 메뉴 접속 시 요청에 따라 대출 가능 도서 우선 조회
+- 사용자는 콘솔을 통해 도서의 ID를 입력하여 도서를 대출
 - 대출하면 도서의 상태를 대출 중으로 변경
-- 대출 중인 도서를 모두 출력
+- 사용자의 대출 중인 도서를 모두 출력
 - 도서가 이미 대출 중일 경우, 대출이 불가능하다고 출력
 
-
 ### 6️⃣ 도서 반납 기능
+
 - 반납 메뉴 선택 시, 사용자의 대출 도서 리스트가 출력됨
 - 반납을 원하는 도서의 ID를 입력받아 반납
 - 반납하면 도서의 상태가 대출 가능으로 변경
 - 반납 처리 후 사용자의 대출 도서 리스트를 출력
 
 ### 7️⃣ 대출 정보 조회 기능
-- 대출한 도서의 정보를 모두 조회 가능
-- 대출 정보는 도서의 ID, 이름, 저자, 출판사, 대출 날짜, 반납일자로 구성
+
+- 사용자의 대출한 도서의 정보를 모두 조회 가능
+- 대출 정보는 도서의 ID, 이름, 저자, 출판사, 대출 날짜 로 구성
 - 대출 정보는 대출 날짜를 기준으로 내림차순으로 정렬
 
-### 8️⃣ 종료 기능
-- 사용자는 프로그램을 종료할 수 있음.
-- 프로그램 종료 시, 로그아웃 처리
+### 8️⃣ 대기 및 종료 기능
+
+- 사용자는 이용 종료 요청 시, 자동 로그아웃 후 서비스 대기 화면으로 이동
+- 대기 화면에서 재가동 요청 시, 사용자 관리 화면으로 이동
+- 대기 화면에서 서비스 종료 요청 시 프로그램 종료
+
+### 9️⃣ 관리자 메뉴 기능
+
+- 서비스 제공자가 지정한 계정에 따라 관리자/사용자로 구분
+- 관리자 계정으로 로그인 시, 관리자 메뉴가 활성화되어 이용 가능
+- 사용자/도서/대출 정보 조회 가능
+- 사용자는 콘솔을 통해 사용자/도서/대출 정보를 입력하여 데이터베이스에 저장
+- 사용자는 콘솔을 통해 사용자/도서/대출 정보를 입력하여 기존에 저장된 데이터를 수정
 
 <br>
 
@@ -71,14 +87,16 @@
 | Database |   PostgreSQL    |     15.3     |
 |   IDE    |     Pycharm     | Professional |
 |  라이브러리   | psycopg2-bynary |    2.9.6     |
-|  라이브러리   |     pandas      |    2.0.3     |
 |  라이브러리   |  python-dotenv  |    1.0.0     |
+|  라이브러리   |     tabulate    |    0.9.0     |
 
 
 <br>
 
-## 🚀 사용자 흐름
-추후 작성 예정
+## 🚀 Workflow
+
+![flowchart_수정2](https://github.com/likelion-backend-6th/PythonProject_ChoiSeonWoo/assets/104040502/6187a065-af9c-4a44-b52c-9cbc06c4bb23)
+
 
 <br>
 
@@ -148,6 +166,56 @@
 | ![11  로그아웃](https://github.com/likelion-backend-6th/PythonProject_ChoiSeonWoo/assets/104040502/5ee301fa-9a4a-4e76-8c00-19e2039a1e7d) | ![12  시스템 대기／종료](https://github.com/likelion-backend-6th/PythonProject_ChoiSeonWoo/assets/104040502/f007fbec-87c0-43f1-a14d-f5d5b67bf4c4) |
 
 <br>
+
+## 📑 Check List
+
+### 1st 초기 설정
+
+- [x] github 설정 (PR, ISSUE Template 외)
+- [x] 프로젝트 구조 설정 및 필수 라이브러리 설치
+- [x] .gitignore 및 .env 설정
+- [x] README 작성
+- [x] Database 설정 및 연결
+- [x] Database 제어 기능 구현 및 테이블 추가
+
+### 2nd 사용자 관리
+
+- [x] Users 모델 생성 및 get/post/put 메서드
+- [x] 입력값에 따른 유효성 검사 기능 
+- [x] 로그인 및 로그아웃
+- [x] 회원가입
+
+### 3rd 도서 관리
+
+- [x] Books 모델 생성 및 get/post/put 메서드
+- [x] Loans 모델 생성 및 get/post/put 메서드
+- [x] 입력값에 따른 유효성 검사 기능
+- [x] 도서 조회 기능
+- [x] 도서 검색 기능
+- [x] 도서 대출 기능
+- [x] 도서 반납 기능
+
+### 4th 메인 프로그램
+
+- [x] 사용자관리-도서관리 개별 기능을 바탕으로 프로그램 구성
+- [x] 순차적 실행 및 이전으로 돌아가기
+- [x] 시스템 대기 및 종료
+- [x] 화면 출력 개선
+
+### 5th 관리자 메뉴
+
+- [x] 관리자 계정 설정
+- [x] 관리자 전용 메뉴 추가
+- [x] 관리자 전용 사용자 관리 조회/등록/수정 기능
+- [x] 관리자 전용 도서/대출 조회/등록/수정 기능
+
+### 6th 기타
+
+- [x] 화면 대기, 클리어 기능
+- [x] csv 파일을 DB에 저장
+
+
+<br>
 <br>
 
 ## 📌 Notion
@@ -210,7 +278,125 @@
 - [57. 화면 대기, 클리어 함수 추가](https://browneyed.notion.site/57-2e6819db3da1402d988281e6e7599141?pvs=4)
 - [58. csv 파일 내용을 DB로 저장 함수 추가](https://browneyed.notion.site/58-csv-DB-f3d1bae9c94e4173aedab186ca098591?pvs=4)
 
+<br>
 
+## 📬 Review
+
+### 📆 해당 프로젝트를 통해 얻고자 계획했던 것
+
+1. **체계적인 프로젝트 진행에 대한 경험**
+   - Github Issue를 통해 작업 단위별 TodoList 작성
+   - 작업 branch를 따서 Todo별 코딩 진행 및 Notion 문서 정리
+   - Pull Request를 통한 main branch로의 병합
+   - bug 발생 시 report 문서 작성 (Notion 이용)
+2. **객체 지향 프로그래밍에 대한 실습 및 이해**
+   - 가급적 함수, 클래스 사용을 통해 코드의 재사용성을 높이고 관리를 편하게 진행하는 것
+     - 클래스를 이용하여 작성한 유저 데이터 모델 : 유저 데이터 조회/생성/수정 시 사용
+       ```python
+    
+       class Users:
+           def __init__(self,
+                        username: Optional[str] = None,
+                        fullname: Optional[str] = None,
+                        password: Optional[str] = None
+                        ):
+               self.table = "users"
+               self.username = username
+               self.fullname = fullname
+               self.password = password
+    
+           def get(self,
+                   size: Optional[int] = None,
+                   id: Optional[int] = None,
+                   username: Optional[str] = None,
+                   fullname: Optional[str] = None,
+                   order_by_info: Tuple = ('id', 'ASC')
+           ):
+               query = "SELECT * FROM users "
+               extra_query = []
+    
+               if id:
+                   extra_query.append(f"id = '{id}'")
+               if username:
+                   extra_query.append(f"username = '{username}'")
+               if fullname:
+                   extra_query.append(f"fullname = '{fullname}'")
+    
+               extra_query = "WHERE " + " AND ".join(extra_query) if extra_query else ""
+    
+               if order_by_info:
+                   extra_query += f" ORDER BY {order_by_info[0]} {order_by_info[1]}"
+    
+               query += extra_query
+    
+               limit_query = f" LIMIT {size};" if size else ";"
+               query += limit_query
+    
+               users = DatabaseManager(self.table, query).fetch_all()
+               return users
+        
+           # .. 생략 ..
+       ```
+     - 함수를 이용하여 작성한 유효성 검증 함수 : 유저/도서/대출 관련 기능에서 모두 사용
+       ```python
+    
+       def existed_id_validation(target):
+           item_list = {
+               "users": ["유저", Users],
+               "books": ["도서", Books],
+               "loans": ["대출", Loans]
+           }
+    
+           init_message = f"\n   {item_list[target][0]}의 ID를 입력해주세요.\n" \
+                          "   (상위 메뉴로 돌아가려면 '-1'을 입력해주세요.)\n" \
+                          "   --->  입력  :  "
+           cnt = 0
+           if target == "loans":
+               item_list[target][1]().get(return_date_info=("NULL", True))
+           objects = item_list[target][1]().get()
+           message = init_message
+    
+           while True:
+               try:
+                   object_id = int(input(message))
+                   if object_id == -1:
+                       return -1
+                   elif all(object_[0] != object_id for object_ in objects):
+                       error_message = f"\n   해당 ID의 {item_list[target][0]} 이/가 존재하지 않습니다.\n"
+                   for object_ in objects:
+                       if object_[0] == object_id:
+                           return object_
+               except ValueError:
+                   error_message = "\n   ID는 숫자만 입력해야 합니다.\n"
+    
+               cnt += 1
+               message = error_message + f"   확인 후 ID를 다시 입력해주세요. ({cnt}/3)\n" \
+                                          "   (상위 메뉴로 돌아가려면 '-1'을 입력해주세요.)\n" \
+                                          "   -->  메뉴 입력  :  "
+    
+               if cnt == 3:
+                   print("\n   3회 이상 실패하였으므로 상위 메뉴로 돌아갑니다.")
+                   waiting()
+    
+                   return -1
+       ```
+
+<br>
+
+### 📝 회고
+
+1. **객체 지향에 대한 좀 더 깊은 이해와 코드 작성**
+   - 공통 기능을 묶어 함수와 클래스로 작성해보았으나, 이는 특정 수정사항이 발생 시 해당 코드가 사용된 여러 곳에 영향을 모두 미치기 때문에 수정하는 작업에 많은 시간이 필요했음.
+   - 스스로 코드리뷰를 해보니 클래스 메서드로 구현해야 하는데 인스턴스 메서드로 구현해놓은 부분도 발견하게 되어 기본 개념이 완벽하게 숙지되지는 않았다는 느낌을 받았으며,
+   - 유효성 검증 함수들은 처음부터 클래스로 구현하여 상속받아 개별 함수들을 만들었으면 코드 작업이 훨씬 줄었을 것 같다는 생각이 들었음.
+   - 기능 명세, 화면 및 테이블 정의서 등을 보고 일정 시간을 들여 대략으로라도 어떤 기능에 어떤 클래스와 함수들이 쓰일지 먼저 고민해보는 작업이 굉장히 의미있을 것이고 또 꼭 필요하겠다 생각하였음.
+2. **데이터 조회 관련 쿼리 최적화**
+   - 이번 프로젝트에서는 코드의 재사용성이라는 측면에 초점을 두었기 때문에, 상황마다 최적의 쿼리를 작성하기보다
+   - `LEFT JOIN` 을 이용하여 처음부터 최대한 많은 내용을 담은 포괄적인 데이터를 가져와 파이썬 기능으로 가공하여 화면에 출력하도록 코드를 작성
+   - 추후 프로젝트 시에는 다양한 상황에서의 최적화된 쿼리에 대한 고민을 먼저 고민 후, 코드 작성을 진행할 예정
+3. **테스트 코드 작성**
+   - 당초 계획은 Todo 단위별 테스트 코드 작성도 고려하여 진행하려고 하였으나, 체계적인 진행 및 기능 개발을 통한 완성도를 높이는 부분에 집중하기 위해 생략하였음.
+   - 그러나 수정사항이 생각보다 많이 발생하고 소요 시간도 상당했다는 점에서 `pytest` 혹은 `unittest` 에 대한 학습과 테스트 코드 작성은 필수라는 점을 다시금 깨닫게 되었음.
 
 
 <br>
