@@ -53,6 +53,10 @@ def menu_num_validation(menu_num_list: List, menu_init_message: str) -> str:
 def bool_validation(execute_meessage: str) -> Optional[bool]:
     init_message = f"\n   {execute_meessage} 하시겠습니까? (Y/n)\n" \
                     "   --->  입력  :  "
+    if "대기" in init_message:
+        init_message = f"\n   {execute_meessage} 하시겠습니까? (Y/n)\n" \
+                        "   대기모드로 전환시, 자동 로그아웃됩니다.\n" \
+                        "   --->  입력  :  "
     cnt = 0
     message = init_message
 

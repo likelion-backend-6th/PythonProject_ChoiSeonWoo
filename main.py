@@ -105,7 +105,7 @@ class LibrarySystem:
 
         if is_stood_by:
             self.user = None
-            clearing()
+            wait_clear()
             return stand_by()
         else:
             return -1
