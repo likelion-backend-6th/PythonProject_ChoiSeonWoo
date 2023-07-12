@@ -202,6 +202,11 @@
 - [49. 도서 세부 기능 함수 개별 수정](https://browneyed.notion.site/49-e584372ca7d5482fa89d7209bb4d9fe4?pvs=4)
 - [50. user 유효성 검증 추가 및 수정](https://browneyed.notion.site/50-user-115e37e2186649f4ace4af6fbcd59755?pvs=4)
 - [51. 도서 조회 시, 내 대출 도서 목록 조회 기능 추가](https://browneyed.notion.site/51-4fea405d52434454a7568425e6598354?pvs=4)
+- [52. 관리자 계정 리스트 및 메뉴 설정](https://browneyed.notion.site/52-11d41f9d352940ceac52d10a5f4196fe?pvs=4)
+- [53. user 유효성 검증 추가 및 수정](https://browneyed.notion.site/53-user-7459a301136844b58eb2b9bc3f28bc09?pvs=4)
+- [54. 관리자 전용 유저 정보 조회/등록/수정 기능](https://browneyed.notion.site/54-88314f1916f7416284171aa4d5bf8eb1?pvs=4)
+- [55. book/loans 유효성 검증 추가 및 수정](https://browneyed.notion.site/55-book-loans-84a8e148d91e4a7cbfe704c7f68471e9?pvs=4)
+- [56. 관리자 전용 도서/대출 정보 조회/등록/수정 기능 추가 및 등록](https://browneyed.notion.site/56-86ef927ce4534a369a40df19dc7a0075?pvs=4)
 
 
 
