@@ -207,6 +207,8 @@
 - [54. 관리자 전용 유저 정보 조회/등록/수정 기능](https://browneyed.notion.site/54-88314f1916f7416284171aa4d5bf8eb1?pvs=4)
 - [55. book/loans 유효성 검증 추가 및 수정](https://browneyed.notion.site/55-book-loans-84a8e148d91e4a7cbfe704c7f68471e9?pvs=4)
 - [56. 관리자 전용 도서/대출 정보 조회/등록/수정 기능 추가 및 등록](https://browneyed.notion.site/56-86ef927ce4534a369a40df19dc7a0075?pvs=4)
+- [57. 화면 대기, 클리어 함수 추가](https://browneyed.notion.site/57-2e6819db3da1402d988281e6e7599141?pvs=4)
+- [58. csv 파일 내용을 DB로 저장 함수 추가](https://browneyed.notion.site/58-csv-DB-f3d1bae9c94e4173aedab186ca098591?pvs=4)
 
 
 
