@@ -65,7 +65,7 @@ def fullname_validation():
 
         if cnt == 3:
             message, cnt = init_message, 0
-            print("   3회 이상 실패하였으므로 상위 메뉴로 돌아갑니다.")
+            print("\n   3회 이상 실패하였으므로 상위 메뉴로 돌아갑니다.")
             waiting()
 
             return "-1"
@@ -94,7 +94,7 @@ def password_validation():
 
         if cnt == 3:
             message, cnt = init_message, 0
-            print("   3회 이상 실패하였으므로 상위 메뉴로 돌아갑니다.")
+            print("\n   3회 이상 실패하였으므로 상위 메뉴로 돌아갑니다.")
             waiting()
 
             return "-1"
@@ -126,7 +126,7 @@ def user_validation():
 
         if cnt == 3:
             message, cnt = init_message, 0
-            print("   3회 이상 실패하였으므로 상위 메뉴로 돌아갑니다.")
+            print("\n   3회 이상 실패하였으므로 상위 메뉴로 돌아갑니다.")
             waiting()
 
             return "-1"
@@ -152,7 +152,7 @@ def password_validation2(user: List):
                   "   -->  비밀번호 입력  :  "
 
         if cnt == 3:
-            print("   3회 이상 실패하였으므로 상위 메뉴로 돌아갑니다.")
+            print("\n   3회 이상 실패하였으므로 상위 메뉴로 돌아갑니다.")
             waiting()
 
             return "-1"
@@ -185,7 +185,7 @@ def user_id_validation():
                                    "   -->  메뉴 입력  :  "
 
         if cnt == 3:
-            print("   3회 이상 실패하였으므로 상위 메뉴로 돌아갑니다.")
+            print("\n   3회 이상 실패하였으므로 상위 메뉴로 돌아갑니다.")
             waiting()
 
             return -1

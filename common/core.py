@@ -1,5 +1,6 @@
 import csv
 import sys
+from time import sleep
 from typing import List
 from tabulate import tabulate
 
@@ -22,6 +23,9 @@ def stand_by():
             wait_clear()
             return -1
         if is_stood_by == 3:
+            sleep(0.3)
+            print("\n   =======            시스템을 종료합니다.            =======")
+            wait_clear()
             sys.exit()
         clearing()
 
@@ -29,12 +33,12 @@ def stand_by():
 def render_table(data, table_name):
     headers = []
     if table_name =="users":
-        headers = ["ID", "사용자명", "성함", "패스워드"]
+        headers = ["No", "ID", "사용자명", "성함", "패스워드"]
     elif table_name =="books":
-        headers = ["ID", "제목", "저자", "출판사", "대출가능여부", "대출일", "반납일"]
+        headers = ["No", "ID", "제목", "저자", "출판사", "대출가능여부", "대출일", "반납일"]
         headers = headers[:len(data[0])+1]
     elif table_name == "loans":
-        headers = ["ID", "사용자 ID", "도서 ID", "대출일", "반납일"]
+        headers = ["No", "ID", "사용자 ID", "도서 ID", "대출일", "반납일"]
 
     table = tabulate(data, headers=headers, tablefmt="fancy_grid",
                      showindex=True, numalign='center', stralign='left', maxcolwidths=30)

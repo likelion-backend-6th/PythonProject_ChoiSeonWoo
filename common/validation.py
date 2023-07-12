@@ -46,13 +46,17 @@ def menu_num_validation(menu_num_list: List, menu_init_message: str) -> str:
                                   "   -->  메뉴 입력  :  "
         if cnt == 3:
             message, cnt = init_message, 0
-            print("   3회 이상 실패하였으므로 이전 메뉴로 돌아갑니다.")
+            print("\n   3회 이상 실패하였으므로 이전 메뉴로 돌아갑니다.")
             waiting()
 
 
 def bool_validation(execute_meessage: str) -> Optional[bool]:
     init_message = f"\n   {execute_meessage} 하시겠습니까? (Y/n)\n" \
                     "   --->  입력  :  "
+    if "대기" in init_message:
+        init_message = f"\n   {execute_meessage} 하시겠습니까? (Y/n)\n" \
+                        "   대기모드로 전환시, 자동 로그아웃됩니다.\n" \
+                        "   --->  입력  :  "
     cnt = 0
     message = init_message
 
@@ -134,7 +138,7 @@ def existed_id_validation(target):
                                    "   -->  메뉴 입력  :  "
 
         if cnt == 3:
-            print("   3회 이상 실패하였으므로 상위 메뉴로 돌아갑니다.")
+            print("\n   3회 이상 실패하였으므로 상위 메뉴로 돌아갑니다.")
             waiting()
 
             return -1
