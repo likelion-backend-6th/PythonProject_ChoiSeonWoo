@@ -93,8 +93,10 @@
 
 <br>
 
-## 🚀 사용자 흐름
-추후 작성 예정
+## 🚀 Workflow
+
+![flowchart_수정2](https://github.com/likelion-backend-6th/PythonProject_ChoiSeonWoo/assets/104040502/6187a065-af9c-4a44-b52c-9cbc06c4bb23)
+
 
 <br>
 
@@ -276,7 +278,125 @@
 - [57. 화면 대기, 클리어 함수 추가](https://browneyed.notion.site/57-2e6819db3da1402d988281e6e7599141?pvs=4)
 - [58. csv 파일 내용을 DB로 저장 함수 추가](https://browneyed.notion.site/58-csv-DB-f3d1bae9c94e4173aedab186ca098591?pvs=4)
 
+<br>
 
+## 📬 Review
+
+### 📆 해당 프로젝트를 통해 얻고자 계획했던 것
+
+1. **체계적인 프로젝트 진행에 대한 경험**
+   - Github Issue를 통해 작업 단위별 TodoList 작성
+   - 작업 branch를 따서 Todo별 코딩 진행 및 Notion 문서 정리
+   - Pull Request를 통한 main branch로의 병합
+   - bug 발생 시 report 문서 작성 (Notion 이용)
+2. **객체 지향 프로그래밍에 대한 실습 및 이해**
+   - 가급적 함수, 클래스 사용을 통해 코드의 재사용성을 높이고 관리를 편하게 진행하는 것
+     - 클래스를 이용하여 작성한 유저 데이터 모델 : 유저 데이터 조회/생성/수정 시 사용
+       ```python
+    
+       class Users:
+           def __init__(self,
+                        username: Optional[str] = None,
+                        fullname: Optional[str] = None,
+                        password: Optional[str] = None
+                        ):
+               self.table = "users"
+               self.username = username
+               self.fullname = fullname
+               self.password = password
+    
+           def get(self,
+                   size: Optional[int] = None,
+                   id: Optional[int] = None,
+                   username: Optional[str] = None,
+                   fullname: Optional[str] = None,
+                   order_by_info: Tuple = ('id', 'ASC')
+           ):
+               query = "SELECT * FROM users "
+               extra_query = []
+    
+               if id:
+                   extra_query.append(f"id = '{id}'")
+               if username:
+                   extra_query.append(f"username = '{username}'")
+               if fullname:
+                   extra_query.append(f"fullname = '{fullname}'")
+    
+               extra_query = "WHERE " + " AND ".join(extra_query) if extra_query else ""
+    
+               if order_by_info:
+                   extra_query += f" ORDER BY {order_by_info[0]} {order_by_info[1]}"
+    
+               query += extra_query
+    
+               limit_query = f" LIMIT {size};" if size else ";"
+               query += limit_query
+    
+               users = DatabaseManager(self.table, query).fetch_all()
+               return users
+        
+           # .. 생략 ..
+       ```
+     - 함수를 이용하여 작성한 유효성 검증 함수 : 유저/도서/대출 관련 기능에서 모두 사용
+       ```python
+    
+       def existed_id_validation(target):
+           item_list = {
+               "users": ["유저", Users],
+               "books": ["도서", Books],
+               "loans": ["대출", Loans]
+           }
+    
+           init_message = f"\n   {item_list[target][0]}의 ID를 입력해주세요.\n" \
+                          "   (상위 메뉴로 돌아가려면 '-1'을 입력해주세요.)\n" \
+                          "   --->  입력  :  "
+           cnt = 0
+           if target == "loans":
+               item_list[target][1]().get(return_date_info=("NULL", True))
+           objects = item_list[target][1]().get()
+           message = init_message
+    
+           while True:
+               try:
+                   object_id = int(input(message))
+                   if object_id == -1:
+                       return -1
+                   elif all(object_[0] != object_id for object_ in objects):
+                       error_message = f"\n   해당 ID의 {item_list[target][0]} 이/가 존재하지 않습니다.\n"
+                   for object_ in objects:
+                       if object_[0] == object_id:
+                           return object_
+               except ValueError:
+                   error_message = "\n   ID는 숫자만 입력해야 합니다.\n"
+    
+               cnt += 1
+               message = error_message + f"   확인 후 ID를 다시 입력해주세요. ({cnt}/3)\n" \
+                                          "   (상위 메뉴로 돌아가려면 '-1'을 입력해주세요.)\n" \
+                                          "   -->  메뉴 입력  :  "
+    
+               if cnt == 3:
+                   print("\n   3회 이상 실패하였으므로 상위 메뉴로 돌아갑니다.")
+                   waiting()
+    
+                   return -1
+       ```
+
+<br>
+
+### 📝 회고
+
+1. **객체 지향에 대한 좀 더 깊은 이해와 코드 작성**
+   - 공통 기능을 묶어 함수와 클래스로 작성해보았으나, 이는 특정 수정사항이 발생 시 해당 코드가 사용된 여러 곳에 영향을 모두 미치기 때문에 수정하는 작업에 많은 시간이 필요했음.
+   - 스스로 코드리뷰를 해보니 클래스 메서드로 구현해야 하는데 인스턴스 메서드로 구현해놓은 부분도 발견하게 되어 기본 개념이 완벽하게 숙지되지는 않았다는 느낌을 받았으며,
+   - 유효성 검증 함수들은 처음부터 클래스로 구현하여 상속받아 개별 함수들을 만들었으면 코드 작업이 훨씬 줄었을 것 같다는 생각이 들었음.
+   - 기능 명세, 화면 및 테이블 정의서 등을 보고 일정 시간을 들여 대략으로라도 어떤 기능에 어떤 클래스와 함수들이 쓰일지 먼저 고민해보는 작업이 굉장히 의미있을 것이고 또 꼭 필요하겠다 생각하였음.
+2. **데이터 조회 관련 쿼리 최적화**
+   - 이번 프로젝트에서는 코드의 재사용성이라는 측면에 초점을 두었기 때문에, 상황마다 최적의 쿼리를 작성하기보다
+   - `LEFT JOIN` 을 이용하여 처음부터 최대한 많은 내용을 담은 포괄적인 데이터를 가져와 파이썬 기능으로 가공하여 화면에 출력하도록 코드를 작성
+   - 추후 프로젝트 시에는 다양한 상황에서의 최적화된 쿼리에 대한 고민을 먼저 고민 후, 코드 작성을 진행할 예정
+3. **테스트 코드 작성**
+   - 당초 계획은 Todo 단위별 테스트 코드 작성도 고려하여 진행하려고 하였으나, 체계적인 진행 및 기능 개발을 통한 완성도를 높이는 부분에 집중하기 위해 생략하였음.
+   - 그러나 수정사항이 생각보다 많이 발생하고 소요 시간도 상당했다는 점에서 `pytest` 혹은 `unittest` 에 대한 학습과 테스트 코드 작성은 필수라는 점을 다시금 깨닫게 되었음.
 
 
 <br>
