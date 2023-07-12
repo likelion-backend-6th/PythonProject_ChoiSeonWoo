@@ -197,6 +197,11 @@
 - [44. 시스템 종료 함수 구현](https://browneyed.notion.site/44-185ae1832cc5466bb724d85e03d5e284?pvs=4)
 - [45. 시스템 대기 여부 입력값에 대한 유효성 검증 함수 구현](https://browneyed.notion.site/45-ffbdc47f912d44a6a9f9f84b964a8880?pvs=4)
 - [46. 시스템 대기 함수 구현](https://browneyed.notion.site/46-2331026d31574c03a5562e1b24bf59c2?pvs=4)
+- [47. DEBUG 모드 추가](https://browneyed.notion.site/47-DEBUG-cc7707aecfc14ceaa358550fc5dc67af?pvs=4)
+- [48. 도서 세부 기능 실행 결과를 화면에 출력](https://browneyed.notion.site/48-7eb70bf826f2413e82c0c1ffaa388e0d?pvs=4)
+- [49. 도서 세부 기능 함수 개별 수정](https://browneyed.notion.site/49-e584372ca7d5482fa89d7209bb4d9fe4?pvs=4)
+- [50. user 유효성 검증 추가 및 수정](https://browneyed.notion.site/50-user-115e37e2186649f4ace4af6fbcd59755?pvs=4)
+- [51. 도서 조회 시, 내 대출 도서 목록 조회 기능 추가](https://browneyed.notion.site/51-4fea405d52434454a7568425e6598354?pvs=4)
 
 
 
